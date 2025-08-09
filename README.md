@@ -1,28 +1,12 @@
-# Marshall Tuner — Acton III (Complete + AI)
+# Marshall Tuner — v4 (Mobile-first + AI Live)
 
-App per suggerire i settaggi **Bass/Treble** della Marshall **Acton III** in base a **genere/artista**.
-Include:
-- **Editor preset** (salvataggio locale + export/import JSON)
-- **Integrazione AI** via OpenAI (endpoint serverless `/api/tune`)
+- Omnibox intelligente (Artista/Brano/Opera/Colonna Sonora/Genere)
+- Chip dei generi comuni
+- UI mobile-first con bottombar
+- Visualizzazione **ore** + **LED 0–10** (conversione lineare)
+- AI live via `/api/tune` (OpenAI). Aggiungi su Vercel `OPENAI_API_KEY` (e opz. `OPENAI_MODEL`).
 
-## Uso offline (senza AI)
-1. Apri `index.html` in un browser moderno.
-2. Funzioni attive: selezione preset, ambiente/volume, editor custom, export/import.
-3. Il tasto **“Chiedi all’AI”** richiede il backend, quindi offline non risponde.
-
-## Deploy (Vercel) — Consigliato
-1. Crea un account su https://vercel.com/
-2. Importa questo progetto come **New Project**.
-3. In **Settings → Environment Variables**, aggiungi:
-   - `OPENAI_API_KEY` = la tua chiave OpenAI
-   - `OPENAI_MODEL` = (opzionale) es. `gpt-4.1-mini`
-4. Premi **Deploy**.
-5. Apri l'app e usa **“Chiedi all’AI”** per generare settaggi automatici.
-
-## Sicurezza
-- La chiave OpenAI resta **sul server** (mai nel client).
-- I preset personalizzati vengono salvati **nel browser** (localStorage).
-
-## Note
-- Non affiliato a Marshall Amplification.
-- Preset curati per uso consumer su Acton III.
+## Deploy
+1) Carica TUTTI i file nella root del repo (inclusa cartella `api/`).
+2) In Vercel → Settings → Environment Variables: `OPENAI_API_KEY`.
+3) Deploy o Redeploy: l’endpoint `/api/tune` sarà disponibile.

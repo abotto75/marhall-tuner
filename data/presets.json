@@ -1,110 +1,88 @@
 {
   "genres": [
     {
+      "id": "pop",
+      "name": "Pop",
+      "bass_clock": 1.8,
+      "treble_clock": 2.0,
+      "notes": "Bilanciato, alti presenti, bassi controllati."
+    },
+    {
       "id": "rock",
       "name": "Rock",
       "bass_clock": 2.0,
       "treble_clock": 1.0,
-      "notes": "Suono pieno, medio-basso energico. Se il mix è molto compresso, riduci i bassi di 0.5 ore.",
-      "examples": [
-        "Nirvana",
-        "Foo Fighters",
-        "Led Zeppelin"
-      ]
+      "notes": "Corpo sui medi-bassi, alti moderati."
+    },
+    {
+      "id": "hiphop",
+      "name": "Hip-Hop / Rap",
+      "bass_clock": 2.6,
+      "treble_clock": 1.2,
+      "notes": "Kick e sub in evidenza, alti morbidi."
+    },
+    {
+      "id": "electronic",
+      "name": "Electronic (EDM)",
+      "bass_clock": 2.7,
+      "treble_clock": 1.1,
+      "notes": "Impatto sui bassi, alti levigati."
+    },
+    {
+      "id": "rnb",
+      "name": "R&B / Soul",
+      "bass_clock": 2.2,
+      "treble_clock": 1.4,
+      "notes": "Caldo e setoso, evita harsh sugli alti."
     },
     {
       "id": "jazz",
       "name": "Jazz",
       "bass_clock": 1.0,
-      "treble_clock": 0.9166666666666666,
-      "notes": "Caldo e definito. Mantieni aria: volumi moderati e bassi controllati.",
-      "examples": [
-        "Miles Davis",
-        "Bill Evans",
-        "Diana Krall"
-      ]
+      "treble_clock": 0.9,
+      "notes": "Aria e definizione, volumi moderati."
     },
     {
       "id": "classical",
       "name": "Classica",
       "bass_clock": 1.0,
       "treble_clock": 1.0,
-      "notes": "Massima naturalezza e spazialità. Evita enfasi: tutto a ore 12 circa.",
-      "examples": [
-        "Mozart",
-        "Beethoven",
-        "Debussy"
-      ]
+      "notes": "Neutro per dinamica e naturalezza."
+    },
+    {
+      "id": "metal",
+      "name": "Metal",
+      "bass_clock": 2.4,
+      "treble_clock": 1.6,
+      "notes": "Chug definito, alti per piatti e attacco."
+    },
+    {
+      "id": "indie",
+      "name": "Indie / Alternative",
+      "bass_clock": 1.8,
+      "treble_clock": 1.6,
+      "notes": "Equilibrio medio-alti, bassi contenuti."
+    },
+    {
+      "id": "dance",
+      "name": "Dance / House / Techno",
+      "bass_clock": 2.8,
+      "treble_clock": 1.2,
+      "notes": "Bassi fisici, alti smussati."
     },
     {
       "id": "ambient",
-      "name": "Ambient / Elettronica",
+      "name": "Ambient",
       "bass_clock": 2.5,
-      "treble_clock": 0.9166666666666666,
-      "notes": "Bassi profondi ma non invadenti, alti morbidi. A volumi medio-bassi funziona meglio.",
-      "examples": [
-        "Brian Eno",
-        "Jon Hopkins",
-        "Bonobo"
-      ]
-    }
-  ],
-  "artists": [
-    {
-      "id": "metallica",
-      "name": "Metallica (’86–’91)",
-      "bass_clock": 2.5,
-      "treble_clock": 1.5,
-      "notes": "Palm mute pieni senza impastare. Per i live/album più grezzi, abbassa i bassi a 2.0.",
-      "albums": [
-        "Master of Puppets",
-        "Metallica (Black Album)"
-      ]
+      "treble_clock": 0.9,
+      "notes": "Sub profondi, high-end morbido."
     },
     {
-      "id": "acdc",
-      "name": "AC/DC",
-      "bass_clock": 1.25,
-      "treble_clock": 2.5,
-      "notes": "Crunch british sui medi. Tieni i bassi contenuti per non perdere il morso.",
-      "albums": [
-        "Back in Black",
-        "Highway to Hell"
-      ]
-    },
-    {
-      "id": "queen",
-      "name": "Queen",
-      "bass_clock": 1.75,
-      "treble_clock": 2.25,
-      "notes": "Apri gli alti per armonie e piatti, bassi moderati per non coprire voce e chitarre multitraccia.",
-      "albums": [
-        "A Night at the Opera",
-        "News of the World"
-      ]
-    },
-    {
-      "id": "zimmer_dune",
-      "name": "Colonna sonora – Dune (Hans Zimmer)",
-      "bass_clock": 2.5,
-      "treble_clock": 1.5,
-      "notes": "Impatto e atmosfera. Allontana la cassa 10–20 cm dal muro se i bassi sono eccessivi.",
-      "albums": [
-        "Dune (Original Motion Picture Soundtrack)"
-      ]
-    },
-    {
-      "id": "zimmer_epic",
-      "name": "Preset Cinema Epico (Zimmer)",
-      "bass_clock": 2.75,
-      "treble_clock": 1.5,
-      "notes": "Per Interstellar/Inception/TDK. Volume 70–85%. Evita EQ aggressivi: +2 dB <100 Hz, +1 dB >6 kHz se proprio.",
-      "albums": [
-        "Interstellar",
-        "Inception",
-        "The Dark Knight",
-        "Gladiator"
-      ]
+      "id": "soundtrack",
+      "name": "Soundtrack / Score",
+      "bass_clock": 2.6,
+      "treble_clock": 1.3,
+      "notes": "Impatto + spazialità, evita harsh."
     }
   ]
 }

@@ -2,131 +2,105 @@
 <html lang="it">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Marshall Tuner — Acton III</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Marshall Tuner — v4 (Mobile)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <div class="brand">
-      <div class="logo">Marshall Tuner</div>
-      <div class="subtitle">Settaggi intelligenti per Acton III</div>
-    </div>
-    <div class="actions"><button id="aiBtn">Chiedi all’AI</button> 
+  <header class="topbar">
+    <div class="brand">Marshall Tuner</div>
+    <div class="actions">
+      <button id="aiBtn" aria-label="Chiedi all’AI">AI</button>
       <button id="resetBtn" class="ghost">Reset</button>
-      <a class="ghost" href="data/presets.json" download>Scarica Preset</a>
     </div>
   </header>
 
   <main>
-    <section class="panel">
-      <h2>Seleziona sorgente</h2>
+    <section class="card sticky-search">
+      <input id="omnibox" class="omnibox" placeholder="Es. Queen — Bohemian Rhapsody • Zimmer — Dune • Beethoven Sinfonia 7" inputmode="text" autocomplete="off">
+      <div class="chips">
+        <button class="chip" data-type="genre" data-query="Pop">Pop</button>
+        <button class="chip" data-type="genre" data-query="Rock">Rock</button>
+        <button class="chip" data-type="genre" data-query="Hip-Hop / Rap">Hip-Hop</button>
+        <button class="chip" data-type="genre" data-query="Electronic (EDM)">Electronic</button>
+        <button class="chip" data-type="genre" data-query="Jazz">Jazz</button>
+        <button class="chip" data-type="genre" data-query="Classica">Classica</button>
+        <button class="chip" data-type="genre" data-query="Metal">Metal</button>
+        <button class="chip" data-type="genre" data-query="Dance / House / Techno">Dance</button>
+      </div>
+      <div class="seg">
+        <button class="seg-btn active" data-tab="quick">Quick</button>
+        <button class="seg-btn" data-tab="pro">Pro</button>
+      </div>
+    </section>
+
+    <section class="card" id="proTab" hidden>
       <div class="grid">
         <div class="field">
-          <label for="mode">Modalità</label>
-          <select id="mode">
+          <label for="type">Tipo</label>
+          <select id="type">
+            <option value="artist">Artista</option>
+            <option value="track">Brano</option>
+            <option value="work">Opera/Classica</option>
+            <option value="score">Colonna sonora</option>
             <option value="genre">Genere</option>
-            <option value="artist">Artista/Colonna sonora</option>
           </select>
         </div>
+        <div class="field"><label>Artista/Compositore</label><input id="fArtist" placeholder="Es. Queen / Hans Zimmer / Beethoven"></div>
+        <div class="field"><label>Titolo / Opera</label><input id="fTitle" placeholder="Es. Time / Sinfonia n.7 / Dune"></div>
+        <div class="field"><label>Dettaglio</label><input id="fExtra" placeholder="Es. Movimento II, OST cue, Album"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="grid tight">
         <div class="field">
-          <label for="picker">Scegli</label>
-          <select id="picker"></select>
-        </div>
-        <div class="field">
-          <label for="room">Ambiente</label>
+          <label>Ambiente</label>
           <select id="room">
-            <option value="neutral">Neutro (scrivania, 20–25 m²)</option>
-            <option value="nearwall">Vicino al muro (&lt; 15 cm)</option>
-            <option value="corner">Angolo della stanza</option>
-            <option value="farwall">Lontano dal muro (&gt; 50 cm)</option>
+            <option value="neutral">Scrivania / 20–25 m²</option>
+            <option value="nearwall">Vicino al muro (&lt;15cm)</option>
+            <option value="corner">Angolo</option>
+            <option value="farwall">Lontano dal muro (&gt;50cm)</option>
           </select>
         </div>
         <div class="field">
-          <label for="volume">Volume corrente</label>
+          <label>Volume</label>
           <input type="range" id="volume" min="0" max="100" value="70">
-          <div class="rangeHint"><span id="volVal">70</span>%</div>
+          <div class="hint"><span id="volVal">70</span>%</div>
         </div>
       </div>
     </section>
 
-    <section class="panel output">
+    <section class="card output">
       <h2>Settaggio consigliato</h2>
       <div class="readout">
-        <div class="knob">
-          <div class="label">BASS</div>
-          <div class="value"><span id="bassVal">—</span> <small>ore</small></div>
+        <div class="dial">
+          <div class="dial-head">BASS</div>
+          <div class="dial-value"><span id="bassClock">—</span> ore · <span id="bassLed">—</span>/10</div>
+          <div class="dial-visual"><div id="bassArc" class="arc"></div></div>
         </div>
-        <div class="knob">
-          <div class="label">TREBLE</div>
-          <div class="value"><span id="trebleVal">—</span> <small>ore</small></div>
-        </div>
-        <div class="knob">
-          <div class="label">NOTE</div>
-          <div class="note" id="notes">Seleziona un preset…</div>
+        <div class="dial">
+          <div class="dial-head">TREBLE</div>
+          <div class="dial-value"><span id="trebleClock">—</span> ore · <span id="trebleLed">—</span>/10</div>
+          <div class="dial-visual"><div id="trebleArc" class="arc"></div></div>
         </div>
       </div>
-      <div class="helper">
-        <button id="copyBtn">Copia settaggi</button>
-        <span id="copied" class="copied" hidden>Copiato ✔</span>
-      </div>
-
-      <div class="tip">
-        <strong>Tip tecnico:</strong> regola il volume sorgente e quello dell’Acton entrambi tra 70–85% per evitare saturazione doppia.
-      </div>
+      <div class="notes" id="notes">Inserisci un artista/genere o usa le chip sopra, poi premi <b>AI</b>.</div>
     </section>
 
-    <section class="panel">
-      <h2>Come leggere le “ore”</h2>
-      <p>Immagina la manopola come un orologio. <strong>Ore 12</strong> è a metà corsa. <strong>Ore 1.5</strong> è leggermente sopra il centro; <strong>Ore 2.5</strong> è spinta verso il lato destro.</p>
-    </section>
-
-    <section class="panel">
-      <h2>Editor preset (tuoi artisti e generi)</h2>
-      <div class="grid">
-        <div class="field">
-          <label for="eType">Tipo</label>
-          <select id="eType">
-            <option value="genre">Genere</option>
-            <option value="artist">Artista/Colonna sonora</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="eName">Nome</label>
-          <input id="eName" placeholder="Es: Pink Floyd / Progressive Rock">
-        </div>
-        <div class="field">
-          <label for="eBass">Bass (ore, 0.5–3.5)</label>
-          <input id="eBass" type="number" step="0.1" min="0.5" max="3.5" value="2.0">
-        </div>
-        <div class="field">
-          <label for="eTreble">Treble (ore, 0.5–3.5)</label>
-          <input id="eTreble" type="number" step="0.1" min="0.5" max="3.5" value="1.5">
-        </div>
-        <div class="field" style="grid-column: 1 / -1;">
-          <label for="eNotes">Note</label>
-          <textarea id="eNotes" rows="2" placeholder="Note utili per questo preset"></textarea>
-        </div>
-      </div>
-      <div class="helper">
-        <button id="addPresetBtn">Aggiungi/aggiorna preset</button>
-        <button id="deletePresetBtn" class="ghost">Elimina selezionato (se custom)</button>
-        <button id="exportAllBtn" class="ghost">Esporta tutti i preset (.json)</button>
-        <label class="ghost" style="padding:8px 12px;cursor:pointer;">
-          Importa (.json)
-          <input id="importFile" type="file" accept="application/json" style="display:none;">
-        </label>
-      </div>
-      <div class="tip">I preset personalizzati vengono salvati nel tuo browser (localStorage). Puoi esportarli e importarli su altri dispositivi.</div>
+    <section class="card">
+      <h3>Come leggere ore ↔︎ LED 0–10</h3>
+      <p>Conversione lineare: <code>LED = round(10 × (ore − 0.5) / 3)</code>. Esempi: 2.0 → 5/10, 2.5 → 7/10, 3.5 → 10/10.</p>
     </section>
   </main>
 
-  <footer>
-    <div>© 2025 Marshall Tuner — MVP demo. Non affiliato a Marshall Amplification.</div>
-  </footer>
+  <nav class="bottombar">
+    <button id="askBtn" class="primary">Chiedi all’AI</button>
+    <button id="copyBtn" class="ghost">Copia</button>
+  </nav>
 
   <script src="app.js"></script>
 </body>
