@@ -19,12 +19,13 @@ export default async function handler(req, res) {
       additionalProperties: false
     };
 
-    const sys = `Sei un tecnico Marshall. Restituisci SOLO JSON valido secondo lo schema:
-- bass_clock e treble_clock in ore (0.5–3.5), niente altro.
-- notes: consigli concisi (posizionamento, volume, accorgimenti).
-Tieni conto di ambiente="${room}" e volume=${volume}%. Non superare i limiti.`;
+    const sys =
+      `Sei un tecnico Marshall. Restituisci SOLO JSON valido secondo lo schema:
+- bass_clock e treble_clock in ore (0.5–3.5).
+- notes: consigli concisi.
+Tieni conto di ambiente="${room}" e volume=${volume}%.`;
 
-    const user = `Suggerisci settaggi per Marshall Acton III per: "${query}"`;
+    const usr = `Suggerisci settaggi per Marshall Acton III per: "${query}"`;
 
     const model = process.env.OPENAI_MODEL || "gpt-4.1-mini";
 
@@ -32,16 +33,24 @@ Tieni conto di ambiente="${room}" e volume=${volume}%. Non superare i limiti.`;
       model,
       input: [
         { role: "system", content: sys },
-        { role: "user", content: user }
+        { role: "user", content: usr }
       ],
-      response_format: { type: "json_schema", json_schema: { name: "tuning", schema } }
+      // ⬇️ NUOVO modo: il formato JSON si dichiara in text.format
+      text: {
+        format: {
+          type: "json_schema",
+          json_schema: { name: "tuning", schema, strict: true }
+        }
+      }
     });
 
-    const text = resp?.output?.[0]?.content?.[0]?.text;
+    // SDK nuovo: testo “puro” già unito
+    const text = resp.output_text || resp.output?.[0]?.content?.[0]?.text || "";
     const data = JSON.parse(text);
+
     return res.status(200).json(data);
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: "AI error", details: String(err?.message||err) });
+    return res.status(500).json({ error: "AI error", details: String(err?.message || err) });
   }
 }
