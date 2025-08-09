@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marshall Tuner — Acton III</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">Marshall Tuner</div>
+      <div class="subtitle">Settaggi intelligenti per Acton III</div>
+    </div>
+    <div class="actions"><button id="aiBtn">Chiedi all’AI</button> 
+      <button id="resetBtn" class="ghost">Reset</button>
+      <a class="ghost" href="data/presets.json" download>Scarica Preset</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Seleziona sorgente</h2>
+      <div class="grid">
+        <div class="field">
+          <label for="mode">Modalità</label>
+          <select id="mode">
+            <option value="genre">Genere</option>
+            <option value="artist">Artista/Colonna sonora</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="picker">Scegli</label>
+          <select id="picker"></select>
+        </div>
+        <div class="field">
+          <label for="room">Ambiente</label>
+          <select id="room">
+            <option value="neutral">Neutro (scrivania, 20–25 m²)</option>
+            <option value="nearwall">Vicino al muro (&lt; 15 cm)</option>
+            <option value="corner">Angolo della stanza</option>
+            <option value="farwall">Lontano dal muro (&gt; 50 cm)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="volume">Volume corrente</label>
+          <input type="range" id="volume" min="0" max="100" value="70">
+          <div class="rangeHint"><span id="volVal">70</span>%</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel output">
+      <h2>Settaggio consigliato</h2>
+      <div class="readout">
+        <div class="knob">
+          <div class="label">BASS</div>
+          <div class="value"><span id="bassVal">—</span> <small>ore</small></div>
+        </div>
+        <div class="knob">
+          <div class="label">TREBLE</div>
+          <div class="value"><span id="trebleVal">—</span> <small>ore</small></div>
+        </div>
+        <div class="knob">
+          <div class="label">NOTE</div>
+          <div class="note" id="notes">Seleziona un preset…</div>
+        </div>
+      </div>
+      <div class="helper">
+        <button id="copyBtn">Copia settaggi</button>
+        <span id="copied" class="copied" hidden>Copiato ✔</span>
+      </div>
+
+      <div class="tip">
+        <strong>Tip tecnico:</strong> regola il volume sorgente e quello dell’Acton entrambi tra 70–85% per evitare saturazione doppia.
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Come leggere le “ore”</h2>
+      <p>Immagina la manopola come un orologio. <strong>Ore 12</strong> è a metà corsa. <strong>Ore 1.5</strong> è leggermente sopra il centro; <strong>Ore 2.5</strong> è spinta verso il lato destro.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Editor preset (tuoi artisti e generi)</h2>
+      <div class="grid">
+        <div class="field">
+          <label for="eType">Tipo</label>
+          <select id="eType">
+            <option value="genre">Genere</option>
+            <option value="artist">Artista/Colonna sonora</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="eName">Nome</label>
+          <input id="eName" placeholder="Es: Pink Floyd / Progressive Rock">
+        </div>
+        <div class="field">
+          <label for="eBass">Bass (ore, 0.5–3.5)</label>
+          <input id="eBass" type="number" step="0.1" min="0.5" max="3.5" value="2.0">
+        </div>
+        <div class="field">
+          <label for="eTreble">Treble (ore, 0.5–3.5)</label>
+          <input id="eTreble" type="number" step="0.1" min="0.5" max="3.5" value="1.5">
+        </div>
+        <div class="field" style="grid-column: 1 / -1;">
+          <label for="eNotes">Note</label>
+          <textarea id="eNotes" rows="2" placeholder="Note utili per questo preset"></textarea>
+        </div>
+      </div>
+      <div class="helper">
+        <button id="addPresetBtn">Aggiungi/aggiorna preset</button>
+        <button id="deletePresetBtn" class="ghost">Elimina selezionato (se custom)</button>
+        <button id="exportAllBtn" class="ghost">Esporta tutti i preset (.json)</button>
+        <label class="ghost" style="padding:8px 12px;cursor:pointer;">
+          Importa (.json)
+          <input id="importFile" type="file" accept="application/json" style="display:none;">
+        </label>
+      </div>
+      <div class="tip">I preset personalizzati vengono salvati nel tuo browser (localStorage). Puoi esportarli e importarli su altri dispositivi.</div>
+    </section>
+  </main>
+
+  <footer>
+    <div>© 2025 Marshall Tuner — MVP demo. Non affiliato a Marshall Amplification.</div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
