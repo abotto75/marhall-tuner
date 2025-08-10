@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Marshall Tuner — v5.2 (Genere + Sottogenere)</title>
+  <title>Marshall Tuner — v5.4 (Toggle + Quick Env/Vol + AI Pro)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -13,7 +13,6 @@
   <header class="topbar">
     <div class="brand">Marshall Tuner</div>
     <div class="actions">
-      <button id="applyBtn" class="primary small">Applica preset</button>
       <button id="aiBtn" class="ghost small" aria-label="Approfondisci con AI">AI Pro</button>
       <button id="resetBtn" class="ghost small">Reset</button>
     </div>
@@ -21,35 +20,41 @@
 
   <main>
     <section class="card sticky-search">
-      <input id="omnibox" class="omnibox" placeholder="Scegli un genere sotto o scrivi: Queen — Bohemian Rhapsody / Genere: Rock" autocomplete="off">
+      <input id="omnibox" class="omnibox" placeholder="Aggiungi dettagli: es. Elton John • Live 1975 • versione rimasterizzata" autocomplete="off">
       <div id="chips" class="chips"></div>
       <div id="subchips" class="chips subtle" hidden></div>
-      <div class="seg">
-        <button class="seg-btn active" data-tab="quick">Quick</button>
-        <button class="seg-btn" data-tab="pro">Pro</button>
-      </div>
-    </section>
-
-    <section class="card" id="proTab" hidden>
-      <div class="grid">
-        <div class="field">
-          <label for="type">Tipo</label>
-          <select id="type">
-            <option value="artist">Artista</option>
-            <option value="track">Brano</option>
-            <option value="work">Opera/Classica</option>
-            <option value="score">Colonna sonora</option>
-            <option value="genre">Genere</option>
-          </select>
-        </div>
-        <div class="field"><label>Artista/Compositore</label><input id="fArtist" placeholder="Es. Queen / Hans Zimmer / Beethoven"></div>
-        <div class="field"><label>Titolo / Opera</label><input id="fTitle" placeholder="Es. Time / Sinfonia n.7 / Dune"></div>
-        <div class="field"><label>Dettaglio</label><input id="fExtra" placeholder="Es. Live at Wembley, Movimento II, OST cue"></div>
-      </div>
     </section>
 
     <section class="card output">
-      <h2>Settaggio consigliato</h2>
+      <div class="output-header">
+        <h2>Settaggio consigliato</h2>
+        <div class="toggle">
+          <button id="modeClock" class="tbtn active">Ore</button>
+          <button id="modePercent" class="tbtn">% </button>
+        </div>
+      </div>
+
+      <div class="current">
+        <div>Selezione: <b id="currentSel">—</b></div>
+      </div>
+
+      <div class="quickline">
+        <div class="field small">
+          <label>Ambiente</label>
+          <select id="qRoom">
+            <option value="neutral" selected>Scrivania</option>
+            <option value="nearwall">Vicino muro</option>
+            <option value="corner">Angolo</option>
+            <option value="farwall">Lontano muro</option>
+          </select>
+        </div>
+        <div class="field small">
+          <label>Volume</label>
+          <input type="range" id="qVolume" min="0" max="100" value="70">
+          <div class="hint"><span id="qVolVal">70</span>%</div>
+        </div>
+      </div>
+
       <div class="readout">
         <div class="dial">
           <div class="dial-head">BASS</div>
@@ -57,7 +62,7 @@
             <img id="bassKnob" src="img/knob.svg" alt="Bass knob">
             <div class="tick" id="bassTick">—/10</div>
           </div>
-          <div class="dial-value"><span id="bassClock">—</span> ore · <span id="bassLed">—</span>/10</div>
+          <div class="dial-value" id="bassValue">—</div>
         </div>
         <div class="dial">
           <div class="dial-head">TREBLE</div>
@@ -65,10 +70,10 @@
             <img id="trebleKnob" src="img/knob.svg" alt="Treble knob">
             <div class="tick" id="trebleTick">—/10</div>
           </div>
-          <div class="dial-value"><span id="trebleClock">—</span> ore · <span id="trebleLed">—</span>/10</div>
+          <div class="dial-value" id="trebleValue">—</div>
         </div>
       </div>
-      <div class="notes" id="notes">Scegli un genere (sotto) e poi un sottogenere: applichiamo il preset locale. Con <b>AI Pro</b> puoi fare il fino-tuning (±0.3h).</div>
+      <div class="notes" id="notes">LED = valore <b>percepito</b> in base ad ambiente/volume. AI Pro userà “Genere/Sottogenere + testo” della barra.</div>
     </section>
   </main>
 

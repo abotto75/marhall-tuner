@@ -18,7 +18,7 @@ export default async function handler(req, res) {
       required:["bass_clock","treble_clock","notes"],
       additionalProperties:false
     };
-    const sys=`Sei un tecnico Marshall per Acton III. Parti dal preset fornito e ritocca al massimo di ±${delta.toFixed(1)} ore (limiti 0.5–3.5). Restituisci SOLO JSON (schema).`;
+    const sys=`Sei un tecnico Marshall per Acton III. Parti tassativamente dal preset fornito e ritocca al massimo di ±${delta.toFixed(1)} ore (limiti 0.5–3.5). Restituisci SOLO JSON (schema).`;
     const prompt=`Contesto: ambiente="${room}", volume=${volume}%.
 Preset di base: bass_clock=${baseBass}, treble_clock=${baseTreble}.
 Richiesta: ${query}`;

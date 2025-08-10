@@ -1,8 +1,8 @@
-# Marshall Tuner — v5.2 (Genere + Sottogenere, Preset-first)
-- Selezione **Genere** dalle chip + **Sottogenere** sotto (chip dinamiche).
-- Applica **sempre** preset locali. AI Pro opzionale per ±0.3h di fine-tuning.
-- UI mobile-first con manopole SVG e LED 0–10.
+# Marshall Tuner — v5.4
+**Novità**
+- Toggle **Ore ↔ Percentuale** sotto le manopole.
+- Selettori rapidi **Ambiente** e **Volume** dentro la card risultato; i **LED** mostrano il valore **percepito** (ambiente/volume).
+- **AI Pro** concatena automaticamente **Genere/Sottogenere selezionato + testo in barra** (es. “Pop — Elton John”), parte dal preset e limita i ritocchi a ±0.3h.
 
-## Deploy
-Carica `api/`, `data/`, `img/`, `index.html`, `style.css`, `app.js`, `package.json` nella root del repo. 
-In Vercel: `OPENAI_API_KEY` (solo per AI Pro). Redeploy.
+**Deploy**
+Carica tutto nella root del repo → Vercel (env `OPENAI_API_KEY` per AI Pro).
