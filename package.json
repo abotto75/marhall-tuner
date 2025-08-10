@@ -1,8 +1,8 @@
 {
-  "name": "marshall-tuner-v4-mobile",
-  "version": "1.0.0",
-  "type": "module",
+  "name": "marshall-tuner-v5-1-mobile",
+  "version": "5.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "openai": "^4.57.0"
   }

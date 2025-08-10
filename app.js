@@ -1,115 +1,113 @@
 function clamp(v,min,max){return Math.min(max,Math.max(min,v));}
 function fmt(v){const r=Math.round(v*10)/10;return (Number.isInteger(r)?String(r):r.toFixed(1)).replace('.0','');}
 function clockToLed(clock){return Math.round(10 * (clock - 0.5) / 3);}
-function ledToClock(led){return 0.5 + 3*(led/10);}
+function clockToDeg(clock){const pct=Math.min(1,Math.max(0,(clock-0.5)/3));return -135 + pct*270;}
+const qs=s=>document.querySelector(s); const qsa=s=>[...document.querySelectorAll(s)];
 
-const qs = sel => document.querySelector(sel);
-const qsa = sel => [...document.querySelectorAll(sel)];
+let PRESETS=null, KEYWORDS=null, LAST={ query:'', baseBass:2.0, baseTreble:2.0 };
 
-function detectTypeFromText(txt){
-  const t = (txt||"").trim();
-  if(!t) return {type:"genre", query:"Rock"};
-  const lowered=t.toLowerCase();
-  if(lowered.includes("ost")||lowered.includes("soundtrack")||lowered.includes("score")) return {type:"score", query:t};
-  if(lowered.includes("sinfonia")||lowered.includes("symphony")||lowered.includes("concerto")||lowered.includes("suite")||lowered.includes("op.")||lowered.includes("k.")||lowered.includes("bwv")) return {type:"work", query:t};
-  if(t.includes(" - ")||t.includes(" — ")||t.includes("–")) return {type:"track", query:t};
-  return {type:"artist", query:t};
+async function loadData(){
+  PRESETS = await (await fetch('data/presets.json')).json();
+  KEYWORDS = await (await fetch('data/keywords.json')).json();
+  // build chips
+  const chips=qs('#chips'); chips.innerHTML='';
+  for(const gid of PRESETS.top_genres_order){
+    const g=PRESETS.genres[gid];
+    const b=document.createElement('button');
+    b.className='chip'; b.textContent=g.name; b.dataset.query=g.name;
+    b.onclick=()=>{ qs('#omnibox').value=g.name; applyPreset(g.bass_clock,g.treble_clock,g.notes); remember(g.name,g.bass_clock,g.treble_clock); };
+    chips.appendChild(b);
+  }
 }
 
-function setArc(el, clock){
-  const pct = clamp((clock - 0.5)/3, 0, 1);
-  el.style.width = (pct*100).toFixed(0)+"%";
+function classifyToGenre(text){
+  const t=(text||'').toLowerCase();
+  // direct match by genre name
+  for(const [id,g] of Object.entries(PRESETS.genres)){
+    if(t.includes(g.name.toLowerCase())) return id;
+  }
+  // keyword map
+  for(const [id,words] of Object.entries(KEYWORDS)){
+    if(words.some(w=>t.includes(w))) return id;
+  }
+  return null; // unknown
 }
 
-async function askAI(queryText){
-  const room = qs('#room').value;
-  const volume = parseInt(qs('#volume').value, 10);
-  const res = await fetch('/api/tune',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({ query: queryText, room, volume })
-  });
-  if(!res.ok){ throw new Error('AI '+res.status); }
-  return await res.json();
+function setKnob(el, clock){ el.style.transform=`rotate(${clockToDeg(clock)}deg)`; }
+
+function applyPreset(bass,treble,notes){
+  const b=clamp(bass,0.5,3.5), t=clamp(treble,0.5,3.5);
+  qs('#bassClock').textContent=fmt(b); qs('#trebleClock').textContent=fmt(t);
+  const bLed=clamp(clockToLed(b),0,10), tLed=clamp(clockToLed(t),0,10);
+  qs('#bassLed').textContent=bLed; qs('#trebleLed').textContent=tLed;
+  qs('#bassTick').textContent=bLed+'/10'; qs('#trebleTick').textContent=tLed+'/10';
+  setKnob(qs('#bassKnob'), b); setKnob(qs('#trebleKnob'), t);
+  qs('#notes').textContent=notes || 'Preset locale applicato.';
 }
 
-function applyResult(data){
-  const b = clamp(data.bass_clock ?? 2.0, 0.5, 3.5);
-  const t = clamp(data.treble_clock ?? 1.5, 0.5, 3.5);
-  qs('#bassClock').textContent = fmt(b);
-  qs('#trebleClock').textContent = fmt(t);
-  const bLed = clamp(clockToLed(b),0,10);
-  const tLed = clamp(clockToLed(t),0,10);
-  qs('#bassLed').textContent = bLed;
-  qs('#trebleLed').textContent = tLed;
-  setArc(qs('#bassArc'), b);
-  setArc(qs('#trebleArc'), t);
-  qs('#notes').textContent = data.notes || '—';
-}
+function remember(q,b,t){ LAST={ query:q, baseBass:b, baseTreble:t }; }
 
-async function runAIFlow(){
-  const tab = qsa('.seg-btn').find(x=>x.classList.contains('active'))?.dataset.tab || 'quick';
-  let text = qs('#omnibox').value.trim();
-  if(tab==='pro'){
-    const type = qs('#type').value;
-    const artist = qs('#fArtist').value.trim();
-    const title = qs('#fTitle').value.trim();
-    const extra = qs('#fExtra').value.trim();
-    const parts = [];
-    if(type==='genre' && title){ parts.push(`Genere: ${title}`); }
-    else if(type==='genre' && artist){ parts.push(`Genere: ${artist}`); }
-    else {
-      if(artist) parts.push(artist);
-      if(title) parts.push(title);
-      if(extra) parts.push(extra);
-    }
+async function applyFromSearch(){
+  // Build text from quick/pro
+  let text=qs('#omnibox').value.trim();
+  const active=qsa('.seg-btn').find(x=>x.classList.contains('active'))?.dataset.tab||'quick';
+  if(active==='pro'){
+    const type=qs('#type').value, artist=qs('#fArtist').value.trim(), title=qs('#fTitle').value.trim(), extra=qs('#fExtra').value.trim();
+    const parts=[];
+    if(type==='genre' && title) parts.push(`Genere: ${title}`);
+    else if(type==='genre' && artist) parts.push(`Genere: ${artist}`);
+    else { if(artist) parts.push(artist); if(title) parts.push(title); if(extra) parts.push(extra); }
     text = parts.join(' — ') || text;
   }
-  if(!text){
-    alert('Scrivi un artista/brano/opera o scegli un genere.');
-    return;
+  if(!text){ alert('Scrivi un artista/brano/opera o scegli un genere.'); return; }
+
+  const gid = classifyToGenre(text);
+  let baseBass, baseTreble, notes;
+  if(gid){
+    const g = PRESETS.genres[gid];
+    baseBass = g.bass_clock; baseTreble = g.treble_clock; notes = g.notes || 'Preset locale del genere.';
+  }else{
+    // default to Pop if unknown, and warn user
+    const g = PRESETS.genres.pop;
+    baseBass = g.bass_clock; baseTreble = g.treble_clock;
+    notes = 'Genere non riconosciuto: uso preset Pop come base. Seleziona un genere o usa AI Pro per dettagli.';
   }
-  const btn = qs('#askBtn'); const ai = qs('#aiBtn');
-  btn.disabled = ai.disabled = true;
-  try{
-    const {type} = detectTypeFromText(text);
-    const query = `${type.charAt(0).toUpperCase()+type.slice(1)}: ${text}`;
-    const data = await askAI(query);
-    applyResult(data);
-  }catch(e){
-    qs('#notes').textContent = 'Errore richiesta AI. Controlla connessione o riprova.';
-  }finally{
-    btn.disabled = ai.disabled = false;
-  }
+  applyPreset(baseBass, baseTreble, notes);
+  remember(text, baseBass, baseTreble);
+}
+
+async function askAIPro(){
+  // Uses the last applied preset as base; does not run if none
+  if(!LAST || !LAST.query){ alert('Prima applica un preset con "Applica preset".'); return; }
+  const room=qs('#room').value; const volume=parseInt(qs('#volume').value,10);
+  const userQuery = LAST.query;
+  const body = {
+    query: `Approfondisci per "${userQuery}" su Marshall Acton III. Parti da preset base e adatta al contesto.`,
+    room, volume,
+    base_bass: LAST.baseBass, base_treble: LAST.baseTreble, max_delta: 0.3
+  };
+  const res = await fetch('/api/tune',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  if(!res.ok){ qs('#notes').textContent='Errore AI Pro. Mantengo il preset locale.'; return; }
+  const data = await res.json();
+  // Clamp defensive
+  const b = Math.min(LAST.baseBass+0.3, Math.max(LAST.baseBass-0.3, data.bass_clock ?? LAST.baseBass));
+  const t = Math.min(LAST.baseTreble+0.3, Math.max(LAST.baseTreble-0.3, data.treble_clock ?? LAST.baseTreble));
+  applyPreset(b,t, data.notes || 'Refinement AI applicato.');
 }
 
 (function init(){
-  qsa('.chip').forEach(ch => ch.addEventListener('click', ()=>{
-    qs('#omnibox').value = ch.dataset.query || '';
+  loadData();
+  qsa('.seg-btn').forEach(b=>b.addEventListener('click',()=>{
+    qsa('.seg-btn').forEach(x=>x.classList.remove('active')); b.classList.add('active');
+    qs('#proTab').hidden = b.dataset.tab!=='pro';
   }));
-  qsa('.seg-btn').forEach(b => b.addEventListener('click', ()=>{
-    qsa('.seg-btn').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    const pro = b.dataset.tab === 'pro';
-    qs('#proTab').hidden = !pro;
-  }));
-  const vol = qs('#volume'); const volVal = qs('#volVal');
-  vol.addEventListener('input', ()=>{ volVal.textContent = vol.value; });
-
-  qs('#askBtn').addEventListener('click', runAIFlow);
-  qs('#aiBtn').addEventListener('click', runAIFlow);
-  qs('#resetBtn').addEventListener('click', ()=>{
+  const vol=qs('#volume'); const volVal=qs('#volVal'); vol.addEventListener('input',()=>volVal.textContent=vol.value);
+  qs('#applyBtn').onclick=applyFromSearch;
+  qs('#aiBtn').onclick=askAIPro;
+  qs('#resetBtn').onclick=()=>{
     qs('#omnibox').value='';
-    vol.value=70; volVal.textContent='70';
-    qs('#room').value='neutral';
-    qs('#bassClock').textContent='—'; qs('#trebleClock').textContent='—';
-    qs('#bassLed').textContent='—'; qs('#trebleLed').textContent='—';
-    qs('#bassArc').style.width='0%'; qs('#trebleArc').style.width='0%';
-    qs('#notes').textContent='Inserisci un artista/genere o usa le chip sopra, poi premi AI.';
-  });
-
-  qs('#copyBtn').addEventListener('click', ()=>{
-    const txt = `Bass: ${qs('#bassClock').textContent} ore (${qs('#bassLed').textContent}/10) | Treble: ${qs('#trebleClock').textContent} ore (${qs('#trebleLed').textContent}/10)\n${qs('#notes').textContent}`;
-    navigator.clipboard.writeText(txt).then(()=>{ alert('Settaggi copiati.'); });
-  });
+    ['bassClock','trebleClock','bassLed','trebleLed','bassTick','trebleTick'].forEach(id=>qs('#'+id).textContent='—');
+    qs('#bassKnob').style.transform='rotate(0deg)'; qs('#trebleKnob').style.transform='rotate(0deg)';
+    qs('#notes').textContent='Premi "Applica preset" per usare solo preset locali.';
+  };
 })();
