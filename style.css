@@ -10,12 +10,12 @@ main{padding:12px;max-width:760px;margin:0 auto}
 .sticky-search{position:sticky;top:54px;z-index:15}
 .omnibox{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #262626;background:#0F0F0F;color:#F5F5F5;font-size:16px}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chips.subtle .chip{opacity:0.9}
 .chip{background:#1A1A1A;border:1px solid #2A2A2A;color:#DDD;padding:6px 10px;border-radius:999px;font-size:12px}
 .seg{display:flex;gap:6px;margin-top:10px}
 .seg-btn{flex:1;background:#0F0F0F;border:1px solid #262626;color:#DCDCDC;padding:8px;border-radius:10px;font-weight:600}
 .seg-btn.active{background:#1A1A1A;border-color:#3A3A3A}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.grid.tight{grid-template-columns:1fr 1fr}
 .field label{display:block;font-size:12px;color:#A9A9A9;margin:6px 0}
 .field input,.field select{width:100%;border:1px solid #262626;background:#0F0F0F;color:#EDEDED;border-radius:12px;padding:10px}
 .readout{display:grid;grid-template-columns:1fr 1fr;gap:10px}

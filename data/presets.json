@@ -1,7 +1,7 @@
 {
   "meta": {
-    "version": "v5.1",
-    "notes": "Preset-first. L’AI è opzionale per approfondimenti basati sul preset scelto."
+    "version": "v5.2",
+    "notes": "Preset-first. UI per scelta di genere e sottogenere."
   },
   "top_genres_order": [
     "pop",

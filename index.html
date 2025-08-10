@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Marshall Tuner — v5.1 (Preset-first)</title>
+  <title>Marshall Tuner — v5.2 (Genere + Sottogenere)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -21,8 +21,9 @@
 
   <main>
     <section class="card sticky-search">
-      <input id="omnibox" class="omnibox" placeholder="Es. Queen — Bohemian Rhapsody • Zimmer — Dune • Genere: Rock" autocomplete="off">
+      <input id="omnibox" class="omnibox" placeholder="Scegli un genere sotto o scrivi: Queen — Bohemian Rhapsody / Genere: Rock" autocomplete="off">
       <div id="chips" class="chips"></div>
+      <div id="subchips" class="chips subtle" hidden></div>
       <div class="seg">
         <button class="seg-btn active" data-tab="quick">Quick</button>
         <button class="seg-btn" data-tab="pro">Pro</button>
@@ -47,27 +48,8 @@
       </div>
     </section>
 
-    <section class="card">
-      <div class="grid tight">
-        <div class="field">
-          <label>Ambiente</label>
-          <select id="room">
-            <option value="neutral">Scrivania / 20–25 m²</option>
-            <option value="nearwall">Vicino al muro (&lt;15cm)</option>
-            <option value="corner">Angolo</option>
-            <option value="farwall">Lontano dal muro (&gt;50cm)</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Volume</label>
-          <input type="range" id="volume" min="0" max="100" value="70">
-          <div class="hint"><span id="volVal">70</span>%</div>
-        </div>
-      </div>
-    </section>
-
     <section class="card output">
-      <h2>Settaggio consigliato (Preset)</h2>
+      <h2>Settaggio consigliato</h2>
       <div class="readout">
         <div class="dial">
           <div class="dial-head">BASS</div>
@@ -86,12 +68,7 @@
           <div class="dial-value"><span id="trebleClock">—</span> ore · <span id="trebleLed">—</span>/10</div>
         </div>
       </div>
-      <div class="notes" id="notes">Premi <b>Applica preset</b> per usare solo i preset locali. Poi scegli <b>AI Pro</b> per un approfondimento puntuale.</div>
-    </section>
-
-    <section class="card">
-      <h3>Ore ↔ LED 0–10</h3>
-      <p>LED = round(10 × (ore − 0.5) / 3). 2.0 → 5/10, 2.5 → 7/10, 3.5 → 10/10.</p>
+      <div class="notes" id="notes">Scegli un genere (sotto) e poi un sottogenere: applichiamo il preset locale. Con <b>AI Pro</b> puoi fare il fino-tuning (±0.3h).</div>
     </section>
   </main>
 
