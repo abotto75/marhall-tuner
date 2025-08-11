@@ -3,31 +3,36 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Marshall Tuner — v5.9</title>
+  <title>Marshall Tuner — v6.1</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="topbar"><div class="brand">Marshall Tuner</div></header>
+  <header class="topbar">
+    <div class="brand">Marshall Tuner <span class="ver">v6.1</span></div>
+  </header>
   <main>
     <section class="card quick">
       <div class="section-title">Quick</div>
       <p class="section-sub">Seleziona <b>Genere</b> e opzionalmente <b>Sottogenere</b>. Default in <b>%</b>. I LED rispecchiano il <b>preset</b>. Arrotondamento LED: ≤ .5 ↓, ≥ .6 ↑.</p>
       <div id="genreWrap" class="block">
         <div class="block-title">Generi</div>
-        <div id="chips" class="chips emph"></div>
+        <div id="chips" class="chips emph" role="group" aria-label="Generi"></div>
       </div>
       <div id="subWrap" class="block subtle" hidden>
         <div class="block-title alt">Sottogeneri</div>
-        <div id="subchips" class="chips alt"></div>
+        <div id="subchips" class="chips alt" role="group" aria-label="Sottogeneri"></div>
       </div>
 
       <div class="selbar">
-        <div class="seltext" id="selText">Nessuna selezione</div>
+        <div class="seltext">
+          <span id="selText">Nessuna selezione</span>
+        </div>
         <div class="source">
           <span id="sourceBadge" class="badge badge-src preset">Preset</span>
+          <span id="aiTime" class="muted" hidden>• —</span>
         </div>
       </div>
 
@@ -54,6 +59,7 @@
             <div class="dial-value" id="trebleValue">—</div>
           </div>
         </div>
+
         <div class="guide">
           <div class="guide-title">Guida all'ascolto</div>
           <div id="guideText" class="guide-text">Seleziona un (sotto)genere per i suggerimenti rapidi.</div>
@@ -92,6 +98,6 @@
       <div class="notes" id="notes">L’AI userà “Genere/Sottogenere selezionato + Dettagli”.</div>
     </section>
   </main>
-  <script src="app.js"></script>
+  <script src="app.js?v=6.1"></script>
 </body>
 </html>

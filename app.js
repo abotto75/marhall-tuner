@@ -5,15 +5,35 @@ function clockToDeg(clock){const pct=Math.min(1,Math.max(0,(clock-0.5)/3));retur
 const qs=s=>document.querySelector(s);
 
 let PRESETS=null, SUB_GUIDES=null;
-let LAST={query:'', baseBass:2.0, baseTreble:2.0, genreId:null, subId:null, guide:'', pristine:{bass:2.0, treble:2.0}, source:'Preset'};
+let LAST={query:'', baseBass:2.0, baseTreble:2.0, genreId:null, subId:null, guide:'', pristine:{bass:2.0, treble:2.0}, source:'Preset', lastAiAt:null};
 let displayMode='percent';
+
+function fmtDate(d){
+  const dd=String(d.getDate()).padStart(2,'0');
+  const mm=String(d.getMonth()+1).padStart(2,'0');
+  const yyyy=d.getFullYear();
+  const hh=String(d.getHours()).padStart(2,'0');
+  const mi=String(d.getMinutes()).padStart(2,'0');
+  return `${dd}/${mm}/${yyyy} • ${hh}:${mi}`;
+}
 
 async function loadData(){
   PRESETS = await (await fetch('data/presets.json')).json();
-  SUB_GUIDES = await (await fetch('data/subgenre_guides.json')).json();
+  try{ SUB_GUIDES = await (await fetch('data/subgenre_guides.json')).json(); }catch{ SUB_GUIDES = {}; }
   renderGenreChips();
+  // Event delegation for stable click handling
+  qs('#chips').addEventListener('click',(e)=>{
+    const b=e.target.closest('.chip'); if(!b) return;
+    const gid=b.dataset.gid; if(gid) selectGenre(gid);
+  });
+  qs('#subchips').addEventListener('click',(e)=>{
+    const b=e.target.closest('.chip'); if(!b) return;
+    const sid=b.dataset.sid; const gid=LAST.genreId; if(sid && gid) applySubgenre(gid, sid);
+  });
+
   qs('#modePercent').onclick=()=>{displayMode='percent'; qs('#modePercent').classList.add('active'); qs('#modeClock').classList.remove('active'); refreshValues();};
   qs('#modeClock').onclick=()=>{displayMode='clock'; qs('#modeClock').classList.add('active'); qs('#modePercent').classList.remove('active'); refreshValues();};
+
   qs('#aiBtn').onclick=askAIPro;
   qs('#resetBtn').onclick=resetToPristine;
   const aiVol=qs('#aiVolume'); const aiVal=qs('#aiVolVal'); aiVol.oninput=()=>aiVal.textContent=aiVol.value;
@@ -25,8 +45,7 @@ function renderGenreChips(){
   for(const gid of PRESETS.top_genres_order){
     const g = PRESETS.genres[gid];
     const b=document.createElement('button');
-    b.className='chip'; b.textContent=g.name; b.dataset.gid=gid;
-    b.onclick=()=>selectGenre(gid);
+    b.className='chip'; b.textContent=g.name; b.dataset.gid=gid; 
     wrap.appendChild(b);
   }
 }
@@ -38,7 +57,6 @@ function renderSubgenreChips(gid){
   list.forEach(sg=>{
     const b=document.createElement('button');
     b.className='chip'; b.textContent=sg.name; b.dataset.sid=sg.id;
-    b.onclick=()=>applySubgenre(gid, sg.id);
     sc.appendChild(b);
   });
 }
@@ -52,6 +70,7 @@ function applyPreset(b,t,guide){
   LAST.pristine = {bass: LAST.baseBass, treble: LAST.baseTreble};
   LAST.guide = guide||'';
   LAST.source = 'Preset';
+  LAST.lastAiAt = null;
   setKnob(document.getElementById('bassKnob'), LAST.baseBass);
   setKnob(document.getElementById('trebleKnob'), LAST.baseTreble);
   document.getElementById('guideText').textContent = guide || 'Preset applicato.';
@@ -87,6 +106,14 @@ function updateSelBar(){
   badge.textContent = LAST.source;
   badge.classList.toggle('aipro', LAST.source==='AI Tune Pro');
   badge.classList.toggle('preset', LAST.source!=='AI Tune Pro');
+  const timeEl = qs('#aiTime');
+  if(LAST.lastAiAt){
+    timeEl.hidden = false;
+    timeEl.textContent = '• ' + fmtDate(LAST.lastAiAt);
+  }else{
+    timeEl.hidden = true;
+    timeEl.textContent = '• —';
+  }
 }
 
 function selectGenre(gid){
@@ -94,6 +121,7 @@ function selectGenre(gid){
   applyPreset(g.bass_clock, g.treble_clock, g.notes||'');
   LAST.genreId=gid; LAST.subId=null; LAST.query=g.name;
   renderSubgenreChips(gid);
+  updateSelBar(); // ensure immediate update on first click
 }
 
 function applySubgenre(gid, sid){
@@ -121,6 +149,7 @@ async function askAIPro(){
     LAST.baseBass = clamp(data.bass_clock ?? LAST.baseBass, LAST.pristine.bass-0.3, LAST.pristine.bass+0.3);
     LAST.baseTreble = clamp(data.treble_clock ?? LAST.baseTreble, LAST.pristine.treble-0.3, LAST.pristine.treble+0.3);
     LAST.source = 'AI Tune Pro';
+    LAST.lastAiAt = new Date();
     setKnob(document.getElementById('bassKnob'), LAST.baseBass);
     setKnob(document.getElementById('trebleKnob'), LAST.baseTreble);
     document.getElementById('notes').textContent = data.notes || 'Refinement AI applicato.';
@@ -135,6 +164,7 @@ function resetToPristine(){
   LAST.baseBass = LAST.pristine.bass;
   LAST.baseTreble = LAST.pristine.treble;
   LAST.source = 'Preset';
+  LAST.lastAiAt = null;
   setKnob(document.getElementById('bassKnob'), LAST.baseBass);
   setKnob(document.getElementById('trebleKnob'), LAST.baseTreble);
   document.getElementById('notes').textContent='Ripristinato il preset originale.';

@@ -1,6 +1,6 @@
 {
-  "name": "marshall-tuner-v5-9-mobile",
-  "version": "5.9.0",
+  "name": "marshall-tuner-v6-1-mobile",
+  "version": "6.1.0",
   "private": true,
   "type": "module",
   "dependencies": {
