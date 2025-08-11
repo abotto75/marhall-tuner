@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Marshall Tuner — v5.6 (Badge + Reset)</title>
+  <title>Marshall Tuner — v5.7 (Quick pulita + AI Pro)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -15,11 +15,20 @@
   </header>
 
   <main>
+    <!-- QUICK -->
     <section class="card quick">
       <div class="section-title">Quick</div>
-      <p class="section-sub">Seleziona <b>Genere</b> e opzionalmente <b>Sottogenere</b>. Default in <b>%</b>. Tocca per passare alle ore.</p>
-      <div id="chips" class="chips emph"></div>
-      <div id="subchips" class="chips subtle" hidden></div>
+      <p class="section-sub">Seleziona <b>Genere</b> e opzionalmente <b>Sottogenere</b>. Default in <b>%</b>. I LED mostrano il <b>preset reale</b>.</p>
+
+      <div id="genreWrap" class="block">
+        <div class="block-title">Generi</div>
+        <div id="chips" class="chips emph"></div>
+      </div>
+
+      <div id="subWrap" class="block subtle" hidden>
+        <div class="block-title alt">Sottogeneri</div>
+        <div id="subchips" class="chips alt"></div>
+      </div>
 
       <div class="quick-output">
         <div class="toggle">
@@ -28,7 +37,7 @@
         </div>
         <div class="readout">
           <div class="dial">
-            <div class="dial-head">BASS <span class="badge">percepito</span></div>
+            <div class="dial-head">BASS <span class="badge">preset</span></div>
             <div class="dial-knob">
               <img id="bassKnob" src="img/knob.svg" alt="Bass knob">
               <div class="tick" id="bassTick">—/10</div>
@@ -36,7 +45,7 @@
             <div class="dial-value" id="bassValue">—</div>
           </div>
           <div class="dial">
-            <div class="dial-head">TREBLE <span class="badge">percepito</span></div>
+            <div class="dial-head">TREBLE <span class="badge">preset</span></div>
             <div class="dial-knob">
               <img id="trebleKnob" src="img/knob.svg" alt="Treble knob">
               <div class="tick" id="trebleTick">—/10</div>
@@ -45,33 +54,17 @@
           </div>
         </div>
 
-        <div class="quickline">
-          <div class="field small">
-            <label>Ambiente</label>
-            <select id="qRoom">
-              <option value="neutral">Scrivania</option>
-              <option value="nearwall" selected>Vicino muro</option>
-              <option value="corner">Angolo</option>
-              <option value="farwall">Lontano muro</option>
-            </select>
-          </div>
-          <div class="field small">
-            <label>Volume</label>
-            <input type="range" id="qVolume" min="0" max="100" value="70">
-            <div class="hint"><span id="qVolVal">70</span>%</div>
-          </div>
-        </div>
-
         <div class="guide">
           <div class="guide-title">Guida all'ascolto</div>
-          <div id="guideText" class="guide-text">Seleziona un genere per suggerimenti rapidi.</div>
+          <div id="guideText" class="guide-text">Seleziona un (sotto)genere per i suggerimenti rapidi.</div>
         </div>
       </div>
     </section>
 
+    <!-- AI PRO -->
     <section class="card ai">
       <div class="section-title">AI Pro</div>
-      <p class="section-sub">Parti dal preset selezionato sopra, poi chiedi un affinamento (±0.3h).</p>
+      <p class="section-sub">Parti dal preset selezionato sopra e chiedi un affinamento (±0.3h). Qui scegli anche <b>Ambiente</b> e <b>Volume</b>.</p>
       <div class="grid">
         <div class="field">
           <label>Dettagli (testo libero)</label>
@@ -96,7 +89,7 @@
         <button id="aiBtn" class="primary">Chiedi ad AI Tune Pro</button>
         <button id="resetBtn" class="ghost">Reset preset</button>
       </div>
-      <div class="notes" id="notes">Dopo AI Pro, usa “Reset preset” per tornare ai valori originali del (sotto)genere selezionato.</div>
+      <div class="notes" id="notes">L’AI userà “Genere/Sottogenere selezionato + Dettagli” (es. “Pop — Elton John”).</div>
     </section>
   </main>
 

@@ -1,4 +1,2 @@
-# Marshall Tuner v5.6
-- Badge 'percepito' accanto ai LED nella sezione Quick.
-- Bottone 'Reset preset' in AI Pro per tornare ai valori originali del (sotto)genere.
-- Preset-first; AI Pro opzionale (±0.3h).
+# Marshall Tuner v5.7
+Fix: preset completo (dal tuo file), sottogeneri separati e colorati, Quick senza Ambiente/Volume (LED = preset). AI Pro gestisce Ambiente/Volume.

@@ -1,82 +1,32 @@
 {
   "pop": [
-    "pop",
-    "dance pop",
-    "synth-pop",
-    "synth pop",
-    "ballad",
-    "acoustic pop"
+    "pop"
   ],
   "rock": [
-    "rock",
-    "hard rock",
-    "punk rock",
-    "prog rock",
-    "progressive rock"
+    "rock"
   ],
   "metal": [
-    "metal",
-    "heavy metal",
-    "thrash",
-    "death metal",
-    "black metal"
+    "metal"
   ],
   "hiphop": [
-    "hip hop",
-    "hip-hop",
-    "rap",
-    "trap",
-    "lofi",
-    "lo-fi"
+    "hip-hop/rap"
   ],
   "electronic": [
-    "edm",
-    "electronic",
-    "house",
-    "techno",
-    "dubstep",
-    "dnb",
-    "drum and bass",
-    "trance"
+    "elettronica"
   ],
   "jazz": [
-    "jazz",
-    "bebop",
-    "big band",
-    "swing",
-    "fusion",
-    "smooth"
+    "jazz"
   ],
   "classical": [
-    "classical",
-    "sinfonia",
-    "symphony",
-    "concerto",
-    "suite",
-    "opera",
-    "choral"
+    "classica"
   ],
   "blues": [
-    "blues",
-    "delta blues",
-    "chicago blues",
-    "texas blues",
-    "blues rock"
+    "blues"
   ],
   "reggae": [
-    "reggae",
-    "roots",
-    "dub",
-    "ska",
-    "rocksteady"
+    "reggae"
   ],
   "soul_rnb": [
-    "soul",
-    "motown",
-    "funk",
-    "r&b",
-    "rnb",
-    "neo-soul",
-    "neo soul"
+    "soul/r&b"
   ]
 }
