@@ -52,7 +52,6 @@ function applyPreset(b,t,guide){
   LAST.pristine = {bass: LAST.baseBass, treble: LAST.baseTreble};
   LAST.guide = guide||'';
   LAST.source = 'Preset';
-  LAST.lastRefinedAt = null;
   setKnob(document.getElementById('bassKnob'), LAST.baseBass);
   setKnob(document.getElementById('trebleKnob'), LAST.baseTreble);
   document.getElementById('guideText').textContent = guide || 'Preset applicato.';
@@ -76,7 +75,6 @@ function refreshValues(){
   }
 }
 
-
 function updateSelBar(){
   const gName = LAST.genreId ? (PRESETS.genres[LAST.genreId]?.name || LAST.genreId) : null;
   let text = gName || 'Nessuna selezione';
@@ -89,49 +87,14 @@ function updateSelBar(){
   badge.textContent = LAST.source;
   badge.classList.toggle('aipro', LAST.source==='AI Tune Pro');
   badge.classList.toggle('preset', LAST.source!=='AI Tune Pro');
-  const lt = qs('#lastTime');
-  if(LAST.source==='AI Tune Pro' && LAST.lastRefinedAt){
-    const d = new Date(LAST.lastRefinedAt);
-    const time = d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
-    const date = d.toLocaleDateString();
-    lt.textContent = `${date} • ${time}`;
-    lt.hidden = false;
-  } else {
-    lt.hidden = true;
-  }
 }
-
-  qs('#selText').textContent = text;
-  const badge = qs('#sourceBadge');
-  badge.textContent = LAST.source;
-  badge.classList.toggle('aipro', LAST.source==='AI Tune Pro');
-  badge.classList.toggle('preset', LAST.source!=='AI Tune Pro');
-  const lt = qs('#lastTime');
-  if(LAST.source==='AI Tune Pro' && LAST.lastRefinedAt){
-    const d = new Date(LAST.lastRefinedAt);
-    const opts = { hour:'2-digit', minute:'2-digit' };
-    const time = d.toLocaleTimeString(undefined, opts);
-    const date = d.toLocaleDateString();
-    lt.textContent = `${date} ${time}`;
-    lt.hidden = false;
-  } else {
-    lt.hidden = true;
-  }
-}
-
-
 
 function selectGenre(gid){
   const g=PRESETS.genres[gid];
-  LAST.genreId=gid;              // set first so selbar reads it
-  LAST.subId=null;
-  LAST.query=g.name;
   applyPreset(g.bass_clock, g.treble_clock, g.notes||'');
+  LAST.genreId=gid; LAST.subId=null; LAST.query=g.name;
   renderSubgenreChips(gid);
-  updateSelBar();                // ensure immediate update
 }
-
-
 
 function applySubgenre(gid, sid){
   const list=(PRESETS.subgenres||{})[gid]||[];
@@ -158,7 +121,6 @@ async function askAIPro(){
     LAST.baseBass = clamp(data.bass_clock ?? LAST.baseBass, LAST.pristine.bass-0.3, LAST.pristine.bass+0.3);
     LAST.baseTreble = clamp(data.treble_clock ?? LAST.baseTreble, LAST.pristine.treble-0.3, LAST.pristine.treble+0.3);
     LAST.source = 'AI Tune Pro';
-    LAST.lastRefinedAt = Date.now();
     setKnob(document.getElementById('bassKnob'), LAST.baseBass);
     setKnob(document.getElementById('trebleKnob'), LAST.baseTreble);
     document.getElementById('notes').textContent = data.notes || 'Refinement AI applicato.';
@@ -173,7 +135,6 @@ function resetToPristine(){
   LAST.baseBass = LAST.pristine.bass;
   LAST.baseTreble = LAST.pristine.treble;
   LAST.source = 'Preset';
-  LAST.lastRefinedAt = null;
   setKnob(document.getElementById('bassKnob'), LAST.baseBass);
   setKnob(document.getElementById('trebleKnob'), LAST.baseTreble);
   document.getElementById('notes').textContent='Ripristinato il preset originale.';
