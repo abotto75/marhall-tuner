@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Marshall Tuner — v5.8</title>
+  <title>Marshall Tuner — v5.9</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -23,6 +23,14 @@
         <div class="block-title alt">Sottogeneri</div>
         <div id="subchips" class="chips alt"></div>
       </div>
+
+      <div class="selbar">
+        <div class="seltext" id="selText">Nessuna selezione</div>
+        <div class="source">
+          <span id="sourceBadge" class="badge badge-src preset">Preset</span>
+        </div>
+      </div>
+
       <div class="quick-output">
         <div class="toggle">
           <button id="modePercent" class="tbtn active">% </button>
@@ -30,7 +38,7 @@
         </div>
         <div class="readout">
           <div class="dial">
-            <div class="dial-head">BASS <span class="badge">preset</span></div>
+            <div class="dial-head">BASS</div>
             <div class="dial-knob">
               <img id="bassKnob" src="img/knob.svg" alt="Bass knob">
               <div class="tick" id="bassTick">—/10</div>
@@ -38,7 +46,7 @@
             <div class="dial-value" id="bassValue">—</div>
           </div>
           <div class="dial">
-            <div class="dial-head">TREBLE <span class="badge">preset</span></div>
+            <div class="dial-head">TREBLE</div>
             <div class="dial-knob">
               <img id="trebleKnob" src="img/knob.svg" alt="Treble knob">
               <div class="tick" id="trebleTick">—/10</div>

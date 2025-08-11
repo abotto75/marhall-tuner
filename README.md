@@ -1,4 +1,3 @@
-# Marshall Tuner v5.8
-- LED rounding: frazione ≤ .5 arrotonda per difetto; ≥ .6 per eccesso.
-- Supporto micro-descrizioni dei sottogeneri (file `data/subgenre_guides.json`, merge non distruttivo).
-- Quick: LED = preset reale, % default; AI Pro invariato.
+# Marshall Tuner v5.9
+- Barra di selezione con Genere/Sottogenere e badge origine: Preset / AI Tune Pro.
+- Mantiene v5.8: LED rounding 5↓/6↑, micro-guide sottogeneri.
