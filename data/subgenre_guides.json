@@ -1,0 +1,28 @@
+{
+  "pop": {
+    "dance_pop": "Kick definito, voci lucide, alti frizzanti.",
+    "synth_pop": "Sintetizzatori brillanti, basso moderato.",
+    "pop_acoustic": "Chitarre naturali, voce in evidenza."
+  },
+  "rock": {
+    "hard_rock": "Ritmica energica, chitarre corpose.",
+    "punk_rock": "Tight e diretto, poco sub.",
+    "prog_rock": "Dettaglio e scena ampia."
+  },
+  "metal": {
+    "heavy_metal": "Palm mute definiti, piatti controllati.",
+    "thrash_metal": "Impatto veloce, evita harsh sugli alti.",
+    "extreme_metal": "Sub pulito, alti non taglienti."
+  },
+  "hiphop": {
+    "trap": "808 profondo, alti morbidi.",
+    "old_school": "Groove caldo, voce chiara.",
+    "lofi": "Texture soffici, niente brillantezze."
+  },
+  "electronic": {
+    "house_techno": "Cassa fisica, hi‑hat preciso.",
+    "dubstep": "Sub dominante, effetti nitidi.",
+    "dnb": "Break incisivo, basso controllato.",
+    "trance": "Lead luminosi, low‑end solido."
+  }
+}

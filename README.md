@@ -1,2 +1,4 @@
-# Marshall Tuner v5.7
-Fix: preset completo (dal tuo file), sottogeneri separati e colorati, Quick senza Ambiente/Volume (LED = preset). AI Pro gestisce Ambiente/Volume.
+# Marshall Tuner v5.8
+- LED rounding: frazione ≤ .5 arrotonda per difetto; ≥ .6 per eccesso.
+- Supporto micro-descrizioni dei sottogeneri (file `data/subgenre_guides.json`, merge non distruttivo).
+- Quick: LED = preset reale, % default; AI Pro invariato.

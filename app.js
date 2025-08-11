@@ -1,13 +1,22 @@
 function clamp(v,min,max){return Math.min(max,Math.max(min,v));}
-function clockToLed(clock){return Math.round(10 * (clock - 0.5) / 3);}
+function clockToLedFloat(clock){return 10 * (clock - 0.5) / 3;}
+function ledRound(val){
+  const base = Math.floor(val);
+  const frac = val - base;
+  // <= .5 -> down; >= .6 -> up; between handled by boundary
+  if (frac <= 0.5) return base;
+  return base + 1;
+}
 function clockToDeg(clock){const pct=Math.min(1,Math.max(0,(clock-0.5)/3));return -135 + pct*270;}
 const qs=s=>document.querySelector(s);
-let PRESETS=null;
+
+let PRESETS=null, SUB_GUIDES=null;
 let LAST={query:'', baseBass:2.0, baseTreble:2.0, genreId:null, subId:null, guide:'', pristine:{bass:2.0, treble:2.0}};
-let displayMode='percent'; // default %
+let displayMode='percent';
 
 async function loadData(){
   PRESETS = await (await fetch('data/presets.json')).json();
+  SUB_GUIDES = await (await fetch('data/subgenre_guides.json')).json();
   renderGenreChips();
   qs('#modePercent').onclick=()=>{displayMode='percent'; qs('#modePercent').classList.add('active'); qs('#modeClock').classList.remove('active'); refreshValues();};
   qs('#modeClock').onclick=()=>{displayMode='clock'; qs('#modeClock').classList.add('active'); qs('#modePercent').classList.remove('active'); refreshValues();};
@@ -50,12 +59,15 @@ function applyPreset(b,t,guide){
   setKnob(document.getElementById('bassKnob'), LAST.baseBass);
   setKnob(document.getElementById('trebleKnob'), LAST.baseTreble);
   document.getElementById('guideText').textContent = guide || 'Preset applicato.';
+  document.getElementById('subGuide').hidden = true;
   refreshValues();
 }
 
 function refreshValues(){
-  document.getElementById('bassTick').textContent = clockToLed(LAST.baseBass)+'/10';
-  document.getElementById('trebleTick').textContent = clockToLed(LAST.baseTreble)+'/10';
+  const bLed = ledRound(clockToLedFloat(LAST.baseBass));
+  const tLed = ledRound(clockToLedFloat(LAST.baseTreble));
+  document.getElementById('bassTick').textContent = bLed+'/10';
+  document.getElementById('trebleTick').textContent = tLed+'/10';
   if(displayMode==='percent'){
     document.getElementById('bassValue').textContent = toPercent(LAST.baseBass)+'%';
     document.getElementById('trebleValue').textContent = toPercent(LAST.baseTreble)+'%';
@@ -72,12 +84,16 @@ function selectGenre(gid){
   LAST.genreId=gid; LAST.subId=null; LAST.query=g.name;
   renderSubgenreChips(gid);
 }
+
 function applySubgenre(gid, sid){
   const list=(PRESETS.subgenres||{})[gid]||[];
   const sg=list.find(x=>x.id===sid); if(!sg) return;
   const gName=PRESETS.genres[gid]?.name || gid;
-  applyPreset(sg.bass_clock, sg.treble_clock, sg.guide || PRESETS.genres[gid]?.notes || '');
+  applyPreset(sg.bass_clock, sg.treble_clock, PRESETS.genres[gid]?.notes || '');
   LAST.genreId=gid; LAST.subId=sid; LAST.query=`${gName} — ${sg.name}`;
+  // micro guide if available
+  const mg = (SUB_GUIDES[gid]||{})[sid];
+  if(mg){ const el=document.getElementById('subGuide'); el.textContent = mg; el.hidden=false; }
 }
 
 async function askAIPro(){

@@ -3,33 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Marshall Tuner — v5.7 (Quick pulita + AI Pro)</title>
+  <title>Marshall Tuner — v5.8</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">Marshall Tuner</div>
-  </header>
-
+  <header class="topbar"><div class="brand">Marshall Tuner</div></header>
   <main>
-    <!-- QUICK -->
     <section class="card quick">
       <div class="section-title">Quick</div>
-      <p class="section-sub">Seleziona <b>Genere</b> e opzionalmente <b>Sottogenere</b>. Default in <b>%</b>. I LED mostrano il <b>preset reale</b>.</p>
-
+      <p class="section-sub">Seleziona <b>Genere</b> e opzionalmente <b>Sottogenere</b>. Default in <b>%</b>. I LED rispecchiano il <b>preset</b>. Arrotondamento LED: ≤ .5 ↓, ≥ .6 ↑.</p>
       <div id="genreWrap" class="block">
         <div class="block-title">Generi</div>
         <div id="chips" class="chips emph"></div>
       </div>
-
       <div id="subWrap" class="block subtle" hidden>
         <div class="block-title alt">Sottogeneri</div>
         <div id="subchips" class="chips alt"></div>
       </div>
-
       <div class="quick-output">
         <div class="toggle">
           <button id="modePercent" class="tbtn active">% </button>
@@ -53,18 +46,17 @@
             <div class="dial-value" id="trebleValue">—</div>
           </div>
         </div>
-
         <div class="guide">
           <div class="guide-title">Guida all'ascolto</div>
           <div id="guideText" class="guide-text">Seleziona un (sotto)genere per i suggerimenti rapidi.</div>
         </div>
+        <div id="subGuide" class="micro-guide" hidden></div>
       </div>
     </section>
 
-    <!-- AI PRO -->
     <section class="card ai">
       <div class="section-title">AI Pro</div>
-      <p class="section-sub">Parti dal preset selezionato sopra e chiedi un affinamento (±0.3h). Qui scegli anche <b>Ambiente</b> e <b>Volume</b>.</p>
+      <p class="section-sub">Parti dal preset selezionato e chiedi un affinamento (±0.3h). Qui scegli <b>Ambiente</b> e <b>Volume</b>.</p>
       <div class="grid">
         <div class="field">
           <label>Dettagli (testo libero)</label>
@@ -89,10 +81,9 @@
         <button id="aiBtn" class="primary">Chiedi ad AI Tune Pro</button>
         <button id="resetBtn" class="ghost">Reset preset</button>
       </div>
-      <div class="notes" id="notes">L’AI userà “Genere/Sottogenere selezionato + Dettagli” (es. “Pop — Elton John”).</div>
+      <div class="notes" id="notes">L’AI userà “Genere/Sottogenere selezionato + Dettagli”.</div>
     </section>
   </main>
-
   <script src="app.js"></script>
 </body>
 </html>
