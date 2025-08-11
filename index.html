@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Marshall Tuner — v5.4 (Toggle + Quick Env/Vol + AI Pro)</title>
+  <title>Marshall Tuner — v5.6 (Badge + Reset)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -12,68 +12,91 @@
 <body>
   <header class="topbar">
     <div class="brand">Marshall Tuner</div>
-    <div class="actions">
-      <button id="aiBtn" class="ghost small" aria-label="Approfondisci con AI">AI Pro</button>
-      <button id="resetBtn" class="ghost small">Reset</button>
-    </div>
   </header>
 
   <main>
-    <section class="card sticky-search">
-      <input id="omnibox" class="omnibox" placeholder="Aggiungi dettagli: es. Elton John • Live 1975 • versione rimasterizzata" autocomplete="off">
-      <div id="chips" class="chips"></div>
+    <section class="card quick">
+      <div class="section-title">Quick</div>
+      <p class="section-sub">Seleziona <b>Genere</b> e opzionalmente <b>Sottogenere</b>. Default in <b>%</b>. Tocca per passare alle ore.</p>
+      <div id="chips" class="chips emph"></div>
       <div id="subchips" class="chips subtle" hidden></div>
-    </section>
 
-    <section class="card output">
-      <div class="output-header">
-        <h2>Settaggio consigliato</h2>
+      <div class="quick-output">
         <div class="toggle">
-          <button id="modeClock" class="tbtn active">Ore</button>
-          <button id="modePercent" class="tbtn">% </button>
+          <button id="modePercent" class="tbtn active">% </button>
+          <button id="modeClock" class="tbtn">Ore</button>
+        </div>
+        <div class="readout">
+          <div class="dial">
+            <div class="dial-head">BASS <span class="badge">percepito</span></div>
+            <div class="dial-knob">
+              <img id="bassKnob" src="img/knob.svg" alt="Bass knob">
+              <div class="tick" id="bassTick">—/10</div>
+            </div>
+            <div class="dial-value" id="bassValue">—</div>
+          </div>
+          <div class="dial">
+            <div class="dial-head">TREBLE <span class="badge">percepito</span></div>
+            <div class="dial-knob">
+              <img id="trebleKnob" src="img/knob.svg" alt="Treble knob">
+              <div class="tick" id="trebleTick">—/10</div>
+            </div>
+            <div class="dial-value" id="trebleValue">—</div>
+          </div>
+        </div>
+
+        <div class="quickline">
+          <div class="field small">
+            <label>Ambiente</label>
+            <select id="qRoom">
+              <option value="neutral">Scrivania</option>
+              <option value="nearwall" selected>Vicino muro</option>
+              <option value="corner">Angolo</option>
+              <option value="farwall">Lontano muro</option>
+            </select>
+          </div>
+          <div class="field small">
+            <label>Volume</label>
+            <input type="range" id="qVolume" min="0" max="100" value="70">
+            <div class="hint"><span id="qVolVal">70</span>%</div>
+          </div>
+        </div>
+
+        <div class="guide">
+          <div class="guide-title">Guida all'ascolto</div>
+          <div id="guideText" class="guide-text">Seleziona un genere per suggerimenti rapidi.</div>
         </div>
       </div>
+    </section>
 
-      <div class="current">
-        <div>Selezione: <b id="currentSel">—</b></div>
-      </div>
-
-      <div class="quickline">
-        <div class="field small">
-          <label>Ambiente</label>
-          <select id="qRoom">
-            <option value="neutral" selected>Scrivania</option>
-            <option value="nearwall">Vicino muro</option>
+    <section class="card ai">
+      <div class="section-title">AI Pro</div>
+      <p class="section-sub">Parti dal preset selezionato sopra, poi chiedi un affinamento (±0.3h).</p>
+      <div class="grid">
+        <div class="field">
+          <label>Dettagli (testo libero)</label>
+          <input id="freeText" placeholder="Es. Elton John — live 1975 — remaster">
+        </div>
+        <div class="field">
+          <label>Ambiente (default: Vicino muro)</label>
+          <select id="aiRoom">
+            <option value="nearwall" selected>Vicino muro</option>
+            <option value="neutral">Scrivania</option>
             <option value="corner">Angolo</option>
             <option value="farwall">Lontano muro</option>
           </select>
         </div>
-        <div class="field small">
-          <label>Volume</label>
-          <input type="range" id="qVolume" min="0" max="100" value="70">
-          <div class="hint"><span id="qVolVal">70</span>%</div>
+        <div class="field">
+          <label>Volume cassa</label>
+          <input type="range" id="aiVolume" min="0" max="100" value="70">
+          <div class="hint"><span id="aiVolVal">70</span>%</div>
         </div>
       </div>
-
-      <div class="readout">
-        <div class="dial">
-          <div class="dial-head">BASS</div>
-          <div class="dial-knob">
-            <img id="bassKnob" src="img/knob.svg" alt="Bass knob">
-            <div class="tick" id="bassTick">—/10</div>
-          </div>
-          <div class="dial-value" id="bassValue">—</div>
-        </div>
-        <div class="dial">
-          <div class="dial-head">TREBLE</div>
-          <div class="dial-knob">
-            <img id="trebleKnob" src="img/knob.svg" alt="Treble knob">
-            <div class="tick" id="trebleTick">—/10</div>
-          </div>
-          <div class="dial-value" id="trebleValue">—</div>
-        </div>
+      <div class="actions">
+        <button id="aiBtn" class="primary">Chiedi ad AI Tune Pro</button>
+        <button id="resetBtn" class="ghost">Reset preset</button>
       </div>
-      <div class="notes" id="notes">LED = valore <b>percepito</b> in base ad ambiente/volume. AI Pro userà “Genere/Sottogenere + testo” della barra.</div>
+      <div class="notes" id="notes">Dopo AI Pro, usa “Reset preset” per tornare ai valori originali del (sotto)genere selezionato.</div>
     </section>
   </main>
 

@@ -1,7 +1,7 @@
 {
   "meta": {
-    "version": "v5.4",
-    "notes": "Preset-first. Toggle Ore↔%, Quick Env/Vol con LED percepito. AI Pro concatena Genere/Sottogenere + testo utente."
+    "version": "v5.6",
+    "notes": "Badge LED 'percepito' + Reset rapido per tornare al preset dopo AI Pro."
   },
   "top_genres_order": [
     "pop",
@@ -20,274 +20,118 @@
       "name": "Pop",
       "bass_clock": 2.5,
       "treble_clock": 3.0,
-      "notes": "Bilanciato, voce chiara, sparkle alto."
+      "notes": "Bilanciato, voce in primo piano.",
+      "guide": "Pop moderno: chiarezza vocale e un pizzico di brillantezza."
     },
     "rock": {
       "name": "Rock",
       "bass_clock": 3.0,
       "treble_clock": 3.0,
-      "notes": "V-shape moderata, energia e chiarezza."
+      "notes": "V-shape moderata.",
+      "guide": "Spinta su basso e alti per chitarre vive."
     },
     "metal": {
       "name": "Metal",
       "bass_clock": 3.5,
       "treble_clock": 3.5,
-      "notes": "Estremi spinti, attenzione a sub e harsh."
+      "notes": "Estremi spinti.",
+      "guide": "Kick e chitarre devono bucare, occhio alla sibilanza."
     },
     "hiphop": {
       "name": "Hip-Hop/Rap",
       "bass_clock": 3.5,
       "treble_clock": 2.5,
-      "notes": "808 e kick in evidenza, alti moderati."
+      "notes": "808 presenti.",
+      "guide": "Enfatizza sub e punch, alti controllati."
     },
     "electronic": {
       "name": "Elettronica",
       "bass_clock": 3.5,
       "treble_clock": 3.0,
-      "notes": "Bassi fisici, dettagli brillanti."
+      "notes": "Bassi fisici.",
+      "guide": "Impatto di cassa e definizione su hi-hat."
     },
     "jazz": {
       "name": "Jazz",
       "bass_clock": 2.0,
       "treble_clock": 2.0,
-      "notes": "Flat o quasi; naturalezza prima di tutto."
+      "notes": "Quasi flat.",
+      "guide": "Equilibrio e aria."
     },
     "classical": {
       "name": "Classica",
       "bass_clock": 1.5,
       "treble_clock": 2.5,
-      "notes": "Bassi controllati, alti ariosi."
+      "notes": "Bassi controllati.",
+      "guide": "Scena e respiro, evita boom."
     },
     "blues": {
       "name": "Blues",
       "bass_clock": 2.0,
       "treble_clock": 2.0,
-      "notes": "Mid-forward; non enfatizzare estremi."
+      "notes": "Mid-forward.",
+      "guide": "Medi caldi per voce e chitarre."
     },
     "reggae": {
       "name": "Reggae",
       "bass_clock": 3.5,
       "treble_clock": 1.5,
-      "notes": "Bassi rotondi, alti smussati."
+      "notes": "Basso rotondo.",
+      "guide": "Low-end rotondo, alti smussati."
     },
     "soul_rnb": {
       "name": "Soul/R&B",
       "bass_clock": 2.5,
       "treble_clock": 2.5,
-      "notes": "Caldo e presente, lieve V-shape."
+      "notes": "Caldo e presente.",
+      "guide": "Voce e groove, alti setosi."
     }
   },
   "subgenres": {
-    "pop": [
-      {
-        "id": "dance_pop",
-        "name": "Dance Pop",
-        "bass_clock": 2.5,
-        "treble_clock": 3.0
-      },
-      {
-        "id": "synth_pop",
-        "name": "Synth-Pop '80",
-        "bass_clock": 2.0,
-        "treble_clock": 3.0
-      },
-      {
-        "id": "pop_acoustic",
-        "name": "Pop Acustico",
-        "bass_clock": 2.0,
-        "treble_clock": 2.5
-      }
-    ],
     "rock": [
       {
         "id": "hard_rock",
         "name": "Hard Rock",
         "bass_clock": 3.0,
-        "treble_clock": 3.0
+        "treble_clock": 3.0,
+        "guide": "Ritmica energica, chitarre corpose."
       },
       {
         "id": "punk_rock",
         "name": "Punk Rock",
         "bass_clock": 2.5,
-        "treble_clock": 2.8
+        "treble_clock": 2.8,
+        "guide": "Tight, niente boom."
       },
       {
         "id": "prog_rock",
         "name": "Rock Progressivo",
         "bass_clock": 2.8,
-        "treble_clock": 3.2
+        "treble_clock": 3.2,
+        "guide": "Dettaglio e scena ampia."
       }
     ],
-    "metal": [
+    "pop": [
       {
-        "id": "heavy_metal",
-        "name": "Heavy Metal",
-        "bass_clock": 3.2,
-        "treble_clock": 3.5
-      },
-      {
-        "id": "thrash_metal",
-        "name": "Thrash Metal",
-        "bass_clock": 3.5,
-        "treble_clock": 3.5
-      },
-      {
-        "id": "extreme_metal",
-        "name": "Death/Black Metal",
-        "bass_clock": 3.3,
-        "treble_clock": 3.8
-      }
-    ],
-    "hiphop": [
-      {
-        "id": "old_school",
-        "name": "Old-School",
-        "bass_clock": 3.0,
-        "treble_clock": 2.5
-      },
-      {
-        "id": "trap",
-        "name": "Trap",
-        "bass_clock": 4.0,
-        "treble_clock": 2.5
-      },
-      {
-        "id": "lofi",
-        "name": "Lo-Fi Hip-Hop",
+        "id": "dance_pop",
+        "name": "Dance Pop",
         "bass_clock": 2.5,
-        "treble_clock": 1.5
-      }
-    ],
-    "electronic": [
-      {
-        "id": "house_techno",
-        "name": "House/Techno",
-        "bass_clock": 3.5,
-        "treble_clock": 2.8
+        "treble_clock": 3.0,
+        "guide": "Kick definito e voci lucide."
       },
       {
-        "id": "dubstep",
-        "name": "Dubstep",
-        "bass_clock": 4.0,
-        "treble_clock": 3.0
-      },
-      {
-        "id": "dnb",
-        "name": "Drum & Bass",
-        "bass_clock": 3.8,
-        "treble_clock": 3.2
-      },
-      {
-        "id": "trance",
-        "name": "Trance",
-        "bass_clock": 3.3,
-        "treble_clock": 3.5
-      }
-    ],
-    "jazz": [
-      {
-        "id": "swing_bigband",
-        "name": "Swing/Big Band",
-        "bass_clock": 2.2,
-        "treble_clock": 2.5
-      },
-      {
-        "id": "bebop",
-        "name": "Bebop/Combo",
+        "id": "synth_pop",
+        "name": "Synth-Pop '80",
         "bass_clock": 2.0,
-        "treble_clock": 2.0
+        "treble_clock": 3.0,
+        "guide": "Synth brillanti, basso moderato."
       },
       {
-        "id": "smooth_fusion",
-        "name": "Smooth/Fusion",
-        "bass_clock": 2.5,
-        "treble_clock": 2.3
-      },
-      {
-        "id": "vocal_jazz",
-        "name": "Vocal Jazz",
+        "id": "pop_acoustic",
+        "name": "Pop Acustico",
         "bass_clock": 2.0,
-        "treble_clock": 2.2
-      }
-    ],
-    "classical": [
-      {
-        "id": "symphonic",
-        "name": "Sinfonica/Orchestrale",
-        "bass_clock": 1.5,
-        "treble_clock": 2.5
-      },
-      {
-        "id": "chamber",
-        "name": "Musica da Camera",
-        "bass_clock": 1.8,
-        "treble_clock": 2.2
-      },
-      {
-        "id": "opera_choral",
-        "name": "Opera/Corale",
-        "bass_clock": 2.0,
-        "treble_clock": 2.5
-      }
-    ],
-    "blues": [
-      {
-        "id": "electric_blues",
-        "name": "Blues Elettrico",
-        "bass_clock": 2.0,
-        "treble_clock": 2.0
-      },
-      {
-        "id": "delta_blues",
-        "name": "Blues Acustico (Delta)",
-        "bass_clock": 2.2,
-        "treble_clock": 1.8
-      },
-      {
-        "id": "blues_rock",
-        "name": "Blues Rock",
-        "bass_clock": 2.5,
-        "treble_clock": 2.5
-      }
-    ],
-    "reggae": [
-      {
-        "id": "roots",
-        "name": "Roots Reggae",
-        "bass_clock": 3.5,
-        "treble_clock": 2.0
-      },
-      {
-        "id": "dub",
-        "name": "Dub",
-        "bass_clock": 4.0,
-        "treble_clock": 1.0
-      },
-      {
-        "id": "ska_rocksteady",
-        "name": "Ska/Rocksteady",
-        "bass_clock": 2.8,
-        "treble_clock": 2.3
-      }
-    ],
-    "soul_rnb": [
-      {
-        "id": "motown",
-        "name": "Soul/Motown",
-        "bass_clock": 2.3,
-        "treble_clock": 2.7
-      },
-      {
-        "id": "funk",
-        "name": "Funk",
-        "bass_clock": 2.8,
-        "treble_clock": 2.5
-      },
-      {
-        "id": "neo_soul",
-        "name": "Neo-Soul/R&B moderno",
-        "bass_clock": 2.7,
-        "treble_clock": 2.3
+        "treble_clock": 2.5,
+        "guide": "Chiarezza sugli acuti, bassi naturali."
       }
     ]
   }
