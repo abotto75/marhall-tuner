@@ -1,26 +1,13 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="240" height="240" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+<svg width="160" height="160" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <radialGradient id="body" cx="50%" cy="40%" r="70%">
-      <stop offset="0%" stop-color="#2a2a2a"/>
-      <stop offset="60%" stop-color="#191919"/>
-      <stop offset="100%" stop-color="#0f0f0f"/>
+    <radialGradient id="g" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#5a5a5a"/>
+      <stop offset="60%" stop-color="#1f1f1f"/>
+      <stop offset="100%" stop-color="#0b0b0b"/>
     </radialGradient>
-    <linearGradient id="edge" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#e0c776"/>
-      <stop offset="100%" stop-color="#8b7334"/>
-    </linearGradient>
-    <filter id="innerShadow" x="-50%" y="-50%" width="200%" height="200%">
-      <feOffset dx="0" dy="1"/>
-      <feGaussianBlur stdDeviation="2" result="blur"/>
-      <feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowDiff"/>
-      <feFlood flood-color="#000" flood-opacity=".35"/>
-      <feComposite in2="shadowDiff" operator="in"/>
-      <feComposite in2="SourceGraphic" operator="over"/>
-    </filter>
   </defs>
-  <circle cx="120" cy="120" r="108" fill="url(#body)" stroke="url(#edge)" stroke-width="6" filter="url(#innerShadow)"/>
-  <rect x="116" y="26" width="8" height="20" rx="2" fill="#ffffff"/>
-  <circle cx="120" cy="120" r="18" fill="#0c0c0c" stroke="#3a3a3a" stroke-width="2"/>
+  <circle cx="100" cy="100" r="92" fill="url(#g)" stroke="#2a2a2a" stroke-width="4"/>
+  <circle cx="100" cy="100" r="64" fill="#0e0e0e" stroke="#333" stroke-width="2"/>
+  <rect x="98" y="14" width="4" height="28" rx="2" fill="#E2C044"/>
 </svg>
