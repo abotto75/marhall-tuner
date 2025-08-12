@@ -1,97 +1,187 @@
-:root {
-  --bg: #232325;
-  --bg-2: #29292B;
-  --accent: #d4af37;
-  --text-primary: #f5f5f5;
-  --text-secondary: #b0b0b0;
-  --border-color: #3a3a3c;
+/* ===============================================================
+   Marshall Tuner — style.css (v8.0.3 "Marshall Full Theme")
+   Deep graphite bg + gold accents, UI/UX tuned for desktop & mobile.
+   Inputs / selects / dropdowns restyled to match the theme.
+   Knobs stacked in one column (BASS & TREBLE).
+   =============================================================== */
+
+/* ---------- Design tokens ---------- */
+:root{
+  /* Palette */
+  --bg:#232325;
+  --bg-2:#29292B;
+  --panel:#121212;
+  --panel-2:#181818;
+  --gold:#d4af37;          /* accent */
+  --gold-weak:#8b7334;     /* borders for accent */
+  --text:#f5f5f5;
+  --text-dim:#b0b0b0;
+  --muted:#7a7a7a;
+  --border:#202020;
+  --border-2:#2a2a2a;
+
+  /* Elevation */
+  --shadow-1:0 6px 18px rgba(0,0,0,.35);
+  --shadow-2:0 10px 34px rgba(0,0,0,.45);
+
+  /* Radii */
+  --r-1:10px; --r-2:14px; --r-3:18px; --r-4:24px;
+
+  /* Type scale */
+  --fs-11:11px; --fs-12:12px; --fs-13:13px; --fs-14:14px; --fs-15:15px;
+  --fs-16:16px; --fs-18:18px; --fs-20:20px; --fs-22:22px; --fs-28:28px; --fs-32:32px;
 }
 
-body {
-  background-color: var(--bg);
-  color: var(--text-primary);
-  font-family: 'Inter', sans-serif;
+/* ---------- Base ---------- */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Inter, Montserrat, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color:var(--text);
+  /* background: gradients with optional glow image if present at public/img/bg_glow.svg */
+  background:
+    radial-gradient(1200px 800px at 70% -10%, rgba(255,255,255,.05), transparent),
+    radial-gradient(800px 600px at -20% 110%, rgba(255,255,255,.035), transparent),
+    var(--bg);
+  background-attachment: fixed, fixed, fixed;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  font-size:var(--fs-16); line-height:1.55;
 }
 
-.card, .panel, .input-group, select, textarea, input[type="text"], input[type="search"] {
-  background-color: var(--bg-2);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
+/* ---------- Topbar ---------- */
+.topbar{
+  position:sticky; top:0; z-index:10;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:12px 14px;
+  background:linear-gradient(180deg, rgba(20,20,20,.94), rgba(20,20,20,.6));
+  border-bottom:1px solid var(--border);
+  backdrop-filter:saturate(1.1) blur(6px);
 }
+.brand{font-weight:900; letter-spacing:.3px; font-size:var(--fs-18)}
+.ver{opacity:.9; font-weight:700; padding:.2rem .55rem; border:1px solid var(--border); border-radius:999px; font-size:var(--fs-12)}
 
-select, textarea, input {
-  padding: 0.75rem 1rem;
-  font-size: 1rem;
-  border-radius: 8px;
-  outline: none;
+/* ---------- Layout ---------- */
+main{
+  max-width:1080px; margin:22px auto; padding:0 14px;
+  display:grid; grid-template-columns:1fr; gap:16px;
 }
+@media (min-width: 980px){ main{ grid-template-columns:1.1fr .9fr; gap:20px }}
 
-select:focus, textarea:focus, input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.3);
+.card{
+  background:linear-gradient(180deg, var(--panel), var(--panel-2));
+  border:1px solid var(--border);
+  border-radius:var(--r-4);
+  box-shadow:var(--shadow-1);
 }
+.card .section-title{
+  padding:12px 14px 6px; font-size:var(--fs-12);
+  text-transform:uppercase; letter-spacing:.14em; color:var(--text-dim);
+}
+.card .section-sub{ padding:0 14px 10px; font-size:var(--fs-14); color:var(--text-dim) }
+.card .content{ padding:12px 14px 14px }
 
-button.primary, #classifyBtn, #consigliamiBtn, #genreAskBtn {
-  background-color: var(--accent);
-  color: var(--bg);
-  font-weight: bold;
-  border-radius: 8px;
-  padding: 0.75rem 1.25rem;
-  border: none;
-  transition: background-color 0.2s ease;
+/* ---------- Selection bar ---------- */
+.selbar{
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  padding:10px; margin:10px 14px 0; border:1px solid var(--border);
+  border-radius:var(--r-2); background:#0f0f0f;
 }
+.seltext{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:var(--fs-14) }
+.badge{ font-size:var(--fs-12); padding:.2rem .55rem; border-radius:999px; border:1px solid var(--border); color:var(--text-dim) }
+.badge.aipro{ color:#e0ecff; border-color:#2b4e7a }
+#aiTs{ font-size:var(--fs-12); opacity:.75; margin-left:6px }
 
-button.primary:hover, #classifyBtn:hover, #consigliamiBtn:hover, #genreAskBtn:hover {
-  background-color: #c19b2e;
+/* ---------- Chips (genres/subgenres) ---------- */
+.chips{ display:flex; flex-wrap:wrap; gap:8px }
+.chip{
+  padding:.6rem .9rem; border-radius:999px;
+  border:1px solid var(--border-2); background:#141414; color:#cfd6e0;
+  cursor:pointer; transition:background .18s ease, transform .06s ease, border-color .18s ease;
 }
+.chip:hover{ background:#171717; border-color:#333 }
+.chip:active{ transform:translateY(1px) }
+.chip.active{ background:#1a1a1a; border-color:#2a2a2a; color:#fff }
 
-.knob-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: var(--bg-2);
-  border-radius: 8px;
-  padding: 1rem;
-  gap: 2rem;
-}
+/* ---------- Form Controls (inputs, selects, textarea) ---------- */
+.input-row{ display:flex; gap:10px; align-items:center }
+.input-row > *{ flex:1 }
+.input-row .cta{ flex:0 0 auto }
 
-.knob-title {
-  font-weight: bold;
-  font-size: 1.2rem;
-  color: var(--accent);
-  text-transform: uppercase;
-  margin-bottom: 0.5rem;
+input[type="text"], input[type="search"], textarea, .text-input{
+  width:100%;
+  min-height:52px; padding:12px 14px;
+  border-radius:14px; background:#0f0f0f; border:1px solid var(--border);
+  color:var(--text); font-weight:700; letter-spacing:.2px;
+  box-shadow: inset 0 0 0 1px transparent;
+  transition: box-shadow .2s ease, border-color .2s ease;
+  resize:vertical;
 }
+textarea{ min-height:92px }
+input::placeholder, textarea::placeholder{ color:var(--muted); font-weight:600 }
+input:focus, textarea:focus{ outline:none; border-color:#2a2a2a; box-shadow:0 0 0 2px rgba(212,175,55,.16) }
 
-.knob-pair {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
+/* Select with custom arrow + gold focus */
+select{
+  appearance:none; width:100%; height:52px;
+  padding:0 42px 0 14px; border-radius:14px;
+  background:#0f0f0f; border:1px solid var(--border); color:var(--text);
+  font-weight:800; letter-spacing:.2px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23b0b0b0' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 10px center;
 }
+select:focus{ outline:none; border-color:#2a2a2a; box-shadow:0 0 0 2px rgba(212,175,55,.16) }
 
-.knob-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
+/* Primary Dropdown/Input look (like ROCK box in ref) */
+.select-primary, .input-primary{
+  border:2px solid var(--gold-weak);
+  background:transparent;
+  color:var(--text);
+  font-weight:900;
 }
+.select-primary:focus, .input-primary:focus{ box-shadow:0 0 0 2px rgba(212,175,55,.2) }
 
-.knob-label {
-  font-weight: bold;
-  color: var(--accent);
-  text-transform: uppercase;
-}
+/* Slider */
+input[type="range"]{ width:100%; height:4px; border-radius:999px; background:#2a2a2a; outline:none }
+input[type="range"]::-webkit-slider-thumb{ -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--gold); border:none; box-shadow:0 0 0 2px #0c0c0c }
+input[type="range"]::-moz-range-thumb{ width:18px; height:18px; border-radius:50%; background:var(--gold); border:none }
 
-.range-slider::-webkit-slider-thumb {
-  background-color: var(--accent);
+/* ---------- Buttons ---------- */
+.actions{ display:flex; gap:12px; padding:0 14px 14px; flex-wrap:wrap }
+button{ appearance:none; border:none; cursor:pointer; font-weight:900; letter-spacing:.25px; font-size:var(--fs-14) }
+button.primary, #classifyBtn, #consigliamiBtn, #genreAskBtn{
+  padding:.9rem 1.2rem; border-radius:14px;
+  background:#151515; color:#f7e7b0; border:1px solid var(--gold-weak);
+  transition: filter .18s ease, transform .06s ease; box-shadow: var(--shadow-1);
 }
+button.primary:hover, #classifyBtn:hover, #consigliamiBtn:hover, #genreAskBtn:hover{ filter:saturate(1.06) }
+button.primary:active, #classifyBtn:active, #consigliamiBtn:active, #genreAskBtn:active{ transform:translateY(1px) }
+button.ghost{ padding:.9rem 1.2rem; border-radius:14px; background:transparent; color:#fff; border:1px solid var(--border) }
 
-.badge, .chip {
-  background-color: var(--bg-2);
-  color: var(--text-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  padding: 0.25rem 0.75rem;
-}
+/* ---------- Percent-only toggle label ---------- */
+.tlabel{ display:inline-flex; align-items:center; justify-content:center; min-width:46px; height:34px; border-radius:999px; background:#131313; color:#d7dfef; border:1px solid var(--border); font-weight:900; letter-spacing:.3px }
+
+/* ---------- Knob column: unified header + vertical layout ---------- */
+.dials{ display:grid; grid-template-columns:1fr; gap:14px; align-items:stretch; position:relative; margin-top:6px }
+.dials::before{ content:"BASS & TREBLE"; display:block; text-align:center; margin:4px 0 2px; font-weight:900; letter-spacing:.14em; color:var(--gold); opacity:.9 }
+
+.dial{ position:relative; padding:14px; border:1px solid var(--border); border-radius:var(--r-3); background:linear-gradient(180deg, #0f0f0f, #151515) }
+.dial .dial-title{ display:flex; align-items:center; gap:8px; font-weight:800; letter-spacing:.2px; text-transform:uppercase; color:var(--text-dim) }
+.dial .dial-value{ margin-top:6px; font-size:var(--fs-28); font-weight:900 }
+
+/* Knob visual (uses background so it never disappears) */
+.dial .knob{ position:relative; width:min(56vw,140px); height:min(56vw,140px); margin:10px auto 8px; display:flex; align-items:center; justify-content:center }
+.dial .knob img, .dial .knob svg{ width:100%; height:100%; display:block; transform:none }
+.dial .knob::before{ content:""; position:absolute; inset:0; background-image:url("img/knob.svg"); background-size:contain; background-repeat:no-repeat; background-position:center; pointer-events:none; opacity:1 }
+
+.dial .hint{ position:absolute; right:12px; top:12px; font-size:var(--fs-12); color:var(--text-dim) }
+
+/* ---------- Notes / Guide ---------- */
+.notes{ margin:8px 14px 14px; padding:10px; border-radius:10px; background:#0f0f0f; border:1px solid var(--border); color:var(--text-dim); font-size:var(--fs-14) }
+.guide[hidden]{ display:none }
+
+/* ---------- Focus & utilities ---------- */
+:focus-visible{ outline:2px solid var(--gold); outline-offset:2px; border-radius:10px }
+.upper{ text-transform:uppercase; letter-spacing:.12em }
+.center{ text-align:center }
+.hidden{ display:none !important }
