@@ -1,0 +1,49 @@
+{
+  "meta": {
+    "version": "example",
+    "notes": "Sostituisci con il tuo presets.json reale."
+  },
+  "top_genres_order": [
+    "rock",
+    "classica",
+    "ost"
+  ],
+  "genres": {
+    "rock": {
+      "name": "Rock",
+      "bass_clock": 2.4,
+      "treble_clock": 2.1,
+      "notes": "Energia e chitarre."
+    },
+    "classica": {
+      "name": "Classica",
+      "bass_clock": 2.0,
+      "treble_clock": 2.3,
+      "notes": "Equilibrio naturale."
+    },
+    "ost": {
+      "name": "Colonne Sonore",
+      "bass_clock": 2.5,
+      "treble_clock": 2.2,
+      "notes": "Scena ampia cinematica."
+    }
+  },
+  "subgenres": {
+    "rock": [
+      {
+        "id": "hard_rock",
+        "name": "Hard Rock",
+        "bass_clock": 2.6,
+        "treble_clock": 2.2
+      }
+    ],
+    "ost": [
+      {
+        "id": "cinematic_epico",
+        "name": "Cinematic Epico",
+        "bass_clock": 2.7,
+        "treble_clock": 2.1
+      }
+    ]
+  }
+}

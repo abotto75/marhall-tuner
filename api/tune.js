@@ -24,7 +24,8 @@ export default async function handler(req, res) {
     const resp = await client.responses.create({
       model,
       input:[{role:"system",content:sys},{role:"user",content:prompt}],
-      text:{ format:{ type:"json_schema", name:"tuning_refined", strict:true, schema } }
+      text:{ format:{ type:"json_schema", name:"tuning_refined", strict:true, schema } },
+      temperature: 0.3
     });
     const text = resp.output_text || resp.output?.[0]?.content?.[0]?.text || "{}";
     const data = JSON.parse(text);
