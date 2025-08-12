@@ -75,3 +75,17 @@ border-radius:var(--r-2);background:#262628}
 
 /* Focus */
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:10px}
+
+/* === Global horizontal spacing adjustment === */
+body, main, .card, .panel, .input-group, .readout, .grid, .actions, .chips, .selbar, 
+.consult-row, .quick-output, .field, .notes, .guide, .micro-guide, 
+input, select, textarea, button {
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+}
+
+.card, .panel, .input-group, .readout, .grid, .actions, .chips, .selbar, 
+.consult-row, .quick-output, .field, .notes, .guide, .micro-guide {
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
