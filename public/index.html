@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=7.0.4">
+  <link rel="stylesheet" href="style.css?v=8.0.3-fix">
 </head>
 <body>
   <header class="topbar">
@@ -43,8 +43,8 @@
         <div class="consult-title">Ricerca genere (consulente)</div>
         <p class="consult-sub">Scrivi artista e/o brano. Ti suggerisco il genere più adatto tra i tuoi preset. Non applico nulla finché non confermi.</p>
         <div class="consult-row">
-          <input id="consultInput" placeholder="Es. Metallica — Master of Puppets · oppure Vivaldi">
-          <button id="consultBtn" class="ghost">Consigliami il genere</button>
+          <input id="consultInput" class="input-primary" placeholder="Es. Metallica — Master of Puppets · oppure Vivaldi">
+          <button id="consultBtn" class="primary">Consigliami il genere</button>
         </div>
         <div id="consultResult" class="consult-result" hidden>
           <div><b>Suggerimento:</b> <span id="consultGenre">—</span> <span class="badge ai">AI Consiglio</span></div>
@@ -57,9 +57,9 @@
       </div>
 
       <div class="quick-output">
-        <div class="toggle">
-          <span class="tlabel">%</span>
-        </div>
+        <div class="toggle"><span class="tlabel">%</span></div>
+
+        <!-- READOUT: knobs affiancati nella stessa colonna/card -->
         <div class="readout">
           <div class="dial">
             <div class="dial-head">BASS</div>
@@ -68,6 +68,7 @@
             </div>
             <div class="dial-value" id="bassValue">—</div>
           </div>
+
           <div class="dial">
             <div class="dial-head">TREBLE</div>
             <div class="dial-knob">
@@ -76,6 +77,7 @@
             <div class="dial-value" id="trebleValue">—</div>
           </div>
         </div>
+
         <div class="guide" hidden>
           <div class="guide-title">Guida all'ascolto</div>
           <div id="guideText" class="guide-text">Seleziona un (sotto)genere per i suggerimenti rapidi.</div>
@@ -90,11 +92,11 @@
       <div class="grid">
         <div class="field">
           <label>Dettagli (testo libero)</label>
-          <input id="freeText" placeholder="Es. Elton John — live 1975 — remaster">
+          <input id="freeText" class="input-primary" placeholder="Es. Elton John — live 1975 — remaster">
         </div>
         <div class="field">
           <label>Ambiente (default: Vicino muro)</label>
-          <select id="aiRoom">
+          <select id="aiRoom" class="select-primary">
             <option value="nearwall" selected>Vicino muro</option>
             <option value="neutral">Scrivania</option>
             <option value="corner">Angolo</option>
@@ -115,6 +117,6 @@
     </section>
   </main>
 
-  <script src="app.js?v=7.0.4"></script>
+  <script src="app.js?v=8.0.3-fix"></script>
 </body>
 </html>
