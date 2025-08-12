@@ -1,6 +1,6 @@
 {
-  "name": "marshall-tuner-v7-0-1",
-  "version": "7.0.1",
+  "name": "marshall-tuner-v7-0-3",
+  "version": "7.0.3",
   "private": true,
   "type": "module",
   "dependencies": {
