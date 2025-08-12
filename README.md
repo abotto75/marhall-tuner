@@ -1,1 +1,1 @@
-Marshall Tuner v7.0.4 — Ricerca Genere via Responses API JSON Schema; Quick + AI Pro; Presets inclusi.
+Marshall Tuner v8.0 — Generatore 10-bande → Bass&Treble o APP5 + Ricerca Genere AI + AI Tune Pro.

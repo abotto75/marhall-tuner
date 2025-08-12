@@ -2,10 +2,11 @@
   "top_genres_order": [
     "rock",
     "metal",
+    "jazz",
     "classica",
-    "country",
     "ost",
-    "pop"
+    "pop",
+    "country"
   ],
   "genres": {
     "rock": {
@@ -16,21 +17,21 @@
     },
     "metal": {
       "name": "Metal",
-      "bass_clock": 2.6,
-      "treble_clock": 2.0,
-      "notes": "Basso impattante, chitarre aggressive."
+      "bass_clock": 2.5,
+      "treble_clock": 2.2,
+      "notes": "Bassi solidi, alti aggressivi."
+    },
+    "jazz": {
+      "name": "Jazz",
+      "bass_clock": 2.2,
+      "treble_clock": 2.3,
+      "notes": "Tono morbido, definizione su piatti."
     },
     "classica": {
       "name": "Classica",
       "bass_clock": 2.0,
       "treble_clock": 2.3,
       "notes": "Equilibrio naturale."
-    },
-    "country": {
-      "name": "Country",
-      "bass_clock": 2.3,
-      "treble_clock": 2.2,
-      "notes": "Voce calda, chitarre nitide."
     },
     "ost": {
       "name": "Colonne Sonore",
@@ -40,9 +41,15 @@
     },
     "pop": {
       "name": "Pop",
+      "bass_clock": 2.3,
+      "treble_clock": 2.2,
+      "notes": "Bilanciato e brillante."
+    },
+    "country": {
+      "name": "Country",
       "bass_clock": 2.2,
-      "treble_clock": 2.4,
-      "notes": "Voci in primo piano, radio friendly."
+      "treble_clock": 2.1,
+      "notes": "Voce in primo piano, chitarre calde."
     }
   },
   "subgenres": {
@@ -52,20 +59,48 @@
         "name": "Hard Rock",
         "bass_clock": 2.6,
         "treble_clock": 2.2
+      },
+      {
+        "id": "prog_rock",
+        "name": "Rock Progressivo",
+        "bass_clock": 2.3,
+        "treble_clock": 2.3
       }
     ],
     "metal": [
       {
         "id": "thrash",
         "name": "Thrash Metal",
-        "bass_clock": 2.7,
-        "treble_clock": 2.0
+        "bass_clock": 2.6,
+        "treble_clock": 2.3
       },
       {
         "id": "heavy",
         "name": "Heavy Metal",
-        "bass_clock": 2.6,
-        "treble_clock": 2.1
+        "bass_clock": 2.5,
+        "treble_clock": 2.2
+      }
+    ],
+    "jazz": [
+      {
+        "id": "bebop",
+        "name": "Bebop",
+        "bass_clock": 2.1,
+        "treble_clock": 2.4
+      },
+      {
+        "id": "fusion",
+        "name": "Fusion",
+        "bass_clock": 2.3,
+        "treble_clock": 2.3
+      }
+    ],
+    "classica": [
+      {
+        "id": "barocco",
+        "name": "Barocco",
+        "bass_clock": 2.0,
+        "treble_clock": 2.3
       }
     ],
     "ost": [
@@ -73,6 +108,22 @@
         "id": "cinematic_epico",
         "name": "Cinematic Epico",
         "bass_clock": 2.7,
+        "treble_clock": 2.1
+      }
+    ],
+    "pop": [
+      {
+        "id": "dance_pop",
+        "name": "Dance Pop",
+        "bass_clock": 2.4,
+        "treble_clock": 2.3
+      }
+    ],
+    "country": [
+      {
+        "id": "country_soul",
+        "name": "Country Soul",
+        "bass_clock": 2.3,
         "treble_clock": 2.1
       }
     ]
