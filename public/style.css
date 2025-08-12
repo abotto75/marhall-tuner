@@ -1,21 +1,30 @@
 
-/* Marshall Original-Inspired Style — v8.0.3 */
-:root{
-  --bg:#0c0c0c;               /* black */
-  --bg-2:#1b1b1b;             /* dark grey */
-  --panel:#121212;
-  --panel-2:#161616;
-  --gold:#d4af37;             /* warm gold accent */
-  --text:#f5f5f5;             /* off white */
-  --text-dim:#b0b0b0;         /* medium grey */
-  --border:#202020;
-  --tap-min:44px;
+/* =========================================================
+   Marshall Tuner — style.css (v8.0.3 — Marshall look)
+   Palette nero/oro, tipografia uppercase, knob restaurate,
+   campi input grandi con placeholder attenuato, mobile-first.
+   ========================================================= */
 
-  --r-1:10px; --r-2:14px; --r-3:18px;
+:root{
+  /* Colors */
+  --bg:#0c0c0c;
+  --bg-2:#1b1b1b;
+  --panel:#121212;
+  --panel-2:#181818;
+  --gold:#d4af37;
+  --gold-weak:#8b7334;
+  --text:#f5f5f5;
+  --text-dim:#b0b0b0;
+  --muted:#777;
+  --border:#202020;
+
+  /* Radii & shadows */
+  --r-1:10px; --r-2:14px; --r-3:18px; --r-4:24px;
   --shadow:0 8px 24px rgba(0,0,0,.35);
 
-  /* Type scale (mobile-first) */
-  --fs-12:12px; --fs-13:13px; --fs-14:14px; --fs-15:15px; --fs-16:16px; --fs-18:18px; --fs-22:22px; --fs-28:28px;
+  /* Type scale */
+  --fs-12:12px; --fs-13:13px; --fs-14:14px; --fs-15:15px;
+  --fs-16:16px; --fs-18:18px; --fs-22:22px; --fs-28:28px;
 }
 
 *{box-sizing:border-box}
@@ -23,81 +32,138 @@ html,body{height:100%}
 body{
   margin:0;
   font-family: Inter, Montserrat, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: radial-gradient(1200px 800px at 80% -10%, rgba(255,255,255,.035), transparent), var(--bg);
   color:var(--text);
-  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-  font-size:var(--fs-16); line-height:1.55;
+  background: radial-gradient(1200px 800px at 80% -10%, rgba(255,255,255,.04), transparent), var(--bg);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  font-size:var(--fs-16);
+  line-height:1.55;
 }
 
 /* Topbar */
 .topbar{
   position:sticky; top:0; z-index:10;
   display:flex; align-items:center; justify-content:space-between; gap:12px;
-  padding:12px 14px;
-  background:#0e0e0e; border-bottom:1px solid var(--border);
+  padding:12px 14px; background:#0e0e0e; border-bottom:1px solid var(--border);
 }
-.brand{font-weight:900; letter-spacing:.4px; font-size:var(--fs-18); text-transform:uppercase}
-.ver{opacity:.9; font-weight:700; padding:.15rem .5rem; border:1px solid var(--border); border-radius:999px; font-size:var(--fs-12)}
+.brand{font-weight:800; letter-spacing:.3px; font-size:var(--fs-18)}
+.ver{opacity:.9; font-weight:700; padding:.2rem .55rem; border:1px solid var(--border); border-radius:999px; font-size:var(--fs-12)}
 
 /* Layout */
 main{max-width:1000px; margin:20px auto; padding:0 12px; display:grid; grid-template-columns:1fr; gap:14px}
 @media (min-width:980px){ main{ grid-template-columns:1.1fr .9fr; gap:18px }}
 
-.card{ background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--border); border-radius:var(--r-3); box-shadow:var(--shadow)}
+.card{ background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--border); border-radius:var(--r-4); box-shadow:var(--shadow)}
 .card .section-title{ padding:12px 14px 6px; font-size:12px; text-transform:uppercase; letter-spacing:.14em; color:var(--text-dim)}
 .card .section-sub{ padding:0 14px 10px; font-size:var(--fs-14); color:var(--text-dim)}
 .card .content{ padding:12px 14px 14px}
 
-/* Selection Bar */
+/* Selection bar */
 .selbar{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px; margin:10px 14px 0;
-  border:1px solid var(--border); border-radius:var(--r-2); background:#0e0e0e }
-.seltext{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:var(--fs-14); text-transform:uppercase; letter-spacing:.06em }
-.badge{ font-size:var(--fs-12); padding:.25rem .6rem; border-radius:999px; border:1px solid var(--border); color:var(--text-dim); text-transform:uppercase; letter-spacing:.06em }
+  border:1px solid var(--border); border-radius:var(--r-2); background:#0f0f0f }
+.seltext{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:var(--fs-14) }
+.badge{ font-size:var(--fs-12); padding:.2rem .55rem; border-radius:999px; border:1px solid var(--border); color:var(--text-dim) }
 .badge.aipro{ color:#e0ecff; border-color:#2b4e7a }
 #aiTs{ font-size:var(--fs-12); opacity:.75; margin-left:6px }
 
 /* Chips */
 .chips{ display:flex; flex-wrap:wrap; gap:8px }
-.chip{ padding:.6rem .9rem; min-height:var(--tap-min); border-radius:999px; border:1px solid var(--border);
-  background:#151515; color:#d9d9d9; cursor:pointer; transition: background .18s ease, transform .08s ease; text-transform:uppercase; letter-spacing:.03em }
+.chip{ padding:.6rem .9rem; border-radius:999px; border:1px solid var(--border); background:#141414; color:#cfd6e0; cursor:pointer;
+  transition: background .18s ease, transform .08s ease }
 .chip:hover{ background:#171717 }
 .chip:active{ transform: translateY(1px) }
 .chip.active{ background:#1a1a1a; border-color:#2a2a2a; color:#fff }
+.block-title{ font-weight:800; margin-bottom:10px; font-size:var(--fs-14); text-transform:uppercase; letter-spacing:.12em }
+.block.subtle{ opacity:.95 }
 
-/* Dials (knobs) */
-.dials{ display:grid; grid-template-columns:1fr; gap:12px }
-@media (min-width:680px){ .dials{ grid-template-columns:1fr 1fr; gap:14px } }
-.dial{ position:relative; padding:14px; border:1px solid var(--border); border-radius:var(--r-3); background:#101010 }
-.dial .dial-title{ display:flex; align-items:center; gap:8px; font-weight:900; letter-spacing:.06em; text-transform:uppercase; color:var(--text) }
-.dial .dial-value{ margin-top:8px; font-size:var(--fs-28); font-weight:900 }
-.dial .knob{ width:min(52vw,132px); height:min(52vw,132px); margin:10px auto 8px }
-.dial .knob svg{ width:100%; height:100%; display:block }
-.dial .hint{ position:absolute; right:10px; top:10px; font-size:var(--fs-12); color:var(--text-dim) }
+/* Inputs (search / text) — large like the "BLUES" field */
+input[type="text"], input[type="search"], .text-input {
+  width:100%;
+  height:48px;
+  padding:0 14px;
+  border-radius:14px;
+  background:#0f0f0f;
+  border:1px solid var(--border);
+  color:var(--text);
+  font-weight:700;
+  letter-spacing:.2px;
+}
+input::placeholder, .text-input::placeholder{ color:var(--muted); font-weight:600 }
+input[type="text"]:focus, input[type="search"]:focus, .text-input:focus{
+  outline:none; border-color:#2a2a2a; box-shadow:0 0 0 2px rgba(212,175,55,.15);
+}
+
+/* Group with action button (e.g., Consigliami il genere) */
+.input-row{ display:flex; gap:10px; align-items:center }
+.input-row > *{ flex:1 }
+.input-row .cta{ flex:0 0 auto }
 
 /* Buttons */
-.actions{ display:flex; gap:10px; padding:0 14px 14px; flex-wrap:wrap }
-button{ appearance:none; border:none; cursor:pointer; font-weight:900; letter-spacing:.06em; text-transform:uppercase; font-size:var(--fs-14) }
+.actions{ display:flex; gap:12px; padding:0 14px 14px; flex-wrap:wrap }
+button{ appearance:none; border:none; cursor:pointer; font-weight:800; letter-spacing:.25px; font-size:var(--fs-14) }
 button.primary{
-  padding:.85rem 1.1rem; border-radius:12px;
-  background:#151515; color:#f7e7b0; border:1px solid #8f7a38;
-  transition: filter .15s ease, transform .08s ease;
+  padding:.8rem 1.1rem; border-radius:14px;
+  background:#151515; color:#f7e7b0; border:1px solid var(--gold-weak);
+  transition: filter .18s ease, transform .06s ease;
 }
-button.primary:hover{ filter:saturate(1.05) }
-button.primary:active{ transform: translateY(1px) }
+button.primary:hover{ filter:saturate(1.06) }
+button.primary:active{ transform:translateY(1px) }
 button.ghost{
-  padding:.85rem 1.1rem; border-radius:12px; background:transparent; color:#fff; border:1px solid var(--border);
-  transition: background .15s ease, transform .08s ease;
+  padding:.8rem 1.1rem; border-radius:14px; background:transparent; color:#fff; border:1px solid var(--border);
 }
-button.ghost:hover{ background:#121212 }
-button.ghost:active{ transform: translateY(1px) }
 
 /* Percent label */
-.tlabel{ display:inline-flex; align-items:center; justify-content:center; min-width:44px; height:32px; border-radius:999px;
-  background:#121212; color:#d7dfef; border:1px solid var(--border); font-weight:900; letter-spacing:.3px }
+.tlabel{ display:inline-flex; align-items:center; justify-content:center; min-width:46px; height:34px; border-radius:999px;
+  background:#131313; color:#d7dfef; border:1px solid var(--border); font-weight:900; letter-spacing:.3px }
 
-/* Notes & Guide */
+/* Dials */
+.dials{ display:grid; grid-template-columns:1fr; gap:12px }
+@media (min-width:680px){ .dials{ grid-template-columns:1fr 1fr; gap:16px } }
+.dial{ position:relative; padding:14px; border:1px solid var(--border); border-radius:var(--r-3);
+  background:linear-gradient(180deg, #0f0f0f, #151515) }
+.dial .dial-title{ display:flex; align-items:center; gap:8px; font-weight:800; letter-spacing:.2px; text-transform:uppercase }
+.dial .dial-value{ margin-top:6px; font-size:var(--fs-28); font-weight:900 }
+
+/* KNOB — restore image, keep perfectly centered */
+.dial .knob{
+  position:relative;
+  width:min(52vw,136px);
+  height:min(52vw,136px);
+  margin:10px auto 8px;
+  display:flex; align-items:center; justify-content:center;
+}
+/* If app injects an <img> or <svg> inside, make it behave */
+.dial .knob img, .dial .knob svg{ width:100%; height:100%; display:block; transform:none }
+.dial .knob::before{
+  content:"";
+  position:absolute; inset:0;
+  background-image:url("img/knob.svg");
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+  pointer-events:none;
+  opacity:1; /* ensure visible */
+}
+
+/* Optional white marker overlay (JS rotates the inner needle if present) */
+.dial .knob::after{
+  content:"";
+  position:absolute; top:10px; left:50%; transform:translateX(-50%);
+  width:10px; height:24px; border-radius:2px;
+  background:#fff; opacity:.0; /* disabled if the SVG already has marker */
+}
+
+/* Hints / notes */
+.dial .hint{ position:absolute; right:12px; top:12px; font-size:var(--fs-12); color:var(--text-dim) }
+.notes{ margin:8px 14px 14px; padding:10px; border-radius:10px; background:#0f0f0f; border:1px solid var(--border); color:var(--text-dim); font-size:var(--fs-14) }
+
+/* Guide hidden (as da richiesta) */
 .guide[hidden]{ display:none }
-.notes{ margin:8px 14px 14px; padding:10px; border-radius:10px; background:#0e0e0e; border:1px solid var(--border); color:var(--text-dim); font-size:var(--fs-14) }
 
 /* Focus ring */
 :focus-visible{ outline:2px solid var(--gold); outline-offset:2px; border-radius:10px }
+
+/* Utilities */
+.upper{ text-transform:uppercase; letter-spacing:.12em }
+.center{ text-align:center }
+.hidden{ display:none !important }
