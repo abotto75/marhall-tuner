@@ -15,10 +15,10 @@ main{padding:12px;max-width:820px;margin:0 auto}
 .chip{background:#1A1A1A;border:1px solid #2A2A2A;color:#DDD;padding:8px 12px;border-radius:999px;font-size:13px}
 .selbar{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding:10px;border:1px dashed #2A2A2A;border-radius:10px;background:#0E0E0E}
 .seltext{font-weight:800;font-size:13px;color:#EDEDED}
-.badge{font-size:10px;background:#1E1E1E;border:1px solid #2A2A2A;color:#CFEFCF;padding:2px 6px;border-radius:999px}
+.badge{font-size:10px;background:#1E1E1E;border:1px solid #2A2A2A;color:#CFCFCF;padding:2px 6px;border-radius:999px}
 .badge-src.preset{background:#1E1E1E;color:#CFCFCF;border-color:#2A2A2A}
 .badge-src.aipro{background:#2BD97F;color:#0B0B0B;border-color:#2BD97F}
-.badge-src.aic{background:#B28DFF;color:#0B0B0B;border-color:#B28DFF}
+.badge.ai{background:#E2C044;color:#0B0B0B;border-color:#E2C044;margin-left:6px}
 .timestamp{font-size:11px;color:#9b9b9b;margin-left:8px}
 .card-lite{margin-top:10px;padding:10px;border:1px dashed #2A2A2A;border-radius:10px;background:#0E0E0E}
 .consult-title{font-weight:800;font-size:13px;margin-bottom:4px}

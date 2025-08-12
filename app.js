@@ -9,7 +9,7 @@ let LAST={query:'', baseBass:2.0, baseTreble:2.0, genreId:null, subId:null, guid
 let displayMode='percent';
 
 async function loadData(){
-  PRESETS = await (await fetch('data/presets.json')).json().catch(async()=> (await (await fetch('data/presets_example.json')).json()));
+  PRESETS = await (await fetch('data/presets.json')).json();
   try { SUB_GUIDES = await (await fetch('data/subgenre_guides.json')).json(); } catch { SUB_GUIDES = {}; }
   renderGenreChips();
   qs('#modePercent').onclick=()=>{displayMode='percent'; qs('#modePercent').classList.add('active'); qs('#modeClock').classList.remove('active'); refreshValues();};
@@ -36,14 +36,15 @@ async function loadData(){
     try {
       console.log("[consult] calling /api/classify with:", text);
       const r = await fetch('/api/classify', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ text }) });
-      console.log("[consult] /api/classify status:", r.status);
+      console.log("[consult] status:", r.status);
       const data = await r.json();
-      console.log("[consult] /api/classify json:", data);
+      console.log("[consult] json:", data);
       lastSuggest = data;
       cGenre.textContent = data.genreName || "Sconosciuto";
       cNote.textContent = data.note || "";
       cRes.hidden = false;
     } catch (e) {
+      console.error("[consult] error:", e);
       cGenre.textContent = "Errore";
       cNote.textContent = "Non sono riuscito a classificare.";
       cRes.hidden = false;
@@ -56,7 +57,6 @@ async function loadData(){
     if (!lastSuggest.genreId) { alert("Nessun genere applicabile."); return; }
     selectGenre(lastSuggest.genreId);
     LAST.source = 'AI Consiglio';
-    LAST.ts = null;
     updateSelBar();
     cRes.hidden = true;
   };
@@ -99,7 +99,7 @@ function applyPreset(b,t,guide){
   LAST.baseTreble = clamp(t,0.5,3.5);
   LAST.pristine = {bass: LAST.baseBass, treble: LAST.baseTreble};
   LAST.guide = guide||'';
-  if(LAST.source!=="AI Consiglio") LAST.source = 'Preset';
+  LAST.source = 'Preset';
   LAST.ts = null;
   setKnob(document.getElementById('bassKnob'), LAST.baseBass);
   setKnob(document.getElementById('trebleKnob'), LAST.baseTreble);
@@ -135,8 +135,7 @@ function updateSelBar(){
   const badge = qs('#sourceBadge');
   badge.textContent = LAST.source;
   badge.classList.toggle('aipro', LAST.source==='AI Tune Pro');
-  badge.classList.toggle('preset', LAST.source==='Preset');
-  badge.classList.toggle('aic', LAST.source==='AI Consiglio');
+  badge.classList.toggle('preset', LAST.source!=='AI Tune Pro');
   const ts = qs('#aiTs');
   if (LAST.ts){ ts.textContent = LAST.ts; ts.hidden=false; } else { ts.hidden=true; }
 }

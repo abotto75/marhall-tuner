@@ -18,19 +18,19 @@
       "name": "Metal",
       "bass_clock": 2.6,
       "treble_clock": 2.0,
-      "notes": "Impatto e attacco sulle chitarre."
+      "notes": "Basso impattante, chitarre aggressive."
     },
     "classica": {
       "name": "Classica",
       "bass_clock": 2.0,
       "treble_clock": 2.3,
-      "notes": "Equilibrio naturale e respiro della sala."
+      "notes": "Equilibrio naturale."
     },
     "country": {
       "name": "Country",
       "bass_clock": 2.3,
       "treble_clock": 2.2,
-      "notes": "Voce calda e chitarre pulite."
+      "notes": "Voce calda, chitarre nitide."
     },
     "ost": {
       "name": "Colonne Sonore",
@@ -42,7 +42,7 @@
       "name": "Pop",
       "bass_clock": 2.2,
       "treble_clock": 2.4,
-      "notes": "Voci lucide e kick definito."
+      "notes": "Voci in primo piano, radio friendly."
     }
   },
   "subgenres": {
@@ -56,64 +56,24 @@
     ],
     "metal": [
       {
-        "id": "heavy",
-        "name": "Heavy Metal",
-        "bass_clock": 2.6,
-        "treble_clock": 2.1
-      },
-      {
         "id": "thrash",
         "name": "Thrash Metal",
         "bass_clock": 2.7,
         "treble_clock": 2.0
-      }
-    ],
-    "country": [
-      {
-        "id": "country_soul",
-        "name": "Country Soul",
-        "bass_clock": 2.68,
-        "treble_clock": 2.04
       },
       {
-        "id": "country_rock",
-        "name": "Country Rock",
-        "bass_clock": 2.72,
-        "treble_clock": 2.06
+        "id": "heavy",
+        "name": "Heavy Metal",
+        "bass_clock": 2.6,
+        "treble_clock": 2.1
       }
     ],
     "ost": [
       {
         "id": "cinematic_epico",
         "name": "Cinematic Epico",
-        "bass_clock": 2.78,
-        "treble_clock": 2.14
-      },
-      {
-        "id": "action_suspense",
-        "name": "Action / Suspense",
-        "bass_clock": 2.75,
-        "treble_clock": 2.18
-      }
-    ],
-    "classica": [
-      {
-        "id": "jazz_sinfonico",
-        "name": "Jazz Sinfonico (Gershwin)",
-        "bass_clock": 2.62,
-        "treble_clock": 2.64
-      },
-      {
-        "id": "musical_orchestrale",
-        "name": "Musical / Orchestrale (Gershwin)",
-        "bass_clock": 2.58,
-        "treble_clock": 2.66
-      },
-      {
-        "id": "piano_concerto",
-        "name": "Piano Concerto / Classica Moderna",
-        "bass_clock": 2.6,
-        "treble_clock": 2.68
+        "bass_clock": 2.7,
+        "treble_clock": 2.1
       }
     ]
   }
