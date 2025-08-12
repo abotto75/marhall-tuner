@@ -1,115 +1,195 @@
-#!/usr/bin/env node
 /**
  * build_presets_from_csv.js
- * Usage: node scripts/build_presets_from_csv.js <input.csv> <output.json>
- * - CSV must be delimited by semicolons (;)
- * - Columns: Genere;Sottogenere;Bass (0-10);Treble (0-10)
- * - "Generico/Generica" row per Genere is used as the base preset, if present.
- * - Top genres order is computed by popularity = row count per Genere (desc).
+ * Usage: node scripts/build_presets_from_csv.js data/presets.csv data/presets.json
+ * - Validates CSV schema and values; exits with code 1 on error (so Vercel build fails).
+ * - Backs up existing presets.json to presets.backup-YYYYMMDD-HHMMSS.json before overwriting.
+ * - Generates presets.json with:
+ *    * LED(0..10) -> clock = 0.5 + 0.3*LED (clamped)
+ *    * "Generico/Generica" row as base genre; otherwise first subgenre as base
+ *    * Genres order:
+ *         If data/genres_order.json exists -> manual order (slugs or names), then the rest by popularity.
+ *         Else -> popularity (row count per genere desc).
+ * - Logs counts and important actions.
  */
 const fs = require('fs');
 const path = require('path');
 
-function slugify(s){
-  return (s||'')
-    .normalize('NFKD').replace(/[\u0300-\u036f]/g,'')
+function slugify(str){
+  return (str||'').normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g,'')
     .toLowerCase()
     .replace(/[^a-z0-9]+/g,'_')
     .replace(/^_+|_+$/g,'') || 'x';
 }
+
 function ledToClock(x){
-  const v = Math.max(0, Math.min(10, Number(x)||0));
-  return Math.round((0.5 + 0.3*v) * 100)/100;
+  let v = Number(x);
+  if (!isFinite(v)) v = 0;
+  v = Math.max(0, Math.min(10, v));
+  return Math.round((0.5 + 0.3*v) * 100) / 100;
 }
-function parseCSV(content){
-  // Simple semicolon CSV parser with quotes support
+
+function readCSV(file){
+  const raw = fs.readFileSync(file, 'utf8');
+  // Support Windows newlines
+  const lines = raw.split(/\r?\n/).filter(l => l.trim().length > 0);
+  if (lines.length === 0) throw new Error("CSV vuoto.");
+  const header = lines[0].split(';').map(h=>h.trim());
+  const required = ['Genere','Sottogenere','Bass (0-10)','Treble (0-10)'];
+  for (const r of required){
+    if (!header.includes(r)) throw new Error(`Colonna mancante: ${r}`);
+  }
+  const idx = Object.fromEntries(header.map((h,i)=>[h,i]));
   const rows = [];
-  let i=0, cur='', inQ=false;
-  const push = () => { rows[rows.length-1].push(cur); cur=''; };
-  rows.push([]);
-  while (i < content.length){
-    const ch = content[i];
-    if (inQ){
-      if (ch === '"'){
-        if (content[i+1] === '"'){ cur += '"'; i++; } else { inQ=false; }
-      } else {
-        cur += ch;
-      }
-    } else {
-      if (ch === '"'){ inQ = true; }
-      else if (ch === ';'){ push(); }
-      else if (ch === '\n'){ push(); rows.push([]); }
-      else if (ch === '\r'){ /* ignore */ }
-      else { cur += ch; }
+  for (let i=1;i<lines.length;i++){
+    const parts = lines[i].split(';');
+    if (parts.length < header.length) {
+      // allow trailing empty columns
+      while (parts.length < header.length) parts.push('');
     }
-    i++;
+    const get = (k)=> (parts[idx[k]]||'').trim();
+    const genere = get('Genere');
+    const sottogenere = get('Sottogenere');
+    const bass = get('Bass (0-10)');
+    const treble = get('Treble (0-10)');
+    if (!genere && !sottogenere) continue; // skip empty row
+    const bNum = Number(bass);
+    const tNum = Number(treble);
+    if (!isFinite(bNum) || !isFinite(tNum)) {
+      throw new Error(`Valori non numerici a riga ${i+1}: "${bass}", "${treble}"`);
+    }
+    if (bNum<0 || bNum>10 || tNum<0 || tNum>10){
+      throw new Error(`Valori fuori range 0-10 a riga ${i+1}: bass=${bNum}, treble=${tNum}`);
+    }
+    rows.push({genere, sottogenere, bass: bNum, treble: tNum});
   }
-  // finalize last cell
-  if (rows.length && rows[rows.length-1]){
-    rows[rows.length-1].push(cur);
-  }
-  // trim empty trailing row if present
-  if (rows.length && rows[rows.length-1].every(c => c==='' )) rows.pop();
+  if (rows.length === 0) throw new Error("Nessuna riga valida nel CSV.");
   return rows;
 }
 
-function main(){
-  const [,, inCsv, outJson] = process.argv;
-  if (!inCsv || !outJson){
-    console.error('Usage: node scripts/build_presets_from_csv.js <input.csv> <output.json>');
-    process.exit(1);
-  }
-  const raw = fs.readFileSync(inCsv, 'utf8');
-  const rows = parseCSV(raw);
-  if (!rows.length) throw new Error('CSV vuoto');
-  const header = rows[0].map(h=>h.trim().toLowerCase());
-  const gi = header.indexOf('genere');
-  const si = header.indexOf('sottogenere');
-  const bi = header.findIndex(h => h.startsWith('bass'));
-  const ti = header.findIndex(h => h.startsWith('treble'));
-  if (gi<0 || si<0 || bi<0 || ti<0){
-    throw new Error('Intestazioni CSV non valide. Attese: Genere;Sottogenere;Bass (0-10);Treble (0-10)');
-  }
-
-  const data = rows.slice(1).map(r => ({
-    g: (r[gi]||'').trim(),
-    s: (r[si]||'').trim(),
-    b: ledToClock(r[bi]),
-    t: ledToClock(r[ti])
-  })).filter(r => r.g);
-
-  // Popularità per conteggio righe
-  const counts = new Map();
-  for (const r of data){ counts.set(r.g, (counts.get(r.g)||0)+1); }
-  const topOrder = Array.from(counts.entries())
-    .sort((a,b)=> b[1]-a[1] || a[0].localeCompare(b[0]))
-    .map(([g]) => slugify(g));
-
-  const genres = {};
-  const subgenres = {};
-  for (const r of data){
-    const gid = slugify(r.g);
-    if (/^generic[oa]$/i.test(r.s)){
-      genres[gid] = { name: r.g, bass_clock: r.b, treble_clock: r.t, notes: "" };
-    } else if (r.s){
-      (subgenres[gid] ||= []).push({ id: slugify(r.s), name: r.s, bass_clock: r.b, treble_clock: r.t });
+function loadManualOrder(dataDir){
+  const file = path.join(dataDir, 'genres_order.json');
+  if (fs.existsSync(file)){
+    try{
+      const arr = JSON.parse(fs.readFileSync(file,'utf8'));
+      if (!Array.isArray(arr)) throw new Error('Il file genres_order.json deve contenere un array.');
+      const norm = arr.map(x=>{
+        const s = String(x||'').trim();
+        return {orig:s, slug: slugify(s)};
+      }).filter(x=>x.slug);
+      console.log(`[build] Ordine manuale trovato: ${norm.map(x=>x.orig).join(', ')}`);
+      return norm;
+    }catch(e){
+      throw new Error(`Errore in genres_order.json: ${e.message}`);
     }
   }
-  // Ensure base preset for each genre
-  for (const gid of topOrder){
+  return null;
+}
+
+function main(){
+  const inFile = process.argv[2] || 'data/presets.csv';
+  const outFile = process.argv[3] || 'data/presets.json';
+  const dataDir = path.dirname(outFile);
+  console.log(`[build] CSV sorgente: ${inFile}`);
+  console.log(`[build] JSON destinazione: ${outFile}`);
+
+  // 1) Read and validate CSV
+  const rows = readCSV(inFile);
+
+  // 2) Aggregate
+  const top_order = [];
+  const genres = {};
+  const subgenres = {};
+  const byGenereCount = {};
+  for (const r of rows){
+    const gid = slugify(r.genere);
+    byGenereCount[gid] = (byGenereCount[gid]||0) + 1;
+    if (!top_order.includes(gid)) top_order.push(gid);
+
+    const bass_clock = ledToClock(r.bass);
+    const treble_clock = ledToClock(r.treble);
+
+    if (/^generico|generica$/i.test(r.sottogenere.trim())){
+      genres[gid] = {
+        name: r.genere.trim(),
+        bass_clock,
+        treble_clock,
+        notes: ""
+      };
+    } else {
+      if (!subgenres[gid]) subgenres[gid] = [];
+      subgenres[gid].push({
+        id: slugify(r.sottogenere),
+        name: r.sottogenere.trim(),
+        bass_clock,
+        treble_clock
+      });
+    }
+  }
+
+  // Ensure every genre has a base
+  for (const gid of top_order){
     if (!genres[gid]){
-      const sg = (subgenres[gid]||[])[0];
-      if (sg){
-        genres[gid] = { name: data.find(d=>slugify(d.g)===gid)?.g || gid, bass_clock: sg.bass_clock, treble_clock: sg.treble_clock, notes: "" };
+      const first = (subgenres[gid]||[])[0];
+      if (first){
+        genres[gid] = {
+          name: rows.find(r=>slugify(r.genere)===gid)?.genere || first.name,
+          bass_clock: first.bass_clock,
+          treble_clock: first.treble_clock,
+          notes: ""
+        };
       } else {
-        genres[gid] = { name: data.find(d=>slugify(d.g)===gid)?.g || gid, bass_clock: 2.0, treble_clock: 2.0, notes: "" };
+        genres[gid] = { name: gid, bass_clock: 2.0, treble_clock: 2.0, notes:"" };
       }
     }
   }
 
-  const out = { top_genres_order: topOrder, genres, subgenres };
-  fs.writeFileSync(outJson, JSON.stringify(out, null, 2), 'utf8');
-  console.log(`Scritto ${outJson} — generi: ${topOrder.length}, sottogeneri: ${Object.values(subgenres).reduce((a,b)=>a+b.length,0)}`);
+  // 3) Ordering
+  const manual = loadManualOrder(dataDir);
+  let order;
+  if (manual){
+    const manualSlugs = manual.map(x=>x.slug);
+    const rest = Object.keys(genres).filter(g=>!manualSlugs.includes(g));
+    // sort rest by popularity desc
+    rest.sort((a,b)=>(byGenereCount[b]||0)-(byGenereCount[a]||0));
+    order = [...manualSlugs, ...rest];
+  } else {
+    order = Object.keys(genres).sort((a,b)=>(byGenereCount[b]||0)-(byGenereCount[a]||0));
+  }
+
+  // 4) Backup existing outFile
+  if (fs.existsSync(outFile)){
+    const stamp = new Date();
+    const y = stamp.getFullYear();
+    const m = String(stamp.getMonth()+1).padStart(2,'0');
+    const d = String(stamp.getDate()).padStart(2,'0');
+    const hh = String(stamp.getHours()).padStart(2,'0');
+    const mm = String(stamp.getMinutes()).padStart(2,'0');
+    const ss = String(stamp.getSeconds()).padStart(2,'0');
+    const backup = path.join(dataDir, `presets.backup-${y}${m}${d}-${hh}${mm}${ss}.json`);
+    fs.copyFileSync(outFile, backup);
+    console.log(`[build] Backup creato: ${path.basename(backup)}`);
+  }
+
+  // 5) Write new presets.json
+  const payload = {
+    top_genres_order: order,
+    genres,
+    subgenres
+  };
+  fs.writeFileSync(outFile, JSON.stringify(payload, null, 2), 'utf8');
+
+  // 6) Logging summary
+  const nGenres = Object.keys(genres).length;
+  const nSub = Object.values(subgenres).reduce((s,arr)=>s+(arr?arr.length:0),0);
+  console.log(`[build] Generi: ${nGenres} | Sottogeneri: ${nSub}`);
+  console.log(`[build] Ordinamento: ${manual ? 'manuale + popolarità' : 'popolarità'}`);
+  console.log(`[build] Completato senza errori.`);
 }
 
-if (require.main === module) main();
+try{
+  main();
+} catch(e){
+  console.error(`[build][ERRORE] ${e.message}`);
+  process.exit(1);
+}
