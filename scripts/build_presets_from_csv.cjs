@@ -1,157 +1,134 @@
-// CommonJS build script for Vercel/Node without ESM
-// Usage: node scripts/build_presets_from_csv.cjs data/presets.csv data/presets.json
+
 const fs = require('fs');
 const path = require('path');
 
-function exitWith(msg) {
-  console.error('[build:presets] ' + msg);
+function exitErr(msg) {
+  console.error(`[build:presets][ERROR] ${msg}`);
   process.exit(1);
 }
 
-const [,, csvInArg, jsonOutArg] = process.argv;
-if (!csvInArg || !jsonOutArg) {
-  exitWith('Usage: node scripts/build_presets_from_csv.cjs <input.csv> <output.json>');
-}
-
-const csvPath = path.resolve(csvInArg);
-const outPath = path.resolve(jsonOutArg);
-const dataDir = path.dirname(csvPath);
-
-if (!fs.existsSync(csvPath)) {
-  exitWith(`CSV not found at ${csvPath}`);
-}
-
-const mustCols = ['Genere','Sottogenere','Bass (0-10)','Treble (0-10)'];
-function parseCSV(content) {
-  const lines = content.replace(/\r/g,'').split('\n').filter(Boolean);
-  const header = lines[0].split(';').map(s=>s.trim());
-  for (const c of mustCols) {
-    if (!header.includes(c)) {
-      exitWith(`Missing column "${c}". Header found: ${header.join(', ')}`);
-    }
+function readCSV(file) {
+  if (!fs.existsSync(file)) exitErr(`CSV non trovato: ${file}`);
+  const raw = fs.readFileSync(file, 'utf8');
+  const lines = raw.split(/\r?\n/).filter(Boolean);
+  if (!lines.length) exitErr('CSV vuoto.');
+  const header = lines[0].split(';').map(s => s.trim());
+  const required = ['Genere','Sottogenere','Bass (0-10)','Treble (0-10)'];
+  for (const col of required) {
+    if (!header.includes(col)) exitErr(`Colonna mancante: "${col}". Header trovato: ${header.join(', ')}`);
   }
-  const idx = Object.fromEntries(header.map((h,i)=>[h,i]));
+  const idx = Object.fromEntries(required.map(k => [k, header.indexOf(k)]));
   const rows = [];
-  for (let i=1;i<lines.length;i++) {
-    const parts = lines[i].split(';').map(s=>s.trim());
-    if (parts.length !== header.length) {
-      exitWith(`Row ${i+1} has ${parts.length} columns, expected ${header.length}. Line="${lines[i]}"`);
-    }
-    const g = parts[idx['Genere']];
-    const s = parts[idx['Sottogenere']];
-    const b = parseFloat(parts[idx['Bass (0-10)']]);
-    const t = parseFloat(parts[idx['Treble (0-10)']]);
-    if (!g) exitWith(`Row ${i+1}: Genere is empty.`);
-    if (!s) exitWith(`Row ${i+1}: Sottogenere is empty.`);
-    if (!Number.isFinite(b) || b<0 || b>10) exitWith(`Row ${i+1}: Bass must be 0–10. Found "${parts[idx['Bass (0-10)']]}".`);
-    if (!Number.isFinite(t) || t<0 || t>10) exitWith(`Row ${i+1}: Treble must be 0–10. Found "${parts[idx['Treble (0-10)']]}".`);
-    rows.push({ Genere:g, Sottogenere:s, Bass:b, Treble:t });
+  for (let i=1;i<lines.length;i++){
+    const parts = lines[i].split(';');
+    if (parts.length < header.length) continue;
+    const g = (parts[idx['Genere']]||'').trim();
+    const s = (parts[idx['Sottogenere']]||'').trim();
+    const b = (parts[idx['Bass (0-10)']]||'').trim();
+    const t = (parts[idx['Treble (0-10)']]||'').trim();
+    if (!g || !s) continue;
+    const bass = Number(b.replace(',', '.'));
+    const treble = Number(t.replace(',', '.'));
+    if (!Number.isFinite(bass) || !Number.isFinite(treble)) exitErr(`Valore non numerico in riga ${i+1}: Bass="${b}", Treble="${t}"`);
+    if (bass < 0 || bass > 10 || treble < 0 || treble > 10) exitErr(`Valori fuori range 0-10 in riga ${i+1}: Bass=${bass}, Treble=${treble}`);
+    rows.push({ Genere:g, Sottogenere:s, Bass:bass, Treble:treble });
   }
   return rows;
 }
 
-function slugify(s) {
-  return s.normalize('NFKD')
-    .replace(/[\u0300-\u036f]/g,'')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g,'_')
-    .replace(/^_+|_+$/g,'');
+function slugify(s){
+  return s.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'');
 }
 
-function ledToClock(x) {
-  x = Math.max(0, Math.min(10, Number(x)));
-  return Math.round((0.5 + 0.3*x) * 100) / 100;
-}
+function ledToClock(x){ x = Math.max(0, Math.min(10, x)); return Math.round((0.5 + 0.3*x)*100)/100; }
 
-const csv = fs.readFileSync(csvPath, 'utf8');
-const rows = parseCSV(csv);
-
-// popularity count
-const pop = new Map();
-for (const r of rows) {
-  const gid = slugify(r.Genere);
-  pop.set(gid, (pop.get(gid)||0)+1);
-}
-
-// build structures
-const genres = {};
-const subgenres = {};
-
-for (const r of rows) {
-  const gid = slugify(r.Genere);
-  const sub = r.Sottogenere;
-  const bass = ledToClock(r.Bass);
-  const treb = ledToClock(r.Treble);
-  if (/^generico|generica$/i.test(sub)) {
-    genres[gid] = { name: r.Genere, bass_clock:bass, treble_clock:treb, notes: "" };
-  } else {
-    if (!subgenres[gid]) subgenres[gid]=[];
-    subgenres[gid].push({ id: slugify(sub), name: sub, bass_clock:bass, treble_clock:treb });
+function orderGenres({rows, manualOrder}){
+  const pop = rows.reduce((acc, r)=>{ acc[r.Genere]=(acc[r.Genere]||0)+1; return acc; }, {});
+  const unique = Array.from(new Set(rows.map(r=>r.Genere)));
+  if (Array.isArray(manualOrder) && manualOrder.length){
+    const setManual = new Set(manualOrder.map(s=>s.toLowerCase()));
+    const manual = unique.filter(g=>setManual.has(g.toLowerCase()));
+    const rest = unique.filter(g=>!setManual.has(g.toLowerCase()));
+    manual.sort((a,b)=> manualOrder.findIndex(x=>x.toLowerCase()===a.toLowerCase()) - manualOrder.findIndex(x=>x.toLowerCase()===b.toLowerCase()));
+    rest.sort((a,b)=> (pop[b]||0)-(pop[a]||0) || a.localeCompare(b));
+    return {order:[...manual, ...rest], mode:'manual+popularity'};
   }
+  const ord = unique.sort((a,b)=> (pop[b]||0)-(pop[a]||0) || a.localeCompare(b));
+  return {order:ord, mode:'popularity'};
 }
 
-// ensure base genre exists
-for (const gid of Object.keys(Object.fromEntries(pop))) {
-  if (!genres[gid]) {
-    const lst = subgenres[gid] || [];
-    if (lst.length) {
-      genres[gid] = { name: rows.find(r=>slugify(r.Genere)===gid).Genere, bass_clock: lst[0].bass_clock, treble_clock: lst[0].treble_clock, notes: "" };
-    } else {
-      genres[gid] = { name: rows.find(r=>slugify(r.Genere)===gid)?.Genere || gid, bass_clock: 2.0, treble_clock: 2.0, notes: "" };
+function main(){
+  const inCSV = process.argv[2];
+  const outJSON = process.argv[3];
+  if (!inCSV || !outJSON) exitErr('Uso: node scripts/build_presets_from_csv.cjs public/data/presets.csv public/data/presets.json');
+
+  const rows = readCSV(inCSV);
+  // Read manual order if present
+  let manualOrder = null;
+  const orderPath = path.join(path.dirname(inCSV), 'genres_order.json');
+  if (fs.existsSync(orderPath)){
+    try {
+      const data = JSON.parse(fs.readFileSync(orderPath,'utf8'));
+      if (!Array.isArray(data)) exitErr('genres_order.json deve essere un array di nomi/slugs.');
+      manualOrder = data;
+    } catch(e){
+      exitErr(`genres_order.json non valido: ${e.message}`);
     }
   }
-}
 
-// ordering: manual (if file exists) then popularity
-let manualOrder = [];
-const orderFile = path.join(dataDir, 'genres_order.json');
-let usedManual = false;
-if (fs.existsSync(orderFile)) {
-  try {
-    const arr = JSON.parse(fs.readFileSync(orderFile,'utf8'));
-    if (!Array.isArray(arr)) exitWith('data/genres_order.json must be an array of names or slugs.');
-    manualOrder = arr.map(x=>String(x));
-    usedManual = true;
-  } catch(e) {
-    exitWith('Invalid JSON in data/genres_order.json: '+e.message);
+  // Build structures
+  const genres = {};
+  const subgenres = {};
+  const rowsByGenre = rows.reduce((acc,r)=>{ (acc[r.Genere]=acc[r.Genere]||[]).push(r); return acc; }, {});
+
+  for (const [g, arr] of Object.entries(rowsByGenre)){
+    const gid = slugify(g);
+    const base = arr.find(r=>/^generico(a)?$/i.test(r.Sottogenere));
+    let bassClock, trebleClock, baseName;
+    if (base){
+      bassClock = ledToClock(base.Bass);
+      trebleClock = ledToClock(base.Treble);
+      baseName = g;
+    } else {
+      const first = arr[0];
+      bassClock = ledToClock(first.Bass);
+      trebleClock = ledToClock(first.Treble);
+      baseName = g;
+    }
+    genres[gid] = { name: g, bass_clock: bassClock, treble_clock: trebleClock, notes: "" };
+    subgenres[gid] = [];
+    for (const r of arr){
+      if (/^generico(a)?$/i.test(r.Sottogenere)) continue;
+      subgenres[gid].push({
+        id: slugify(r.Sottogenere),
+        name: r.Sottogenere,
+        bass_clock: ledToClock(r.Bass),
+        treble_clock: ledToClock(r.Treble)
+      });
+    }
   }
-}
 
-const allGids = Object.keys(genres);
-const byPopularity = [...allGids].sort((a,b)=> (pop.get(b)||0)-(pop.get(a)||0));
+  const {order, mode} = orderGenres({rows, manualOrder});
+  const top_genres_order = order.map(g => slugify(g));
 
-function nameOrSlugToGid(x){
-  const s = slugify(x);
-  if (genres[s]) return s;
-  // try by name match
-  const found = allGids.find(gid=> (genres[gid].name||'').toLowerCase()===String(x).toLowerCase());
-  return found || s;
-}
+  const outDir = path.dirname(outJSON);
+  if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, {recursive:true});
 
-const top_genres_order = [];
-if (usedManual) {
-  for (const x of manualOrder) {
-    const gid = nameOrSlugToGid(x);
-    if (!top_genres_order.includes(gid) && genres[gid]) top_genres_order.push(gid);
+  // Backup existing outJSON if exists
+  if (fs.existsSync(outJSON)){
+    const stamp = new Date().toISOString().replace(/[-:T]/g,'').slice(0,15);
+    const bkp = path.join(outDir, `presets.backup-${stamp}.json`);
+    fs.copyFileSync(outJSON, bkp);
+    console.log(`[build:presets] Backup created: ${path.relative(process.cwd(), bkp)}`);
   }
-  for (const gid of byPopularity) {
-    if (!top_genres_order.includes(gid)) top_genres_order.push(gid);
-  }
-} else {
-  top_genres_order.push(...byPopularity);
+
+  const payload = { top_genres_order, genres, subgenres };
+  fs.writeFileSync(outJSON, JSON.stringify(payload, null, 2), 'utf8');
+
+  const subCount = Object.values(subgenres).reduce((a,v)=>a+v.length,0);
+  console.log(`[build:presets] Done. Genres: ${Object.keys(genres).length}, Subgenres: ${subCount}. Order: ${mode}.`);
 }
 
-// backup existing presets.json if present
-if (fs.existsSync(outPath)) {
-  const ts = new Date().toISOString().replace(/[-:T]/g,'').slice(0,15);
-  const backup = outPath.replace(/\.json$/i, `.backup-${ts}.json`);
-  fs.copyFileSync(outPath, backup);
-  console.log(`[build:presets] Backup created: ${path.relative(process.cwd(), backup)}`);
-}
-
-const out = { top_genres_order, genres, subgenres };
-fs.mkdirSync(path.dirname(outPath), { recursive:true });
-fs.writeFileSync(outPath, JSON.stringify(out, null, 2), 'utf8');
-
-const totalSub = Object.values(subgenres).reduce((a,arr)=>a+arr.length,0);
-console.log(`[build:presets] Done. Genres: ${Object.keys(genres).length}, Subgenres: ${totalSub}. Order: ${usedManual?'manual+popularity':'popularity'}.`);
+main();

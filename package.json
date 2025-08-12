@@ -1,13 +1,8 @@
 {
-  "name": "marshall-tuner-v8-0-0",
-  "version": "8.0.0",
-  "private": true,
-  "type": "module",
-  "dependencies": {
-    "openai": "^4.57.0"
-  },
+  "name": "marshall-tuner-v8-0-2",
+  "version": "8.0.2",
   "scripts": {
-    "build:presets": "node scripts/build_presets_from_csv.cjs data/presets.csv data/presets.json",
+    "build:presets": "node scripts/build_presets_from_csv.cjs public/data/presets.csv public/data/presets.json",
     "vercel-build": "npm run build:presets && echo Vercel build step complete"
   }
 }

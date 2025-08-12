@@ -1,0 +1,611 @@
+{
+  "top_genres_order": [
+    "elettronica",
+    "heavy_metal",
+    "jazz",
+    "rock",
+    "hip_hop_rap",
+    "pop",
+    "classica",
+    "folk_world",
+    "reggae_ska",
+    "blues",
+    "country",
+    "soul_r_b",
+    "punk_rock"
+  ],
+  "genres": {
+    "blues": {
+      "name": "Blues",
+      "bass_clock": 2.3,
+      "treble_clock": 2.15,
+      "notes": ""
+    },
+    "classica": {
+      "name": "Classica",
+      "bass_clock": 1.7,
+      "treble_clock": 2.3,
+      "notes": ""
+    },
+    "country": {
+      "name": "Country",
+      "bass_clock": 2.3,
+      "treble_clock": 2.15,
+      "notes": ""
+    },
+    "elettronica": {
+      "name": "Elettronica",
+      "bass_clock": 2.6,
+      "treble_clock": 2.6,
+      "notes": ""
+    },
+    "folk_world": {
+      "name": "Folk / World",
+      "bass_clock": 2.15,
+      "treble_clock": 2.3,
+      "notes": ""
+    },
+    "heavy_metal": {
+      "name": "Heavy metal",
+      "bass_clock": 2.6,
+      "treble_clock": 2.45,
+      "notes": ""
+    },
+    "hip_hop_rap": {
+      "name": "Hip-Hop / Rap",
+      "bass_clock": 2.75,
+      "treble_clock": 2.45,
+      "notes": ""
+    },
+    "jazz": {
+      "name": "Jazz",
+      "bass_clock": 2.45,
+      "treble_clock": 2.6,
+      "notes": ""
+    },
+    "pop": {
+      "name": "Pop",
+      "bass_clock": 2.6,
+      "treble_clock": 2.6,
+      "notes": ""
+    },
+    "punk_rock": {
+      "name": "Punk Rock",
+      "bass_clock": 2.45,
+      "treble_clock": 2.45,
+      "notes": ""
+    },
+    "reggae_ska": {
+      "name": "Reggae / Ska",
+      "bass_clock": 2.75,
+      "treble_clock": 2.0,
+      "notes": ""
+    },
+    "rock": {
+      "name": "Rock",
+      "bass_clock": 2.45,
+      "treble_clock": 2.15,
+      "notes": ""
+    },
+    "soul_r_b": {
+      "name": "Soul / R&B",
+      "bass_clock": 2.6,
+      "treble_clock": 2.45,
+      "notes": ""
+    }
+  },
+  "subgenres": {
+    "blues": [
+      {
+        "id": "delta_blues",
+        "name": "Delta blues",
+        "bass_clock": 2.3,
+        "treble_clock": 2.15
+      },
+      {
+        "id": "chicago_blues",
+        "name": "Chicago blues",
+        "bass_clock": 2.45,
+        "treble_clock": 2.15
+      },
+      {
+        "id": "electric_blues",
+        "name": "Electric blues",
+        "bass_clock": 2.45,
+        "treble_clock": 2.15
+      },
+      {
+        "id": "blues_rock",
+        "name": "Blues rock",
+        "bass_clock": 2.3,
+        "treble_clock": 2.15
+      }
+    ],
+    "classica": [
+      {
+        "id": "musica_barocca",
+        "name": "Musica barocca",
+        "bass_clock": 1.4,
+        "treble_clock": 2.6
+      },
+      {
+        "id": "classica_del_periodo_classico",
+        "name": "Classica del periodo classico",
+        "bass_clock": 1.55,
+        "treble_clock": 2.45
+      },
+      {
+        "id": "romantica",
+        "name": "Romantica",
+        "bass_clock": 1.85,
+        "treble_clock": 2.45
+      },
+      {
+        "id": "impressionista",
+        "name": "Impressionista",
+        "bass_clock": 1.7,
+        "treble_clock": 2.75
+      },
+      {
+        "id": "contemporanea",
+        "name": "Contemporanea",
+        "bass_clock": 1.7,
+        "treble_clock": 2.3
+      }
+    ],
+    "country": [
+      {
+        "id": "country_tradizionale",
+        "name": "Country tradizionale",
+        "bass_clock": 2.3,
+        "treble_clock": 2.15
+      },
+      {
+        "id": "bluegrass",
+        "name": "Bluegrass",
+        "bass_clock": 2.15,
+        "treble_clock": 2.15
+      },
+      {
+        "id": "country_pop",
+        "name": "Country pop",
+        "bass_clock": 2.3,
+        "treble_clock": 2.3
+      },
+      {
+        "id": "outlaw_country",
+        "name": "Outlaw country",
+        "bass_clock": 2.3,
+        "treble_clock": 2.15
+      }
+    ],
+    "elettronica": [
+      {
+        "id": "house",
+        "name": "House",
+        "bass_clock": 2.6,
+        "treble_clock": 2.6
+      },
+      {
+        "id": "deep_house",
+        "name": "Deep house",
+        "bass_clock": 2.75,
+        "treble_clock": 2.45
+      },
+      {
+        "id": "progressive_house",
+        "name": "Progressive house",
+        "bass_clock": 2.6,
+        "treble_clock": 2.75
+      },
+      {
+        "id": "electro_house",
+        "name": "Electro house",
+        "bass_clock": 2.6,
+        "treble_clock": 2.75
+      },
+      {
+        "id": "techno",
+        "name": "Techno",
+        "bass_clock": 2.75,
+        "treble_clock": 2.6
+      },
+      {
+        "id": "trance",
+        "name": "Trance",
+        "bass_clock": 2.6,
+        "treble_clock": 2.75
+      },
+      {
+        "id": "psytrance",
+        "name": "Psytrance",
+        "bass_clock": 2.6,
+        "treble_clock": 2.75
+      },
+      {
+        "id": "progressive_trance",
+        "name": "Progressive trance",
+        "bass_clock": 2.6,
+        "treble_clock": 2.75
+      },
+      {
+        "id": "drum_and_bass",
+        "name": "Drum and bass",
+        "bass_clock": 2.75,
+        "treble_clock": 2.6
+      },
+      {
+        "id": "dubstep",
+        "name": "Dubstep",
+        "bass_clock": 2.75,
+        "treble_clock": 2.6
+      },
+      {
+        "id": "chillout_ambient",
+        "name": "Chillout / Ambient",
+        "bass_clock": 2.45,
+        "treble_clock": 2.9
+      },
+      {
+        "id": "idm_intelligent_dance_music",
+        "name": "IDM (Intelligent Dance Music)",
+        "bass_clock": 2.6,
+        "treble_clock": 2.6
+      }
+    ],
+    "folk_world": [
+      {
+        "id": "folk_tradizionale",
+        "name": "Folk tradizionale",
+        "bass_clock": 2.15,
+        "treble_clock": 2.3
+      },
+      {
+        "id": "neo_folk",
+        "name": "Neo-folk",
+        "bass_clock": 2.15,
+        "treble_clock": 2.45
+      },
+      {
+        "id": "world_music",
+        "name": "World music",
+        "bass_clock": 2.15,
+        "treble_clock": 2.45
+      },
+      {
+        "id": "flamenco",
+        "name": "Flamenco",
+        "bass_clock": 2.15,
+        "treble_clock": 2.3
+      },
+      {
+        "id": "celtic",
+        "name": "Celtic",
+        "bass_clock": 2.15,
+        "treble_clock": 2.45
+      }
+    ],
+    "heavy_metal": [
+      {
+        "id": "thrash_metal",
+        "name": "Thrash metal",
+        "bass_clock": 2.45,
+        "treble_clock": 2.45
+      },
+      {
+        "id": "death_metal",
+        "name": "Death metal",
+        "bass_clock": 2.6,
+        "treble_clock": 2.45
+      },
+      {
+        "id": "black_metal",
+        "name": "Black metal",
+        "bass_clock": 2.45,
+        "treble_clock": 2.6
+      },
+      {
+        "id": "power_metal",
+        "name": "Power metal",
+        "bass_clock": 2.6,
+        "treble_clock": 2.45
+      },
+      {
+        "id": "doom_metal",
+        "name": "Doom metal",
+        "bass_clock": 2.9,
+        "treble_clock": 2.0
+      },
+      {
+        "id": "progressive_metal",
+        "name": "Progressive metal",
+        "bass_clock": 2.45,
+        "treble_clock": 2.3
+      },
+      {
+        "id": "nu_metal",
+        "name": "Nu metal",
+        "bass_clock": 2.9,
+        "treble_clock": 2.3
+      },
+      {
+        "id": "symphonic_metal",
+        "name": "Symphonic metal",
+        "bass_clock": 2.45,
+        "treble_clock": 2.6
+      },
+      {
+        "id": "groove_metal",
+        "name": "Groove metal",
+        "bass_clock": 2.45,
+        "treble_clock": 2.15
+      }
+    ],
+    "hip_hop_rap": [
+      {
+        "id": "east_coast_rap",
+        "name": "East Coast rap",
+        "bass_clock": 2.75,
+        "treble_clock": 2.45
+      },
+      {
+        "id": "west_coast_rap",
+        "name": "West Coast rap",
+        "bass_clock": 2.9,
+        "treble_clock": 2.3
+      },
+      {
+        "id": "trap",
+        "name": "Trap",
+        "bass_clock": 3.05,
+        "treble_clock": 2.6
+      },
+      {
+        "id": "boom_bap",
+        "name": "Boom bap",
+        "bass_clock": 2.9,
+        "treble_clock": 2.45
+      },
+      {
+        "id": "conscious_rap",
+        "name": "Conscious rap",
+        "bass_clock": 2.75,
+        "treble_clock": 2.45
+      },
+      {
+        "id": "drill",
+        "name": "Drill",
+        "bass_clock": 3.05,
+        "treble_clock": 2.6
+      },
+      {
+        "id": "alternative_hip_hop",
+        "name": "Alternative hip-hop",
+        "bass_clock": 2.75,
+        "treble_clock": 2.45
+      }
+    ],
+    "jazz": [
+      {
+        "id": "swing",
+        "name": "Swing",
+        "bass_clock": 2.45,
+        "treble_clock": 2.6
+      },
+      {
+        "id": "bebop",
+        "name": "Bebop",
+        "bass_clock": 2.45,
+        "treble_clock": 2.6
+      },
+      {
+        "id": "cool_jazz",
+        "name": "Cool jazz",
+        "bass_clock": 2.45,
+        "treble_clock": 2.6
+      },
+      {
+        "id": "free_jazz",
+        "name": "Free jazz",
+        "bass_clock": 2.45,
+        "treble_clock": 2.6
+      },
+      {
+        "id": "fusion_jazz",
+        "name": "Fusion jazz",
+        "bass_clock": 2.6,
+        "treble_clock": 2.6
+      },
+      {
+        "id": "smooth_jazz",
+        "name": "Smooth jazz",
+        "bass_clock": 2.6,
+        "treble_clock": 2.6
+      },
+      {
+        "id": "latin_jazz",
+        "name": "Latin jazz",
+        "bass_clock": 2.45,
+        "treble_clock": 2.6
+      },
+      {
+        "id": "gypsy_jazz",
+        "name": "Gypsy jazz",
+        "bass_clock": 2.3,
+        "treble_clock": 2.6
+      }
+    ],
+    "pop": [
+      {
+        "id": "pop_tradizionale",
+        "name": "Pop tradizionale",
+        "bass_clock": 2.6,
+        "treble_clock": 2.6
+      },
+      {
+        "id": "dance_pop",
+        "name": "Dance pop",
+        "bass_clock": 2.6,
+        "treble_clock": 2.75
+      },
+      {
+        "id": "synth_pop",
+        "name": "Synth pop",
+        "bass_clock": 2.45,
+        "treble_clock": 2.6
+      },
+      {
+        "id": "electropop",
+        "name": "Electropop",
+        "bass_clock": 2.6,
+        "treble_clock": 2.75
+      },
+      {
+        "id": "teen_pop",
+        "name": "Teen pop",
+        "bass_clock": 2.6,
+        "treble_clock": 2.75
+      },
+      {
+        "id": "indie_pop",
+        "name": "Indie pop",
+        "bass_clock": 2.6,
+        "treble_clock": 2.45
+      },
+      {
+        "id": "pop_rock",
+        "name": "Pop rock",
+        "bass_clock": 2.6,
+        "treble_clock": 2.45
+      }
+    ],
+    "punk_rock": [
+      {
+        "id": "pop_punk",
+        "name": "Pop punk",
+        "bass_clock": 2.45,
+        "treble_clock": 2.15
+      },
+      {
+        "id": "hardcore_punk",
+        "name": "Hardcore punk",
+        "bass_clock": 2.3,
+        "treble_clock": 2.45
+      },
+      {
+        "id": "post_punk",
+        "name": "Post-punk",
+        "bass_clock": 2.3,
+        "treble_clock": 2.15
+      }
+    ],
+    "reggae_ska": [
+      {
+        "id": "roots_reggae",
+        "name": "Roots reggae",
+        "bass_clock": 2.9,
+        "treble_clock": 2.0
+      },
+      {
+        "id": "dub_reggae",
+        "name": "Dub reggae",
+        "bass_clock": 3.05,
+        "treble_clock": 1.85
+      },
+      {
+        "id": "dancehall",
+        "name": "Dancehall",
+        "bass_clock": 2.9,
+        "treble_clock": 2.15
+      },
+      {
+        "id": "ska_tradizionale",
+        "name": "Ska tradizionale",
+        "bass_clock": 2.75,
+        "treble_clock": 2.0
+      },
+      {
+        "id": "ska_punk",
+        "name": "Ska punk",
+        "bass_clock": 2.9,
+        "treble_clock": 2.15
+      }
+    ],
+    "rock": [
+      {
+        "id": "classic_rock",
+        "name": "Classic rock",
+        "bass_clock": 2.45,
+        "treble_clock": 2.15
+      },
+      {
+        "id": "hard_rock",
+        "name": "Hard rock",
+        "bass_clock": 2.45,
+        "treble_clock": 2.15
+      },
+      {
+        "id": "progressive_rock",
+        "name": "Progressive rock",
+        "bass_clock": 2.45,
+        "treble_clock": 2.45
+      },
+      {
+        "id": "psychedelic_rock",
+        "name": "Psychedelic rock",
+        "bass_clock": 2.45,
+        "treble_clock": 2.6
+      },
+      {
+        "id": "grunge",
+        "name": "Grunge",
+        "bass_clock": 2.45,
+        "treble_clock": 2.15
+      },
+      {
+        "id": "alternative_rock",
+        "name": "Alternative rock",
+        "bass_clock": 2.45,
+        "treble_clock": 2.15
+      },
+      {
+        "id": "garage_rock",
+        "name": "Garage rock",
+        "bass_clock": 2.45,
+        "treble_clock": 2.0
+      },
+      {
+        "id": "southern_rock",
+        "name": "Southern rock",
+        "bass_clock": 2.45,
+        "treble_clock": 2.0
+      }
+    ],
+    "soul_r_b": [
+      {
+        "id": "motown",
+        "name": "Motown",
+        "bass_clock": 2.6,
+        "treble_clock": 2.3
+      },
+      {
+        "id": "neo_soul",
+        "name": "Neo-soul",
+        "bass_clock": 2.6,
+        "treble_clock": 2.6
+      },
+      {
+        "id": "funk",
+        "name": "Funk",
+        "bass_clock": 2.6,
+        "treble_clock": 2.45
+      },
+      {
+        "id": "disco",
+        "name": "Disco",
+        "bass_clock": 2.75,
+        "treble_clock": 2.6
+      }
+    ]
+  }
+}
