@@ -1,7 +1,7 @@
 {
   "meta": {
-    "version": "v5.4",
-    "notes": "Preset-first. Toggle Ore↔%, Quick Env/Vol con LED percepito. AI Pro concatena Genere/Sottogenere + testo utente."
+    "version": "v6.4",
+    "notes": "AI Classifier Plus (button-triggered), alternatives, reset; selection bar + timestamp; LED rounding 5↓/6↑; micro-guides."
   },
   "top_genres_order": [
     "pop",

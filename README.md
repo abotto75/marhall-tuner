@@ -1,5 +1,6 @@
-# Marshall Tuner v6.3
-- Ricerca Genere con bottoni (niente auto-match su 2 lettere).
-- Campi separati Artista/Brano.
-- Bottone Reset ricerca.
-- Classificatore robusto: schema enum + soglia di confidenza + fallback senza bias su POP.
+# Marshall Tuner v6.4 — AI Classifier Plus
+- Ricerca Genere con campi Artista/Brano, bottone dedicato e Reset
+- Classificatore solo OpenAI (Responses API con JSON Schema), temperatura 0.2
+- Alternative mostrate se confidenza < 0.6
+- Barra selezione con badge Preset/AI Pro e timestamp
+- LED rounding 5↓/6↑, micro-guide sottogeneri

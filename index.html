@@ -3,33 +3,35 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Marshall Tuner — v6.3</title>
+  <title>Marshall Tuner — v6.4</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="topbar"><div class="brand">Marshall Tuner <span class="ver">v6.3</span></div></header>
+  <header class="topbar">
+    <div class="brand">Marshall Tuner <span class="ver">v6.4</span></div>
+  </header>
+
   <main>
+    <!-- QUICK -->
     <section class="card quick">
       <div class="section-title">Quick</div>
-      <p class="section-sub">Seleziona <b>Genere</b> e opzionalmente <b>Sottogenere</b>. Oppure usa <b>Ricerca Genere</b> con Artista/Brano. I LED rispecchiano il <b>preset</b> (round 5↓/6↑).</p>
+      <p class="section-sub">Seleziona <b>Genere</b> o usa la ricerca. LED = <b>preset</b>. Arrotondamento LED: ≤ .5 ↓, ≥ .6 ↑.</p>
 
-      <div class="finder">
-        <div class="field">
-          <label>Artista</label>
-          <input id="artistField" placeholder="Es. Chris Stapleton">
-        </div>
-        <div class="field">
-          <label>Brano</label>
-          <input id="trackField" placeholder="Es. Tennessee Whiskey">
-        </div>
-        <div class="finder-actions">
-          <button id="matchBtn" class="primary">Ricerca Genere</button>
-          <button id="resetSearchBtn" class="ghost">Reset ricerca</button>
-        </div>
-        <div id="matchMsg" class="hint"></div>
+      <!-- Ricerca artista/brano -->
+      <div class="grid2">
+        <div class="field"><label>Artista</label><input id="artist" placeholder="Es. Chris Stapleton"></div>
+        <div class="field"><label>Brano</label><input id="track" placeholder="Es. Tennessee Whiskey"></div>
+      </div>
+      <div class="actions">
+        <button id="matchBtn" class="primary">Ricerca Genere</button>
+        <button id="resetSearchBtn" class="ghost">Reset ricerca</button>
+      </div>
+      <div id="altWrap" class="alts" hidden>
+        <div class="alts-title">Alternative suggerite</div>
+        <div id="altChips" class="chips alt"></div>
       </div>
 
       <div id="genreWrap" class="block">
@@ -41,11 +43,12 @@
         <div id="subchips" class="chips alt"></div>
       </div>
 
+      <!-- Selection bar -->
       <div class="selbar">
         <div class="seltext" id="selText">Nessuna selezione</div>
         <div class="source">
           <span id="sourceBadge" class="badge badge-src preset">Preset</span>
-          <span id="timestamp" class="ts" hidden>—</span>
+          <span id="ts" class="ts" hidden>—</span>
         </div>
       </div>
 
@@ -74,15 +77,16 @@
         </div>
         <div class="guide">
           <div class="guide-title">Guida all'ascolto</div>
-          <div id="guideText" class="guide-text">Seleziona un (sotto)genere per i suggerimenti rapidi.</div>
+          <div id="guideText" class="guide-text">Seleziona un (sotto)genere o usa la Ricerca Genere.</div>
         </div>
         <div id="subGuide" class="micro-guide" hidden></div>
       </div>
     </section>
 
+    <!-- AI PRO -->
     <section class="card ai">
       <div class="section-title">AI Pro</div>
-      <p class="section-sub">Parti dal preset selezionato e chiedi un affinamento (±0.3h). Qui scegli <b>Ambiente</b> e <b>Volume</b>.</p>
+      <p class="section-sub">Parti dal preset attuale e chiedi un affinamento (±0.3h). Qui scegli <b>Ambiente</b> e <b>Volume</b>.</p>
       <div class="grid">
         <div class="field">
           <label>Dettagli (testo libero)</label>
@@ -110,6 +114,7 @@
       <div class="notes" id="notes">L’AI userà “Genere/Sottogenere selezionato + Dettagli”.</div>
     </section>
   </main>
-  <script src="app.js?v=6.3"></script>
+
+  <script src="app.js?v=6.4"></script>
 </body>
 </html>

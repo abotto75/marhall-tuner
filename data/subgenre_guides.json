@@ -1,1 +1,11 @@
-{}
+{
+  "rock": {
+    "hard_rock": "Chitarre corpose, kick deciso."
+  },
+  "classical": {
+    "jazz_symph": "Fiati pieni, clarinetto brillante."
+  },
+  "soundtrack": {
+    "cinematic_epic": "Timpani e percussioni con impatto."
+  }
+}

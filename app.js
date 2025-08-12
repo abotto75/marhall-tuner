@@ -5,8 +5,13 @@ function clockToDeg(clock){const pct=Math.min(1,Math.max(0,(clock-0.5)/3));retur
 const qs=s=>document.querySelector(s);
 
 let PRESETS=null, SUB_GUIDES=null;
-let LAST={query:'', baseBass:2.0, baseTreble:2.0, genreId:null, subId:null, guide:'', pristine:{bass:2.0, treble:2.0}, source:'Preset', lastTs:null};
+let LAST={query:'', baseBass:2.0, baseTreble:2.0, genreId:null, subId:null, guide:'', pristine:{bass:2.0, treble:2.0}, source:'Preset', ts:null};
 let displayMode='percent';
+
+function fmtTS(d){
+  const pad=n=>String(n).padStart(2,'0');
+  return `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} • ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
 
 async function loadData(){
   PRESETS = await (await fetch('data/presets.json')).json();
@@ -18,23 +23,11 @@ async function loadData(){
   qs('#resetBtn').onclick=resetToPristine;
   const aiVol=qs('#aiVolume'); const aiVal=qs('#aiVolVal'); aiVol.oninput=()=>aiVal.textContent=aiVol.value;
 
-  // Search controls
-  qs('#matchBtn').onclick=()=>{
-    const artist=(qs('#artistField').value||'').trim();
-    const track=(qs('#trackField').value||'').trim();
-    if(artist.length<3 && track.length<3){
-      setMatchMsg('Inserisci almeno 3 caratteri in Artista o Brano.', true);
-      return;
-    }
-    aiMatch({artist, track});
-  };
-  qs('#resetSearchBtn').onclick=resetSearch;
+  // Buttons: match + reset search
+  qs('#matchBtn').onclick=onMatchClick;
+  qs('#resetSearchBtn').onclick=onResetSearch;
 
   updateSelBar();
-}
-
-function setMatchMsg(msg, isErr=false){
-  const el=qs('#matchMsg'); el.textContent=msg||''; el.style.color=isErr?'#FFB4B4':'#A9A9A9';
 }
 
 function renderGenreChips(){
@@ -69,6 +62,7 @@ function applyPreset(b,t,guide){
   LAST.pristine = {bass: LAST.baseBass, treble: LAST.baseTreble};
   LAST.guide = guide||'';
   LAST.source = 'Preset';
+  LAST.ts = null;
   setKnob(document.getElementById('bassKnob'), LAST.baseBass);
   setKnob(document.getElementById('trebleKnob'), LAST.baseTreble);
   document.getElementById('guideText').textContent = guide || 'Preset applicato.';
@@ -104,8 +98,8 @@ function updateSelBar(){
   badge.textContent = LAST.source;
   badge.classList.toggle('aipro', LAST.source==='AI Tune Pro');
   badge.classList.toggle('preset', LAST.source!=='AI Tune Pro');
-  const ts=qs('#timestamp');
-  if(LAST.source==='AI Tune Pro' && LAST.lastTs){ ts.hidden=false; ts.textContent=LAST.lastTs; } else { ts.hidden=true; ts.textContent=''; }
+  const tsEl = qs('#ts');
+  if(LAST.ts){ tsEl.hidden=false; tsEl.textContent=fmtTS(LAST.ts); } else { tsEl.hidden=true; tsEl.textContent=''; }
 }
 
 function selectGenre(gid){
@@ -113,6 +107,7 @@ function selectGenre(gid){
   applyPreset(g.bass_clock, g.treble_clock, g.notes||'');
   LAST.genreId=gid; LAST.subId=null; LAST.query=g.name;
   renderSubgenreChips(gid);
+  updateSelBar();
 }
 
 function applySubgenre(gid, sid){
@@ -124,45 +119,6 @@ function applySubgenre(gid, sid){
   const mg = (SUB_GUIDES[gid]||{})[sid];
   if(mg){ const el=document.getElementById('subGuide'); el.textContent = mg; el.hidden=false; }
   updateSelBar();
-}
-
-async function aiMatch({artist, track}){
-  try{
-    setMatchMsg('Ricerca in corso…');
-    const res=await fetch('/api/match',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({artist, track})});
-    if(!res.ok){ setMatchMsg('Nessun risultato. Prova a scrivere meglio artista o brano.', true); return; }
-    const { genreId, subId, confidence, reason } = await res.json();
-
-    if (genreId && PRESETS.genres[genreId]) {
-      const g = PRESETS.genres[genreId];
-      applyPreset(g.bass_clock, g.treble_clock, g.notes || '');
-      LAST.genreId = genreId; LAST.subId = null; LAST.query = g.name;
-      renderSubgenreChips(genreId);
-    } else {
-      setMatchMsg('Genere non trovato tra i preset.', true); return;
-    }
-
-    if (subId && (PRESETS.subgenres?.[genreId]||[]).find(s=>s.id===subId)) {
-      const sg = PRESETS.subgenres[genreId].find(s=>s.id===subId);
-      applyPreset(sg.bass_clock, sg.treble_clock, PRESETS.genres[genreId]?.notes || '');
-      LAST.subId = subId; LAST.query = `${PRESETS.genres[genreId]?.name || genreId} — ${sg.name}`;
-      const mg = (SUB_GUIDES?.[genreId]||{})[subId];
-      if (mg){ const el=document.getElementById('subGuide'); el.textContent=mg; el.hidden=false; }
-    }
-
-    LAST.source='Preset';
-    updateSelBar();
-    setMatchMsg(confidence<0.6 ? 'Trovato (bassa confidenza): verifica o prova AI Pro.' : 'Trovato.');
-  }catch(e){
-    setMatchMsg('Errore di rete/AI durante la ricerca.', true);
-  }
-}
-
-function resetSearch(){
-  qs('#artistField').value=''; qs('#trackField').value='';
-  setMatchMsg('');
-  // Non resetto il preset selezionato; ma posso offrire reset totale:
-  // resetToPristine();
 }
 
 async function askAIPro(){
@@ -179,9 +135,7 @@ async function askAIPro(){
     LAST.baseBass = clamp(data.bass_clock ?? LAST.baseBass, LAST.pristine.bass-0.3, LAST.pristine.bass+0.3);
     LAST.baseTreble = clamp(data.treble_clock ?? LAST.baseTreble, LAST.pristine.treble-0.3, LAST.pristine.treble+0.3);
     LAST.source = 'AI Tune Pro';
-    const now = new Date();
-    const ts = now.toLocaleDateString('it-IT') + ' • ' + now.toLocaleTimeString('it-IT', {hour:'2-digit', minute:'2-digit'});
-    LAST.lastTs = ts;
+    LAST.ts = new Date();
     setKnob(document.getElementById('bassKnob'), LAST.baseBass);
     setKnob(document.getElementById('trebleKnob'), LAST.baseTreble);
     document.getElementById('notes').textContent = data.notes || 'Refinement AI applicato.';
@@ -196,12 +150,66 @@ function resetToPristine(){
   LAST.baseBass = LAST.pristine.bass;
   LAST.baseTreble = LAST.pristine.treble;
   LAST.source = 'Preset';
-  LAST.lastTs = null;
+  LAST.ts = null;
   setKnob(document.getElementById('bassKnob'), LAST.baseBass);
   setKnob(document.getElementById('trebleKnob'), LAST.baseTreble);
   document.getElementById('notes').textContent='Ripristinato il preset originale.';
   updateSelBar();
   refreshValues();
+}
+
+// ---- Match logic (button triggered) ----
+async function onMatchClick(){
+  const artist=(qs('#artist').value||'').trim();
+  const track=(qs('#track').value||'').trim();
+  if(artist.length<3 && track.length<3){ alert('Inserisci almeno 3 caratteri in Artista o Brano.'); return; }
+  // clean alts
+  qs('#altWrap').hidden = true; qs('#altChips').innerHTML='';
+  try{
+    const r=await fetch('/api/match',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({artist, track})});
+    if(!r.ok) throw new Error('match '+r.status);
+    const data=await r.json();
+    applyMatchResult(data);
+  }catch(e){
+    alert('Errore nella ricerca genere.');
+  }
+}
+
+function onResetSearch(){
+  qs('#artist').value=''; qs('#track').value='';
+  qs('#altWrap').hidden = true; qs('#altChips').innerHTML='';
+}
+
+function applyMatchResult({genreId, subId, confidence, reason, alternatives}){
+  if(genreId && PRESETS.genres[genreId]){
+    const g=PRESETS.genres[genreId];
+    applyPreset(g.bass_clock, g.treble_clock, g.notes||'');
+    LAST.genreId=genreId; LAST.subId=null; LAST.query=g.name;
+    renderSubgenreChips(genreId);
+  }
+  if(subId && (PRESETS.subgenres?.[genreId]||[]).find(s=>s.id===subId)){
+    const sg = PRESETS.subgenres[genreId].find(s=>s.id===subId);
+    applyPreset(sg.bass_clock, sg.treble_clock, PRESETS.genres[genreId]?.notes || '');
+    LAST.subId=subId; LAST.query=`${PRESETS.genres[genreId]?.name || genreId} — ${sg.name}`;
+    const mg = (SUB_GUIDES?.[genreId]||{})[subId];
+    if (mg){ const el=document.getElementById('subGuide'); el.textContent=mg; el.hidden=false; }
+  }
+  updateSelBar();
+  // alternatives
+  if(alternatives && alternatives.length){
+    const wrap=qs('#altChips'); wrap.innerHTML='';
+    alternatives.forEach(({genreId:gid, subId:sid, label})=>{
+      const b=document.createElement('button'); b.className='chip'; b.textContent=label||`${gid}${sid?(' / '+sid):''}`;
+      b.onclick=()=>{
+        applyMatchResult({genreId:gid, subId:sid, confidence:0.9, reason:'user-choice', alternatives:[]});
+        qs('#altWrap').hidden=true; wrap.innerHTML='';
+      };
+      wrap.appendChild(b);
+    });
+    qs('#altWrap').hidden=false;
+  } else {
+    qs('#altWrap').hidden=true;
+  }
 }
 
 (function init(){ loadData(); })();
