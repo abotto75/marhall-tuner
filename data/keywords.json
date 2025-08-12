@@ -1,1 +1,32 @@
-{}
+{
+  "pop": [
+    "pop"
+  ],
+  "rock": [
+    "rock"
+  ],
+  "metal": [
+    "metal"
+  ],
+  "hiphop": [
+    "hip-hop/rap"
+  ],
+  "electronic": [
+    "elettronica"
+  ],
+  "jazz": [
+    "jazz"
+  ],
+  "classical": [
+    "classica"
+  ],
+  "blues": [
+    "blues"
+  ],
+  "reggae": [
+    "reggae"
+  ],
+  "soul_rnb": [
+    "soul/r&b"
+  ]
+}

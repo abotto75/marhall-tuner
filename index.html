@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Marshall Tuner — v6.4</title>
+  <title>Marshall Tuner — v6.1</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -11,44 +11,28 @@
 </head>
 <body>
   <header class="topbar">
-    <div class="brand">Marshall Tuner <span class="ver">v6.4</span></div>
+    <div class="brand">Marshall Tuner <span class="ver">v6.1</span></div>
   </header>
-
   <main>
-    <!-- QUICK -->
     <section class="card quick">
       <div class="section-title">Quick</div>
-      <p class="section-sub">Seleziona <b>Genere</b> o usa la ricerca. LED = <b>preset</b>. Arrotondamento LED: ≤ .5 ↓, ≥ .6 ↑.</p>
-
-      <!-- Ricerca artista/brano -->
-      <div class="grid2">
-        <div class="field"><label>Artista</label><input id="artist" placeholder="Es. Chris Stapleton"></div>
-        <div class="field"><label>Brano</label><input id="track" placeholder="Es. Tennessee Whiskey"></div>
-      </div>
-      <div class="actions">
-        <button id="matchBtn" class="primary">Ricerca Genere</button>
-        <button id="resetSearchBtn" class="ghost">Reset ricerca</button>
-      </div>
-      <div id="altWrap" class="alts" hidden>
-        <div class="alts-title">Alternative suggerite</div>
-        <div id="altChips" class="chips alt"></div>
-      </div>
-
+      <p class="section-sub">Seleziona <b>Genere</b> e opzionalmente <b>Sottogenere</b>. Default in <b>%</b>. I LED rispecchiano il <b>preset</b>. Arrotondamento LED: ≤ .5 ↓, ≥ .6 ↑.</p>
       <div id="genreWrap" class="block">
         <div class="block-title">Generi</div>
-        <div id="chips" class="chips emph"></div>
+        <div id="chips" class="chips emph" role="group" aria-label="Generi"></div>
       </div>
       <div id="subWrap" class="block subtle" hidden>
         <div class="block-title alt">Sottogeneri</div>
-        <div id="subchips" class="chips alt"></div>
+        <div id="subchips" class="chips alt" role="group" aria-label="Sottogeneri"></div>
       </div>
 
-      <!-- Selection bar -->
       <div class="selbar">
-        <div class="seltext" id="selText">Nessuna selezione</div>
+        <div class="seltext">
+          <span id="selText">Nessuna selezione</span>
+        </div>
         <div class="source">
           <span id="sourceBadge" class="badge badge-src preset">Preset</span>
-          <span id="ts" class="ts" hidden>—</span>
+          <span id="aiTime" class="muted" hidden>• —</span>
         </div>
       </div>
 
@@ -75,18 +59,18 @@
             <div class="dial-value" id="trebleValue">—</div>
           </div>
         </div>
+
         <div class="guide">
           <div class="guide-title">Guida all'ascolto</div>
-          <div id="guideText" class="guide-text">Seleziona un (sotto)genere o usa la Ricerca Genere.</div>
+          <div id="guideText" class="guide-text">Seleziona un (sotto)genere per i suggerimenti rapidi.</div>
         </div>
         <div id="subGuide" class="micro-guide" hidden></div>
       </div>
     </section>
 
-    <!-- AI PRO -->
     <section class="card ai">
       <div class="section-title">AI Pro</div>
-      <p class="section-sub">Parti dal preset attuale e chiedi un affinamento (±0.3h). Qui scegli <b>Ambiente</b> e <b>Volume</b>.</p>
+      <p class="section-sub">Parti dal preset selezionato e chiedi un affinamento (±0.3h). Qui scegli <b>Ambiente</b> e <b>Volume</b>.</p>
       <div class="grid">
         <div class="field">
           <label>Dettagli (testo libero)</label>
@@ -114,7 +98,6 @@
       <div class="notes" id="notes">L’AI userà “Genere/Sottogenere selezionato + Dettagli”.</div>
     </section>
   </main>
-
-  <script src="app.js?v=6.4"></script>
+  <script src="app.js?v=6.1"></script>
 </body>
 </html>

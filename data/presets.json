@@ -1,7 +1,7 @@
 {
   "meta": {
-    "version": "v6.4",
-    "notes": "AI Classifier Plus (button-triggered), alternatives, reset; selection bar + timestamp; LED rounding 5↓/6↑; micro-guides."
+    "version": "v5.8",
+    "notes": "LED rounding 0–5 down / 6–9 up. Quick shows micro-guide per sottogenere se disponibile."
   },
   "top_genres_order": [
     "pop",
