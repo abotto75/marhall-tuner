@@ -7,7 +7,7 @@
     "openai": "^4.57.0"
   },
   "scripts": {
-    "build:presets": "node scripts/build_presets_from_csv.js data/presets.csv data/presets.json",
+    "build:presets": "node scripts/build_presets_from_csv.cjs data/presets.csv data/presets.json",
     "vercel-build": "npm run build:presets && echo Vercel build step complete"
   }
 }

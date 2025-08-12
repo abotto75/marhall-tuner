@@ -44,3 +44,7 @@ Crea `data/genres_order.json` con un array di nomi o slugs:
 ["Rock", "Pop", "Metal", "classica"]
 ```
 Nomi e slugs vengono normalizzati automaticamente.
+
+
+## Build presets (Vercel)
+Vercel esegue automaticamente `npm run vercel-build`, che lancia `node scripts/build_presets_from_csv.cjs data/presets.csv data/presets.json`.
