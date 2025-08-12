@@ -1,9 +1,12 @@
 {
-  "name": "marshall-tuner-v7-0-5-essential",
-  "version": "7.0.5",
+  "name": "marshall-tuner-v7-0-4",
+  "version": "7.0.4",
   "private": true,
   "type": "module",
   "dependencies": {
     "openai": "^4.57.0"
+  },
+  "scripts": {
+    "build:presets": "node scripts/build_presets_from_csv.js data/presets.csv data/presets.json"
   }
 }

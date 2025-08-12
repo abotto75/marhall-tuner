@@ -28,7 +28,7 @@ export default async function handler(req, res) {
       text:{ format:{ type:"json_schema", name:"tuning_refined", strict:true, schema } },
       temperature: 0.3
     });
-    const text = resp.output_text || resp.output?.[0]?.content?.[0]?.text || "{}";
+    const text = resp.output_text || "{}";
     const data = JSON.parse(text);
     data.bass_clock=Math.max(baseBass-delta, Math.min(baseBass+delta, data.bass_clock));
     data.treble_clock=Math.max(baseTreble-delta, Math.min(baseTreble+delta, data.treble_clock));
