@@ -1,0 +1,98 @@
+{
+  "metallica": {
+    "genreId": "metal",
+    "subIdIfExists": [
+      "thrash_metal",
+      "heavy_metal",
+      "metal_moderno",
+      "metal"
+    ]
+  },
+  "megadeth": {
+    "genreId": "metal",
+    "subIdIfExists": [
+      "thrash_metal",
+      "heavy_metal",
+      "metal"
+    ]
+  },
+  "slayer": {
+    "genreId": "metal",
+    "subIdIfExists": [
+      "thrash_metal",
+      "heavy_metal",
+      "metal"
+    ]
+  },
+  "acdc": {
+    "genreId": "rock",
+    "subIdIfExists": [
+      "hard_rock",
+      "classic_rock",
+      "rock_progressivo",
+      "rock"
+    ]
+  },
+  "queen": {
+    "genreId": "rock",
+    "subIdIfExists": [
+      "classic_rock",
+      "rock_progressivo",
+      "hard_rock",
+      "rock"
+    ]
+  },
+  "vivaldi": {
+    "genreId": "classica",
+    "subIdIfExists": [
+      "barocco",
+      "piano_concerto",
+      "classica_moderna",
+      "jazz_sinfonico",
+      ""
+    ]
+  },
+  "gershwin": {
+    "genreId": "classica",
+    "subIdIfExists": [
+      "jazz_sinfonico",
+      "musical_orchestrale",
+      "classica_moderna",
+      ""
+    ]
+  },
+  "hanszimmer": {
+    "genreId": "colonne_sonore",
+    "subIdIfExists": [
+      "cinematic_epico",
+      "drammatico_emotivo",
+      "action_suspense",
+      ""
+    ]
+  },
+  "johnwilliams": {
+    "genreId": "colonne_sonore",
+    "subIdIfExists": [
+      "cinematic_epico",
+      "action_suspense",
+      ""
+    ]
+  },
+  "enniomorricone": {
+    "genreId": "colonne_sonore",
+    "subIdIfExists": [
+      "drammatico_emotivo",
+      "cinematic_epico",
+      ""
+    ]
+  },
+  "chrisstapleton": {
+    "genreId": "country",
+    "subIdIfExists": [
+      "country_soul",
+      "blues_country",
+      "country_rock",
+      ""
+    ]
+  }
+}
