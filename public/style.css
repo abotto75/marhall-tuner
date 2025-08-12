@@ -8,8 +8,8 @@
 /* ---------- Design tokens ---------- */
 :root{
   /* Palette */
-  --bg:#0c0c0c;
-  --bg-2:#1a1a1a;
+  --bg:#232325;
+  --bg-2:#29292B;
   --panel:#121212;
   --panel-2:#181818;
   --gold:#d4af37;          /* accent */
