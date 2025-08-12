@@ -5,39 +5,33 @@ function clockToDeg(clock){const pct=Math.min(1,Math.max(0,(clock-0.5)/3));retur
 const qs=s=>document.querySelector(s);
 
 let PRESETS=null, SUB_GUIDES=null;
-let LAST={query:'', baseBass:2.0, baseTreble:2.0, genreId:null, subId:null, guide:'', pristine:{bass:2.0, treble:2.0}, source:'Preset', lastAiAt:null};
+let LAST={query:'', baseBass:2.0, baseTreble:2.0, genreId:null, subId:null, guide:'', pristine:{bass:2.0, treble:2.0}, source:'Preset', lastAiTs:null};
 let displayMode='percent';
-
-function fmtDate(d){
-  const dd=String(d.getDate()).padStart(2,'0');
-  const mm=String(d.getMonth()+1).padStart(2,'0');
-  const yyyy=d.getFullYear();
-  const hh=String(d.getHours()).padStart(2,'0');
-  const mi=String(d.getMinutes()).padStart(2,'0');
-  return `${dd}/${mm}/${yyyy} • ${hh}:${mi}`;
-}
 
 async function loadData(){
   PRESETS = await (await fetch('data/presets.json')).json();
-  try{ SUB_GUIDES = await (await fetch('data/subgenre_guides.json')).json(); }catch{ SUB_GUIDES = {}; }
+  SUB_GUIDES = await (await fetch('data/subgenre_guides.json')).json();
   renderGenreChips();
-  // Event delegation for stable click handling
-  qs('#chips').addEventListener('click',(e)=>{
-    const b=e.target.closest('.chip'); if(!b) return;
-    const gid=b.dataset.gid; if(gid) selectGenre(gid);
-  });
-  qs('#subchips').addEventListener('click',(e)=>{
-    const b=e.target.closest('.chip'); if(!b) return;
-    const sid=b.dataset.sid; const gid=LAST.genreId; if(sid && gid) applySubgenre(gid, sid);
-  });
-
   qs('#modePercent').onclick=()=>{displayMode='percent'; qs('#modePercent').classList.add('active'); qs('#modeClock').classList.remove('active'); refreshValues();};
   qs('#modeClock').onclick=()=>{displayMode='clock'; qs('#modeClock').classList.add('active'); qs('#modePercent').classList.remove('active'); refreshValues();};
-
   qs('#aiBtn').onclick=askAIPro;
   qs('#resetBtn').onclick=resetToPristine;
   const aiVol=qs('#aiVolume'); const aiVal=qs('#aiVolVal'); aiVol.oninput=()=>aiVal.textContent=aiVol.value;
   updateSelBar();
+
+  // artist/track listeners with debounce
+  const artist = document.getElementById('artistInput');
+  const track = document.getElementById('trackInput');
+  let t=null;
+  function trigger(){
+    clearTimeout(t);
+    const a=(artist.value||'').trim();
+    const tr=(track.value||'').trim();
+    if(!a && !tr) return;
+    t=setTimeout(()=>aiMatch(a,tr), 400);
+  }
+  artist.addEventListener('input', trigger);
+  track.addEventListener('input', trigger);
 }
 
 function renderGenreChips(){
@@ -45,11 +39,11 @@ function renderGenreChips(){
   for(const gid of PRESETS.top_genres_order){
     const g = PRESETS.genres[gid];
     const b=document.createElement('button');
-    b.className='chip'; b.textContent=g.name; b.dataset.gid=gid; 
+    b.className='chip'; b.textContent=g.name; b.dataset.gid=gid;
+    b.onclick=()=>selectGenre(gid);
     wrap.appendChild(b);
   }
 }
-
 function renderSubgenreChips(gid){
   const sw=qs('#subWrap'); const sc=qs('#subchips'); sc.innerHTML='';
   const list = (PRESETS.subgenres||{})[gid]||[];
@@ -57,6 +51,7 @@ function renderSubgenreChips(gid){
   list.forEach(sg=>{
     const b=document.createElement('button');
     b.className='chip'; b.textContent=sg.name; b.dataset.sid=sg.id;
+    b.onclick=()=>applySubgenre(gid, sg.id);
     sc.appendChild(b);
   });
 }
@@ -70,7 +65,6 @@ function applyPreset(b,t,guide){
   LAST.pristine = {bass: LAST.baseBass, treble: LAST.baseTreble};
   LAST.guide = guide||'';
   LAST.source = 'Preset';
-  LAST.lastAiAt = null;
   setKnob(document.getElementById('bassKnob'), LAST.baseBass);
   setKnob(document.getElementById('trebleKnob'), LAST.baseTreble);
   document.getElementById('guideText').textContent = guide || 'Preset applicato.';
@@ -106,14 +100,10 @@ function updateSelBar(){
   badge.textContent = LAST.source;
   badge.classList.toggle('aipro', LAST.source==='AI Tune Pro');
   badge.classList.toggle('preset', LAST.source!=='AI Tune Pro');
-  const timeEl = qs('#aiTime');
-  if(LAST.lastAiAt){
-    timeEl.hidden = false;
-    timeEl.textContent = '• ' + fmtDate(LAST.lastAiAt);
-  }else{
-    timeEl.hidden = true;
-    timeEl.textContent = '• —';
-  }
+  const ts = qs('#tsBadge');
+  if(LAST.source==='AI Tune Pro' && LAST.lastAiTs){
+    ts.hidden=false; ts.textContent = LAST.lastAiTs;
+  } else { ts.hidden=true; ts.textContent=''; }
 }
 
 function selectGenre(gid){
@@ -121,9 +111,8 @@ function selectGenre(gid){
   applyPreset(g.bass_clock, g.treble_clock, g.notes||'');
   LAST.genreId=gid; LAST.subId=null; LAST.query=g.name;
   renderSubgenreChips(gid);
-  updateSelBar(); // ensure immediate update on first click
+  updateSelBar();
 }
-
 function applySubgenre(gid, sid){
   const list=(PRESETS.subgenres||{})[gid]||[];
   const sg=list.find(x=>x.id===sid); if(!sg) return;
@@ -133,6 +122,37 @@ function applySubgenre(gid, sid){
   const mg = (SUB_GUIDES[gid]||{})[sid];
   if(mg){ const el=document.getElementById('subGuide'); el.textContent = mg; el.hidden=false; }
   updateSelBar();
+}
+
+async function aiMatch(artist, track){
+  try{
+    const r = await fetch('/api/match', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ artist, track })
+    });
+    if(!r.ok) throw new Error('match '+r.status);
+    const { genreId, subId, confidence } = await r.json();
+
+    if (genreId && PRESETS.genres[genreId]) {
+      const g = PRESETS.genres[genreId];
+      applyPreset(g.bass_clock, g.treble_clock, g.notes || '');
+      LAST.genreId = genreId; LAST.subId = null; LAST.query = g.name;
+      renderSubgenreChips(genreId);
+    }
+    if (subId && (PRESETS.subgenres?.[genreId]||[]).find(s=>s.id===subId)) {
+      const sg = PRESETS.subgenres[genreId].find(s=>s.id===subId);
+      applyPreset(sg.bass_clock, sg.treble_clock, PRESETS.genres[genreId]?.notes || '');
+      LAST.subId = subId; LAST.query = `${PRESETS.genres[genreId]?.name || genreId} — ${sg.name}`;
+      const mg = (SUB_GUIDES?.[genreId]||{})[subId];
+      if (mg){ const el=document.getElementById('subGuide'); el.textContent=mg; el.hidden=false; }
+    }
+    LAST.source='Preset'; updateSelBar();
+    // Optionally auto AI Pro when confidence low:
+    // if(confidence < 0.6){ await askAIPro(); }
+  }catch(e){
+    console.warn('AI match failed', e);
+  }
 }
 
 async function askAIPro(){
@@ -149,7 +169,8 @@ async function askAIPro(){
     LAST.baseBass = clamp(data.bass_clock ?? LAST.baseBass, LAST.pristine.bass-0.3, LAST.pristine.bass+0.3);
     LAST.baseTreble = clamp(data.treble_clock ?? LAST.baseTreble, LAST.pristine.treble-0.3, LAST.pristine.treble+0.3);
     LAST.source = 'AI Tune Pro';
-    LAST.lastAiAt = new Date();
+    const d=new Date(); const pad=n=>String(n).padStart(2,'0');
+    LAST.lastAiTs = `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} • ${pad(d.getHours())}:${pad(d.getMinutes())}`;
     setKnob(document.getElementById('bassKnob'), LAST.baseBass);
     setKnob(document.getElementById('trebleKnob'), LAST.baseTreble);
     document.getElementById('notes').textContent = data.notes || 'Refinement AI applicato.';
@@ -164,7 +185,7 @@ function resetToPristine(){
   LAST.baseBass = LAST.pristine.bass;
   LAST.baseTreble = LAST.pristine.treble;
   LAST.source = 'Preset';
-  LAST.lastAiAt = null;
+  LAST.lastAiTs = null;
   setKnob(document.getElementById('bassKnob'), LAST.baseBass);
   setKnob(document.getElementById('trebleKnob'), LAST.baseTreble);
   document.getElementById('notes').textContent='Ripristinato il preset originale.';

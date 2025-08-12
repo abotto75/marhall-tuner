@@ -1,7 +1,7 @@
 {
   "meta": {
-    "version": "v5.8",
-    "notes": "LED rounding 0–5 down / 6–9 up. Quick shows micro-guide per sottogenere se disponibile."
+    "version": "v6.2",
+    "notes": "Artist/Track AI Match; selection header; LED rounding; micro-guides."
   },
   "top_genres_order": [
     "pop",

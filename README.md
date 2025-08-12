@@ -1,4 +1,4 @@
-# Marshall Tuner v6.1
-- Barra selezione aggiornata al primo click su Genere.
-- Badge Preset/AI Tune Pro + timestamp ultimo affinamento.
-- Version string in header e cache-busting `app.js?v=6.1` per evitare vecchie cache.
+# Marshall Tuner v6.2
+- Artist/Track AI Match (2 campi separati) con /api/match.
+- Selezione header con origine (Preset/AI Tune Pro) e timestamp.
+- LED rounding 5↓/6↑, micro-guide.
