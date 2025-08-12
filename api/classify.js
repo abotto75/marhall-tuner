@@ -1,54 +1,43 @@
 import { OpenAI } from "openai";
-import fs from "fs";
-import path from "path";
-
+import fs from "fs"; import path from "path";
 export const config = { runtime: "nodejs" };
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-function loadGenreNames() {
-  try {
+function allowedGenres(){
+  try{
     const p = path.join(process.cwd(), "data", "presets.json");
-    const raw = fs.readFileSync(p, "utf-8");
-    const json = JSON.parse(raw);
-    return Object.keys(json.genres||{}).map(gid => json.genres[gid]?.name || gid);
-  } catch { return []; }
+    const rows = JSON.parse(fs.readFileSync(p, "utf-8"));
+    return Array.from(new Set(rows.map(r=>String(r.genre).trim())));
+  }catch{ return ["Pop","Rock","Metal","Jazz","Classica","Country","Colonne Sonore","Sconosciuto"]; }
 }
 
 export default async function handler(req,res){
-  try {
-    if (req.method!=="POST") return res.status(405).json({error:"Method not allowed"});
-    const { text, allowedGenres } = req.body || {};
-    if (!text || text.trim().length<2) return res.status(400).json({error:"Input troppo corto"});
-    const enumNames = Array.isArray(allowedGenres) && allowedGenres.length ? allowedGenres : loadGenreNames();
-    if (!enumNames.length) {
-      return res.status(200).json({ genreName: "Sconosciuto", note:"Nessun genere caricato", genreId:"" });
-    }
-    if (!process.env.OPENAI_API_KEY) return res.status(500).json({error:"OPENAI_API_KEY mancante"});
+  try{
+    if(req.method!=="POST") return res.status(405).json({error:"Method not allowed"});
+    const { artist="", track="" } = req.body || {};
+    const text = [artist, track].filter(Boolean).join(" — ");
+    if(!text || text.length<2) return res.status(400).json({error:"Inserisci almeno 2 caratteri"});
+    const genres = Array.from(new Set([...allowedGenres(), "Sconosciuto"]));
+
     const schema = {
       type:"object",
-      properties:{
-        genreName:{type:"string", enum: enumNames.concat(["Sconosciuto"]) },
-        note:{type:"string"}
-      },
-      required:["genreName"],
-      additionalProperties:false
+      properties:{ genreName:{type:"string",enum:genres}, note:{type:"string"} },
+      required:["genreName"], additionalProperties:false
     };
+    const sys = "Sei un classificatore musicale. Scegli il GENERE PIÙ PROBABILE tra quelli forniti. Usa 'Sconosciuto' solo se impossibile dedurre. Rispondi SOLO in JSON conforme allo schema.";
+    const user = `Input: ${text}
+Generi consentiti: ${genres.join(", ")}`;
+    const model = process.env.OPENAI_MODEL || "gpt-4.1-mini";
     const resp = await client.responses.create({
-      model: process.env.OPENAI_MODEL || "gpt-4.1-mini",
-      input:[
-        {role:"system", content: "Sei un classificatore musicale. Scegli il GENERE PIÙ PROBABILE dall'elenco. Se non è possibile, scegli 'Sconosciuto'. Restituisci SOLO JSON conforme allo schema."},
-        {role:"user", content: `Input: ${text}
-Generi disponibili: ${enumNames.join(", ")}`}
-      ],
-      text:{ format:{ type:"json_schema", name:"genre_pick", strict:true, schema } },
-      temperature:0
+      model, temperature: 0.2,
+      input:[{role:"system",content:sys},{role:"user",content:user}],
+      text:{ format:{ type:"json_schema", name:"genre_pick", strict:true, schema } }
     });
-    const outText = resp.output_text || "{}";
-    const data = JSON.parse(outText);
-    const genreName = data.genreName || "Sconosciuto";
-    return res.status(200).json({ genreName, note: data.note||"" });
-  } catch(e){
-    console.error("[classify]", e);
-    return res.status(500).json({error:"classify error", details:String(e?.message||e)});
+    const out = resp.output_text || "{}";
+    let data={}; try{ data=JSON.parse(out); }catch{ data={genreName:"Sconosciuto", note:"parse-failed"}; }
+    return res.status(200).json({ genreName:data.genreName||"Sconosciuto", note:data.note||"" });
+  }catch(e){
+    console.error(e);
+    return res.status(500).json({ error:"classify error", details:String(e?.message||e) });
   }
 }

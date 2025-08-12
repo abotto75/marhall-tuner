@@ -1,149 +1,166 @@
-const qs=s=>document.querySelector(s); const qsa=s=>document.querySelectorAll(s);
 function clamp(v,min,max){return Math.min(max,Math.max(min,v));}
-function clockToDeg(clock){const pct=Math.min(1,Math.max(0,(clock-0.5)/3));return -135 + pct*270;}
-function setKnob(el, clock){ el.style.transform=`rotate(${clockToDeg(clock)}deg)`; }
+function clockToLedFloat(clock){return 10 * (clock - 0.5) / 3;}
 function ledRound(val){ const base=Math.floor(val); const frac=val-base; return (frac<=0.5)?base:(base+1); }
-function ticksToHours(t){ return 0.5 + (t/10)*3.0; }
-function hoursToTicks(h){ return clamp((h-0.5)/3.0*10,0,10); }
+function clockToDeg(clock){const pct=Math.min(1,Math.max(0,(clock-0.5)/3));return -135 + pct*270;}
+const qs=s=>document.querySelector(s);
 
-let PRESETS=null, CURVES10=null, COEFF=null;
-let LAST={genreId:null, subId:null, baseBass:2.0, baseTreble:2.0, source:'Preset', ts:null};
+let MAP=null;
+let LAST={ genre:null, sub:null, bassH:2.0, trebleH:2.0, bassT:5, trebleT:5, pristine:{bassH:2.0, trebleH:2.0}, source:'Preset', ts:null };
 
-async function loadAll(){
-  PRESETS = await (await fetch('data/presets.json')).json();
-  CURVES10 = await (await fetch('data/curves10.json')).json();
-  COEFF = await (await fetch('data/coefficients.json')).json();
-  renderGenres();
-  attachUI();
+async function loadData(){
+  const rows = await (await fetch('data/presets.json')).json();
+  const map = {};
+  rows.forEach(r=>{
+    const g=(r.genre||'').trim(); if(!g) return;
+    const s=(r.subgenre||'').trim();
+    const b=Number(r.bass||0), t=Number(r.treble||0);
+    const guide=(r.guida||r.guide||'').trim();
+    const song=(r.song||'').trim();
+    const emotion=(r.emotion||'').trim();
+    map[g] = map[g] || [];
+    map[g].push({sub:s,b,t,guide,song,emotion});
+  });
+  MAP = map;
+  renderGenres(Object.keys(map).sort());
+  setupAI();
   updateSelBar();
 }
-function renderGenres(){
+
+function renderGenres(list){
   const wrap=qs('#chips'); wrap.innerHTML='';
-  (PRESETS.top_genres_order||Object.keys(PRESETS.genres)).forEach(gid=>{
-    const b=document.createElement('button'); b.className='chip'; b.textContent=PRESETS.genres[gid].name; b.onclick=()=>selectGenre(gid); wrap.appendChild(b);
+  list.forEach(g=>{
+    const b=document.createElement('button');
+    b.className='chip'; b.textContent=g; b.onclick=()=>selectGenre(g);
+    wrap.appendChild(b);
   });
 }
-function renderSub(gid){
-  const sw=qs('#subWrap'), sc=qs('#subchips'); sc.innerHTML='';
-  const list=(PRESETS.subgenres||{})[gid]||[]; sw.hidden=list.length===0;
-  list.forEach(sg=>{ const b=document.createElement('button'); b.className='chip'; b.textContent=sg.name; b.onclick=()=>applySub(gid, sg.id); sc.appendChild(b); });
-}
-function selectGenre(gid){
-  const g=PRESETS.genres[gid]; LAST.genreId=gid; LAST.subId=null;
-  LAST.baseBass=g.bass_clock; LAST.baseTreble=g.treble_clock;
-  setKnob(qs('#bassKnob'), LAST.baseBass); setKnob(qs('#trebleKnob'), LAST.baseTreble);
-  refreshBT();
-  renderSub(gid); updateSelBar(); render10();
-  computeOutput();
-}
-function applySub(gid,sid){
-  const sg=((PRESETS.subgenres||{})[gid]||[]).find(x=>x.id===sid); if(!sg) return;
-  LAST.genreId=gid; LAST.subId=sid; LAST.baseBass=sg.bass_clock; LAST.baseTreble=sg.treble_clock;
-  setKnob(qs('#bassKnob'), LAST.baseBass); setKnob(qs('#trebleKnob'), LAST.baseTreble);
-  refreshBT(); updateSelBar(); render10(); computeOutput();
-}
-function refreshBT(){
-  const bTick = ledRound((LAST.baseBass-0.5)/3*10);
-  const tTick = ledRound((LAST.baseTreble-0.5)/3*10);
-  qs('#bassTick').textContent = bTick+'/10';
-  qs('#trebleTick').textContent = tTick+'/10';
-  qs('#bassValue').textContent = Math.round((LAST.baseBass-0.5)/3*100)+'%';
-  qs('#trebleValue').textContent = Math.round((LAST.baseTreble-0.5)/3*100)+'%';
-}
-function updateSelBar(){
-  const gName = LAST.genreId ? (PRESETS.genres[LAST.genreId]?.name||LAST.genreId) : 'Nessuna selezione';
-  let text=gName;
-  if(LAST.subId){
-    const sub=((PRESETS.subgenres||{})[LAST.genreId]||[]).find(s=>s.id===LAST.subId);
-    if(sub) text = `${gName} — ${sub.name}`;
-  }
-  qs('#selText').textContent=text;
-  const badge=qs('#sourceBadge'); badge.textContent=LAST.source; badge.classList.toggle('aipro', LAST.source==='AI Tune Pro');
-}
-function render10(){
-  const gId = LAST.subId ? null : LAST.genreId;
-  const ten = (LAST.subId && (CURVES10.subgenres?.[LAST.genreId]?.[LAST.subId])) || (CURVES10.genres?.[LAST.genreId]) || null;
-  const box=qs('#band10'); box.innerHTML='';
-  const order=["31","62","125","250","500","1k","2k","4k","8k","16k"];
-  if(!ten){ box.textContent="Nessun profilo universale definito per questo (sotto)genere."; return; }
-  order.forEach(k=>{ const d=document.createElement('div'); d.className='b'; d.textContent=`${k}: ${ten[k]??0} dB`; box.appendChild(d); });
-}
-function computeOutput(){
-  const ten = (LAST.subId && (CURVES10.subgenres?.[LAST.genreId]?.[LAST.subId])) || (CURVES10.genres?.[LAST.genreId]) || null;
-  if(!ten) return;
-  if(currentMode==='bt'){
-    const r = toBassTreble(ten, COEFF);
-    LAST.baseBass = ticksToHours(r.ticks.bass);
-    LAST.baseTreble = ticksToHours(r.ticks.treble);
-    setKnob(qs('#bassKnob'), LAST.baseBass); setKnob(qs('#trebleKnob'), LAST.baseTreble);
-    qs('#bassTick').textContent = r.led.bass+'/10'; qs('#trebleTick').textContent = r.led.treble+'/10';
-    qs('#bassValue').textContent = (Math.round((LAST.baseBass-0.5)/3*100))+'%';
-    qs('#trebleValue').textContent = (Math.round((LAST.baseTreble-0.5)/3*100))+'%';
-  }else{
-    const a = toApp5(ten);
-    qs('#a160').textContent=a.APP_160.toFixed(2);
-    qs('#a400').textContent=a.APP_400.toFixed(2);
-    qs('#a1k').textContent=(typeof a.APP_1k==="number"?a.APP_1k.toFixed(2):a.APP_1k);
-    qs('#a2k5').textContent=a.APP_2k5.toFixed(2);
-    qs('#a6k25').textContent=a.APP_6k25.toFixed(2);
-  }
-}
-let currentMode='bt';
-function attachUI(){
-  qs('#modeBT').onclick=()=>{currentMode='bt'; qs('#modeBT').classList.add('active'); qs('#modeAPP').classList.remove('active'); qs('#btBox').hidden=false; qs('#appBox').hidden=true; computeOutput();};
-  qs('#modeAPP').onclick=()=>{currentMode='app5'; qs('#modeAPP').classList.add('active'); qs('#modeBT').classList.remove('active'); qs('#btBox').hidden=true; qs('#appBox').hidden=false; computeOutput();};
-  qs('#copyApp').onclick=()=>{
-    const row=[qs('#a160').textContent,qs('#a400').textContent,qs('#a1k').textContent,qs('#a2k5').textContent,qs('#a6k25').textContent].join(',');
-    navigator.clipboard.writeText(row);
-  };
-  // Consult
-  const cInput=qs('#consultInput'), cBtn=qs('#consultBtn'), cRes=qs('#consultResult'), cGenre=qs('#consultGenre'), cNote=qs('#consultNote');
-  const cApply=qs('#consultApply'), cReset=qs('#consultReset');
-  let last={genreName:"", note:""};
-  cBtn.onclick=async ()=>{
-    const text=(cInput.value||"").trim(); if(text.length<2){alert("Scrivi qualcosa.");return;}
-    cBtn.disabled=true; cBtn.textContent="Analizzo…";
-    try{
-      const allowed=Object.values(PRESETS.genres).map(g=>g.name);
-      const r=await fetch('/api/classify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text, allowedGenres: allowed})});
-      const j=await r.json();
-      last=j; cGenre.textContent=j.genreName||"Sconosciuto"; cNote.textContent=j.note||""; cRes.hidden=false;
-    }catch(e){ cGenre.textContent="Errore"; cNote.textContent=String(e); cRes.hidden=false; }
-    finally{ cBtn.disabled=false; cBtn.textContent="Consigliami il genere"; }
-  };
-  cApply.onclick=()=>{
-    // map name to id
-    const name = (last.genreName||"").toLowerCase();
-    const gid = Object.keys(PRESETS.genres).find(id => (PRESETS.genres[id].name||id).toLowerCase()===name);
-    if(!gid){ alert("Genere non presente nei preset."); return; }
-    selectGenre(gid);
-    qs('#sourceBadge').textContent="AI Consiglio";
-    cRes.hidden=true;
-  };
-  cReset.onclick=()=>{ cInput.value=""; cRes.hidden=true; last={}; };
-  // AI Pro
-  const aiVol=qs('#aiVolume'); const aiVal=qs('#aiVolVal'); aiVol.oninput=()=>aiVal.textContent=aiVol.value;
-  qs('#aiBtn').onclick=askAIPro; qs('#resetBtn').onclick=resetPreset;
-}
-function fmtTs(d){const pad=n=>String(n).padStart(2,'0'); return `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} • ${pad(d.getHours())}:${pad(d.getMinutes())}`;}
-async function askAIPro(){
-  if(!LAST.genreId){ alert("Seleziona un genere prima."); return; }
-  const room=qs('#aiRoom').value, volume=parseInt(qs('#aiVolume').value,10); const extra=(qs('#freeText').value||'').trim();
-  const gName = PRESETS.genres[LAST.genreId]?.name||LAST.genreId;
-  const query = extra ? `${gName} — ${extra}` : gName;
-  const body={query:`Approfondisci per "${query}" su Marshall Acton III.`, room, volume, base_bass: LAST.baseBass, base_treble: LAST.baseTreble, max_delta:0.3};
-  try{
-    const r=await fetch('/api/tune',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-    const j=await r.json(); LAST.baseBass=j.bass_clock; LAST.baseTreble=j.treble_clock;
-    setKnob(qs('#bassKnob'), LAST.baseBass); setKnob(qs('#trebleKnob'), LAST.baseTreble);
-    refreshBT(); LAST.source='AI Tune Pro'; LAST.ts=fmtTs(new Date()); updateSelBar(); qs('#notes').textContent=j.notes||'Affinamento applicato.';
-  }catch(e){ qs('#notes').textContent='Errore AI Pro'; }
-}
-function resetPreset(){
-  if(!LAST.genreId){return;}
-  const base = PRESETS.genres[LAST.genreId];
-  LAST.baseBass=base.bass_clock; LAST.baseTreble=base.treble_clock; LAST.source='Preset'; LAST.ts=null;
-  setKnob(qs('#bassKnob'), LAST.baseBass); setKnob(qs('#trebleKnob'), LAST.baseTreble); refreshBT(); updateSelBar();
+
+function renderSubs(g){
+  const sw=qs('#subWrap'); const sc=qs('#subchips'); sc.innerHTML='';
+  const list = (MAP[g]||[]).map(x=>x.sub).filter(v=>v).filter((v,i,a)=>a.indexOf(v)===i);
+  sw.hidden = list.length===0;
+  list.forEach(s=>{
+    const b=document.createElement('button');
+    b.className='chip'; b.textContent=s; b.onclick=()=>applySub(g,s);
+    sc.appendChild(b);
+  });
 }
 
-loadAll();
+function setKnob(el, clock){ el.style.transform=`rotate(${clockToDeg(clock)}deg)`; }
+function tickToHours(t){ return 0.5 + (t/10)*3.0; }
+function hoursToTick(h){ return clamp(Math.round(((h-0.5)/3)*10*100)/100, 0, 10); }
+
+function applyPresetTick(bTick,tTick, meta){
+  const bH = tickToHours(bTick), tH = tickToHours(tTick);
+  LAST.bassH=clamp(bH,0.5,3.5); LAST.trebleH=clamp(tH,0.5,3.5);
+  LAST.bassT=bTick; LAST.trebleT=tTick;
+  LAST.pristine={bassH:LAST.bassH, trebleH:LAST.trebleH};
+  LAST.source='Preset'; LAST.ts=null;
+  setKnob(document.getElementById('bassKnob'), LAST.bassH);
+  setKnob(document.getElementById('trebleKnob'), LAST.trebleH);
+  document.getElementById('guideText').textContent = (meta?.guide||'Preset applicato.');
+  document.getElementById('songText').textContent = meta?.song ? ('Brano consigliato: '+meta.song) : '';
+  document.getElementById('emotionText').textContent = meta?.emotion ? ('Guida emozionale: '+meta.emotion) : '';
+  updateSelBar(); refreshValues();
+}
+
+function refreshValues(){
+  const bLed = ledRound(clockToLedFloat(LAST.bassH));
+  const tLed = ledRound(clockToLedFloat(LAST.trebleH));
+  document.getElementById('bassTick').textContent = bLed+'/10';
+  document.getElementById('trebleTick').textContent = tLed+'/10';
+  const f=v=>String(Math.round(v*10)/10).replace(/\.0$/,'');
+  document.getElementById('bassValue').textContent = `${f(LAST.bassH)} ore (${LAST.bassT}/10)`;
+  document.getElementById('trebleValue').textContent = `${f(LAST.trebleH)} ore (${LAST.trebleT}/10)`;
+}
+
+function updateSelBar(){
+  let text = LAST.genre || 'Nessuna selezione';
+  if (LAST.sub){ text = `${text} — ${LAST.sub}`; }
+  qs('#selText').textContent = text;
+  const badge = qs('#sourceBadge');
+  badge.textContent = LAST.source;
+  badge.classList.toggle('aipro', LAST.source==='AI Tune Pro');
+  badge.classList.toggle('preset', LAST.source!=='AI Tune Pro');
+  qs('#aiTs').hidden = !LAST.ts;
+  if(LAST.ts) qs('#aiTs').textContent = LAST.ts;
+}
+
+function selectGenre(g){
+  LAST.genre=g; LAST.sub=null;
+  renderSubs(g);
+  const rec=(MAP[g]||[])[0];
+  if(rec){ applyPresetTick(rec.b, rec.t, rec); }
+}
+
+function applySub(g,s){
+  const rec=(MAP[g]||[]).find(x=>x.sub===s) || (MAP[g]||[])[0];
+  if(rec){ LAST.genre=g; LAST.sub=rec.sub||null; applyPresetTick(rec.b, rec.t, rec); }
+}
+
+function fmtTs(d){ const pad=n=>String(n).padStart(2,'0'); return `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} • ${pad(d.getHours())}:${pad(d.getMinutes())}`; }
+
+async function askAIPro(){
+  if(!LAST.genre){ alert('Seleziona prima un genere/sottogenere.'); return; }
+  const room=document.getElementById('aiRoom').value;
+  const volume=parseInt(document.getElementById('aiVolume').value,10);
+  const extra=(document.getElementById('freeText').value||'').trim();
+  const query = extra ? `${LAST.genre}${LAST.sub?(' — '+LAST.sub):''} — ${extra}` : `${LAST.genre}${LAST.sub?(' — '+LAST.sub):''}`;
+  const body = { query: `Affina per "${query}" su Marshall Acton III. Parti dal preset selezionato e adatta al contesto.`, room, volume, base_bass: LAST.bassH, base_treble: LAST.trebleH, max_delta: 0.3 };
+  try{
+    const res=await fetch('/api/tune',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    if(!res.ok) throw new Error('AI '+res.status);
+    const data=await res.json();
+    LAST.bassH = clamp(data.bass_clock ?? LAST.bassH, LAST.pristine.bassH-0.3, LAST.pristine.bassH+0.3);
+    LAST.trebleH = clamp(data.treble_clock ?? LAST.trebleH, LAST.pristine.trebleH-0.3, LAST.pristine.trebleH+0.3);
+    setKnob(document.getElementById('bassKnob'), LAST.bassH);
+    setKnob(document.getElementById('trebleKnob'), LAST.trebleH);
+    LAST.source='AI Tune Pro'; LAST.ts=fmtTs(new Date());
+    document.getElementById('notes').textContent = data.notes || 'Refinement AI applicato.';
+    updateSelBar(); refreshValues();
+  }catch(e){
+    document.getElementById('notes').textContent='Errore AI Pro. Mantengo il preset locale.';
+  }
+}
+
+// ---- Ricerca Genere (consulente) ----
+function setupAI(){
+  const artist = document.getElementById('artistInput');
+  const track = document.getElementById('trackInput');
+  const btn = document.getElementById('consultBtn');
+  const resBox = document.getElementById('consultResult');
+  const txt = document.getElementById('consultGenre');
+  const note = document.getElementById('consultNote');
+  const apply = document.getElementById('consultApply');
+  const reset = document.getElementById('consultReset');
+
+  let last = { genreName:'', note:'' };
+
+  btn.onclick = async () => {
+    const a=(artist.value||'').trim(), t=(track.value||'').trim();
+    if(!a && !t){ alert('Inserisci almeno Artista o Brano.'); return; }
+    btn.disabled=true; btn.textContent='Analizzo…';
+    try{
+      const r = await fetch('/api/classify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ artist:a, track:t })});
+      const j = await r.json();
+      last = j;
+      txt.textContent = j.genreName || 'Sconosciuto';
+      note.textContent = j.note || '';
+      resBox.hidden=false;
+    }catch(e){
+      txt.textContent='Errore'; note.textContent='Classificazione non riuscita.'; resBox.hidden=false;
+    }finally{
+      btn.disabled=false; btn.textContent='Consigliami il genere';
+    }
+  };
+
+  apply.onclick = () => {
+    if(!last.genreName || last.genreName==='Sconosciuto'){ alert('Nessun genere applicabile.'); return; }
+    selectGenre(last.genreName);
+    resBox.hidden=true;
+  };
+
+  reset.onclick = () => { artist.value=''; track.value=''; resBox.hidden=true; };
+}
+
+(function init(){ loadData(); })();

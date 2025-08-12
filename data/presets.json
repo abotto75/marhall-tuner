@@ -1,131 +1,848 @@
-{
-  "top_genres_order": [
-    "rock",
-    "metal",
-    "jazz",
-    "classica",
-    "ost",
-    "pop",
-    "country"
-  ],
-  "genres": {
-    "rock": {
-      "name": "Rock",
-      "bass_clock": 2.4,
-      "treble_clock": 2.1,
-      "notes": "Energia e chitarre."
-    },
-    "metal": {
-      "name": "Metal",
-      "bass_clock": 2.5,
-      "treble_clock": 2.2,
-      "notes": "Bassi solidi, alti aggressivi."
-    },
-    "jazz": {
-      "name": "Jazz",
-      "bass_clock": 2.2,
-      "treble_clock": 2.3,
-      "notes": "Tono morbido, definizione su piatti."
-    },
-    "classica": {
-      "name": "Classica",
-      "bass_clock": 2.0,
-      "treble_clock": 2.3,
-      "notes": "Equilibrio naturale."
-    },
-    "ost": {
-      "name": "Colonne Sonore",
-      "bass_clock": 2.5,
-      "treble_clock": 2.2,
-      "notes": "Scena ampia cinematica."
-    },
-    "pop": {
-      "name": "Pop",
-      "bass_clock": 2.3,
-      "treble_clock": 2.2,
-      "notes": "Bilanciato e brillante."
-    },
-    "country": {
-      "name": "Country",
-      "bass_clock": 2.2,
-      "treble_clock": 2.1,
-      "notes": "Voce in primo piano, chitarre calde."
-    }
+[
+  {
+    "genre": "Pop",
+    "subgenre": "Pop tradizionale",
+    "bass": 7.0,
+    "treble": 7.0,
+    "song": "Michael Jackson – Billie Jean",
+    "guide": "Michael Jackson – Billie Jean → Low-end bilanciato @160 Hz. | Chiarezza vocale @1 kHz. | Presenza @2.5 kHz. | Aria @6.25 kHz senza fatica.",
+    "emotion": "Il basso di Billie Jean pulsa come un cuore sicuro, la batteria scandisce il tempo come passi decisi nella notte, ogni colpo di rullante è un lampo sotto i riflettori."
   },
-  "subgenres": {
-    "rock": [
-      {
-        "id": "hard_rock",
-        "name": "Hard Rock",
-        "bass_clock": 2.6,
-        "treble_clock": 2.2
-      },
-      {
-        "id": "prog_rock",
-        "name": "Rock Progressivo",
-        "bass_clock": 2.3,
-        "treble_clock": 2.3
-      }
-    ],
-    "metal": [
-      {
-        "id": "thrash",
-        "name": "Thrash Metal",
-        "bass_clock": 2.6,
-        "treble_clock": 2.3
-      },
-      {
-        "id": "heavy",
-        "name": "Heavy Metal",
-        "bass_clock": 2.5,
-        "treble_clock": 2.2
-      }
-    ],
-    "jazz": [
-      {
-        "id": "bebop",
-        "name": "Bebop",
-        "bass_clock": 2.1,
-        "treble_clock": 2.4
-      },
-      {
-        "id": "fusion",
-        "name": "Fusion",
-        "bass_clock": 2.3,
-        "treble_clock": 2.3
-      }
-    ],
-    "classica": [
-      {
-        "id": "barocco",
-        "name": "Barocco",
-        "bass_clock": 2.0,
-        "treble_clock": 2.3
-      }
-    ],
-    "ost": [
-      {
-        "id": "cinematic_epico",
-        "name": "Cinematic Epico",
-        "bass_clock": 2.7,
-        "treble_clock": 2.1
-      }
-    ],
-    "pop": [
-      {
-        "id": "dance_pop",
-        "name": "Dance Pop",
-        "bass_clock": 2.4,
-        "treble_clock": 2.3
-      }
-    ],
-    "country": [
-      {
-        "id": "country_soul",
-        "name": "Country Soul",
-        "bass_clock": 2.3,
-        "treble_clock": 2.1
-      }
-    ]
+  {
+    "genre": "Pop",
+    "subgenre": "Dance pop",
+    "bass": 7.0,
+    "treble": 7.5,
+    "song": "Kylie Minogue – Can't Get You Out of My Head",
+    "guide": "Kylie Minogue – Can't Get You Out of My Head → Low-end bilanciato @160 Hz. | Chiarezza vocale @1 kHz. | Presenza @2.5 kHz. | Aria @6.25 kHz senza fatica.",
+    "emotion": "Il beat ipnotico ti avvolge come un mantra danzante, la voce di Kylie ti culla e ti seduce, ogni synth è un filo di luce che si intreccia nei tuoi pensieri."
+  },
+  {
+    "genre": "Pop",
+    "subgenre": "Synth pop",
+    "bass": 6.5,
+    "treble": 7.0,
+    "song": "Depeche Mode – Enjoy the Silence",
+    "guide": "Depeche Mode – Enjoy the Silence → Low-end bilanciato @160 Hz. | Chiarezza vocale @1 kHz. | Presenza @2.5 kHz. | Aria @6.25 kHz senza fatica.",
+    "emotion": "I synth sono onde che si infrangono dolcemente, la voce di Gahan è un sussurro che riempie spazi infiniti, il ritmo lento ti accompagna come un passo nella neve."
+  },
+  {
+    "genre": "Pop",
+    "subgenre": "Electropop",
+    "bass": 7.0,
+    "treble": 7.5,
+    "song": "Billie Eilish – bad guy",
+    "guide": "Billie Eilish – bad guy → Low-end bilanciato @160 Hz. | Chiarezza vocale @1 kHz. | Presenza @2.5 kHz. | Aria @6.25 kHz senza fatica.",
+    "emotion": "Il basso scuro è un battito sotterraneo, la voce è vicinissima, quasi un segreto sussurrato all’orecchio, ogni pausa è carica di tensione."
+  },
+  {
+    "genre": "Pop",
+    "subgenre": "Teen pop",
+    "bass": 7.0,
+    "treble": 7.5,
+    "song": "One Direction – What Makes You Beautiful",
+    "guide": "One Direction – What Makes You Beautiful → Low-end bilanciato @160 Hz. | Chiarezza vocale @1 kHz. | Presenza @2.5 kHz. | Aria @6.25 kHz senza fatica.",
+    "emotion": "Le chitarre brillano come sole d’estate, la voce è sorridente e diretta, il ritmo ti spinge verso un’energia giovane e leggera."
+  },
+  {
+    "genre": "Pop",
+    "subgenre": "Indie pop",
+    "bass": 7.0,
+    "treble": 6.5,
+    "song": "Florence + The Machine – Dog Days Are Over",
+    "guide": "Florence + The Machine – Dog Days Are Over → Low-end bilanciato @160 Hz. | Chiarezza vocale @1 kHz. | Presenza @2.5 kHz. | Aria @6.25 kHz senza fatica.",
+    "emotion": "Ascoltando 'Florence + The Machine – Dog Days Are Over', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Pop",
+    "subgenre": "Pop rock",
+    "bass": 7.0,
+    "treble": 6.5,
+    "song": "The Killers – Mr. Brightside",
+    "guide": "The Killers – Mr. Brightside → Low-end bilanciato @160 Hz. | Chiarezza vocale @1 kHz. | Presenza @2.5 kHz. | Aria @6.25 kHz senza fatica.",
+    "emotion": "Ascoltando 'The Killers – Mr. Brightside', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Rock",
+    "subgenre": "Classic rock",
+    "bass": 6.5,
+    "treble": 5.5,
+    "song": "Led Zeppelin – Stairway to Heaven",
+    "guide": "Led Zeppelin – Stairway to Heaven → Basso/Kick: devono incastrarsi senza coprire la voce; ritocca ±0.5 dB @160 Hz. | Voce/Chitarre: presenza centrata @2.5 kHz; se la voce affoga, +0.5 dB. | Boxiness: se senti 'scatola' nel rullante, -0.5 dB @400 Hz. | Aria: piatti e chitarre brillanti ma non pungenti, regola @6.25 kHz.",
+    "emotion": "Ascoltando 'Led Zeppelin – Stairway to Heaven', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Rock",
+    "subgenre": "Hard rock",
+    "bass": 6.5,
+    "treble": 5.5,
+    "song": "AC/DC – Back in Black",
+    "guide": "AC/DC – Back in Black → Basso/Kick: devono incastrarsi senza coprire la voce; ritocca ±0.5 dB @160 Hz. | Voce/Chitarre: presenza centrata @2.5 kHz; se la voce affoga, +0.5 dB. | Boxiness: se senti 'scatola' nel rullante, -0.5 dB @400 Hz. | Aria: piatti e chitarre brillanti ma non pungenti, regola @6.25 kHz.",
+    "emotion": "Ascoltando 'AC/DC – Back in Black', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Rock",
+    "subgenre": "Heavy metal",
+    "bass": 7.0,
+    "treble": 6.5,
+    "song": "Black Sabbath – Paranoid",
+    "guide": "Black Sabbath – Paranoid → Low-end (60–160 Hz): cassa tesa e chitarre palm-mute pulite; se impasta, -0.5 dB @160 Hz. | Corpo (400 Hz): rimuovi boxiness della chitarra/rullante con -0.5 dB @400 Hz se serve. | Punta (2.5 kHz): definizione plettri/rasp; se taglia, -0.5 dB @2.5 kHz. | Brillantezza (6.25 kHz): sizzle dei piatti; se strilla, -0.5 dB @6.25 kHz.",
+    "emotion": "Ascoltando 'Black Sabbath – Paranoid', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Rock",
+    "subgenre": "Thrash metal",
+    "bass": 6.5,
+    "treble": 6.5,
+    "song": "Metallica – Master of Puppets",
+    "guide": "Metallica – Master of Puppets → Low-end (60–160 Hz): cassa tesa e chitarre palm-mute pulite; se impasta, -0.5 dB @160 Hz. | Corpo (400 Hz): rimuovi boxiness della chitarra/rullante con -0.5 dB @400 Hz se serve. | Punta (2.5 kHz): definizione plettri/rasp; se taglia, -0.5 dB @2.5 kHz. | Brillantezza (6.25 kHz): sizzle dei piatti; se strilla, -0.5 dB @6.25 kHz.",
+    "emotion": "Ascoltando 'Metallica – Master of Puppets', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Rock",
+    "subgenre": "Death metal",
+    "bass": 7.0,
+    "treble": 6.5,
+    "song": "Death – Symbolic",
+    "guide": "Death – Symbolic → Low-end (60–160 Hz): cassa tesa e chitarre palm-mute pulite; se impasta, -0.5 dB @160 Hz. | Corpo (400 Hz): rimuovi boxiness della chitarra/rullante con -0.5 dB @400 Hz se serve. | Punta (2.5 kHz): definizione plettri/rasp; se taglia, -0.5 dB @2.5 kHz. | Brillantezza (6.25 kHz): sizzle dei piatti; se strilla, -0.5 dB @6.25 kHz.",
+    "emotion": "Ascoltando 'Death – Symbolic', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Rock",
+    "subgenre": "Black metal",
+    "bass": 6.5,
+    "treble": 7.0,
+    "song": "Mayhem – Freezing Moon",
+    "guide": "Mayhem – Freezing Moon → Low-end (60–160 Hz): cassa tesa e chitarre palm-mute pulite; se impasta, -0.5 dB @160 Hz. | Corpo (400 Hz): rimuovi boxiness della chitarra/rullante con -0.5 dB @400 Hz se serve. | Punta (2.5 kHz): definizione plettri/rasp; se taglia, -0.5 dB @2.5 kHz. | Brillantezza (6.25 kHz): sizzle dei piatti; se strilla, -0.5 dB @6.25 kHz.",
+    "emotion": "Ascoltando 'Mayhem – Freezing Moon', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Rock",
+    "subgenre": "Power metal",
+    "bass": 7.0,
+    "treble": 6.5,
+    "song": "DragonForce – Through the Fire and Flames",
+    "guide": "DragonForce – Through the Fire and Flames → Low-end (60–160 Hz): cassa tesa e chitarre palm-mute pulite; se impasta, -0.5 dB @160 Hz. | Corpo (400 Hz): rimuovi boxiness della chitarra/rullante con -0.5 dB @400 Hz se serve. | Punta (2.5 kHz): definizione plettri/rasp; se taglia, -0.5 dB @2.5 kHz. | Brillantezza (6.25 kHz): sizzle dei piatti; se strilla, -0.5 dB @6.25 kHz.",
+    "emotion": "Ascoltando 'DragonForce – Through the Fire and Flames', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Rock",
+    "subgenre": "Doom metal",
+    "bass": 8.0,
+    "treble": 5.0,
+    "song": "Candlemass – Solitude",
+    "guide": "Candlemass – Solitude → Low-end (60–160 Hz): cassa tesa e chitarre palm-mute pulite; se impasta, -0.5 dB @160 Hz. | Corpo (400 Hz): rimuovi boxiness della chitarra/rullante con -0.5 dB @400 Hz se serve. | Punta (2.5 kHz): definizione plettri/rasp; se taglia, -0.5 dB @2.5 kHz. | Brillantezza (6.25 kHz): sizzle dei piatti; se strilla, -0.5 dB @6.25 kHz.",
+    "emotion": "Ascoltando 'Candlemass – Solitude', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Rock",
+    "subgenre": "Progressive metal",
+    "bass": 6.5,
+    "treble": 6.0,
+    "song": "Dream Theater – Metropolis Pt. 1",
+    "guide": "Dream Theater – Metropolis Pt. 1 → Low-end (60–160 Hz): cassa tesa e chitarre palm-mute pulite; se impasta, -0.5 dB @160 Hz. | Corpo (400 Hz): rimuovi boxiness della chitarra/rullante con -0.5 dB @400 Hz se serve. | Punta (2.5 kHz): definizione plettri/rasp; se taglia, -0.5 dB @2.5 kHz. | Brillantezza (6.25 kHz): sizzle dei piatti; se strilla, -0.5 dB @6.25 kHz.",
+    "emotion": "Ascoltando 'Dream Theater – Metropolis Pt. 1', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Rock",
+    "subgenre": "Nu metal",
+    "bass": 8.0,
+    "treble": 6.0,
+    "song": "Korn – Freak on a Leash",
+    "guide": "Korn – Freak on a Leash → Low-end (60–160 Hz): cassa tesa e chitarre palm-mute pulite; se impasta, -0.5 dB @160 Hz. | Corpo (400 Hz): rimuovi boxiness della chitarra/rullante con -0.5 dB @400 Hz se serve. | Punta (2.5 kHz): definizione plettri/rasp; se taglia, -0.5 dB @2.5 kHz. | Brillantezza (6.25 kHz): sizzle dei piatti; se strilla, -0.5 dB @6.25 kHz.",
+    "emotion": "Ascoltando 'Korn – Freak on a Leash', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Rock",
+    "subgenre": "Symphonic metal",
+    "bass": 6.5,
+    "treble": 7.0,
+    "song": "Nightwish – Nemo",
+    "guide": "Nightwish – Nemo → Low-end (60–160 Hz): cassa tesa e chitarre palm-mute pulite; se impasta, -0.5 dB @160 Hz. | Corpo (400 Hz): rimuovi boxiness della chitarra/rullante con -0.5 dB @400 Hz se serve. | Punta (2.5 kHz): definizione plettri/rasp; se taglia, -0.5 dB @2.5 kHz. | Brillantezza (6.25 kHz): sizzle dei piatti; se strilla, -0.5 dB @6.25 kHz.",
+    "emotion": "Ascoltando 'Nightwish – Nemo', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Rock",
+    "subgenre": "Groove metal",
+    "bass": 6.5,
+    "treble": 5.5,
+    "song": "Pantera – Walk",
+    "guide": "Pantera – Walk → Low-end (60–160 Hz): cassa tesa e chitarre palm-mute pulite; se impasta, -0.5 dB @160 Hz. | Corpo (400 Hz): rimuovi boxiness della chitarra/rullante con -0.5 dB @400 Hz se serve. | Punta (2.5 kHz): definizione plettri/rasp; se taglia, -0.5 dB @2.5 kHz. | Brillantezza (6.25 kHz): sizzle dei piatti; se strilla, -0.5 dB @6.25 kHz.",
+    "emotion": "Ascoltando 'Pantera – Walk', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Rock",
+    "subgenre": "Punk rock",
+    "bass": 6.5,
+    "treble": 6.5,
+    "song": "The Clash – London Calling",
+    "guide": "The Clash – London Calling → Basso/Kick: devono incastrarsi senza coprire la voce; ritocca ±0.5 dB @160 Hz. | Voce/Chitarre: presenza centrata @2.5 kHz; se la voce affoga, +0.5 dB. | Boxiness: se senti 'scatola' nel rullante, -0.5 dB @400 Hz. | Aria: piatti e chitarre brillanti ma non pungenti, regola @6.25 kHz.",
+    "emotion": "Ascoltando 'The Clash – London Calling', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Rock",
+    "subgenre": "Pop punk",
+    "bass": 6.5,
+    "treble": 5.5,
+    "song": "blink-182 – All the Small Things",
+    "guide": "blink-182 – All the Small Things → Basso/Kick: devono incastrarsi senza coprire la voce; ritocca ±0.5 dB @160 Hz. | Voce/Chitarre: presenza centrata @2.5 kHz; se la voce affoga, +0.5 dB. | Boxiness: se senti 'scatola' nel rullante, -0.5 dB @400 Hz. | Aria: piatti e chitarre brillanti ma non pungenti, regola @6.25 kHz.",
+    "emotion": "Ascoltando 'blink-182 – All the Small Things', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Rock",
+    "subgenre": "Hardcore punk",
+    "bass": 6.0,
+    "treble": 6.5,
+    "song": "Black Flag – Rise Above",
+    "guide": "Black Flag – Rise Above → Basso/Kick: devono incastrarsi senza coprire la voce; ritocca ±0.5 dB @160 Hz. | Voce/Chitarre: presenza centrata @2.5 kHz; se la voce affoga, +0.5 dB. | Boxiness: se senti 'scatola' nel rullante, -0.5 dB @400 Hz. | Aria: piatti e chitarre brillanti ma non pungenti, regola @6.25 kHz.",
+    "emotion": "Ascoltando 'Black Flag – Rise Above', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Rock",
+    "subgenre": "Post-punk",
+    "bass": 6.0,
+    "treble": 5.5,
+    "song": "Joy Division – Love Will Tear Us Apart",
+    "guide": "Joy Division – Love Will Tear Us Apart → Basso/Kick: devono incastrarsi senza coprire la voce; ritocca ±0.5 dB @160 Hz. | Voce/Chitarre: presenza centrata @2.5 kHz; se la voce affoga, +0.5 dB. | Boxiness: se senti 'scatola' nel rullante, -0.5 dB @400 Hz. | Aria: piatti e chitarre brillanti ma non pungenti, regola @6.25 kHz.",
+    "emotion": "Ascoltando 'Joy Division – Love Will Tear Us Apart', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Rock",
+    "subgenre": "Progressive rock",
+    "bass": 6.5,
+    "treble": 6.5,
+    "song": "Yes – Roundabout",
+    "guide": "Yes – Roundabout → Basso/Kick: devono incastrarsi senza coprire la voce; ritocca ±0.5 dB @160 Hz. | Voce/Chitarre: presenza centrata @2.5 kHz; se la voce affoga, +0.5 dB. | Boxiness: se senti 'scatola' nel rullante, -0.5 dB @400 Hz. | Aria: piatti e chitarre brillanti ma non pungenti, regola @6.25 kHz.",
+    "emotion": "Ascoltando 'Yes – Roundabout', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Rock",
+    "subgenre": "Psychedelic rock",
+    "bass": 6.5,
+    "treble": 7.0,
+    "song": "Jefferson Airplane – White Rabbit",
+    "guide": "Jefferson Airplane – White Rabbit → Basso/Kick: devono incastrarsi senza coprire la voce; ritocca ±0.5 dB @160 Hz. | Voce/Chitarre: presenza centrata @2.5 kHz; se la voce affoga, +0.5 dB. | Boxiness: se senti 'scatola' nel rullante, -0.5 dB @400 Hz. | Aria: piatti e chitarre brillanti ma non pungenti, regola @6.25 kHz.",
+    "emotion": "Ascoltando 'Jefferson Airplane – White Rabbit', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Rock",
+    "subgenre": "Grunge",
+    "bass": 6.5,
+    "treble": 5.5,
+    "song": "Nirvana – Smells Like Teen Spirit",
+    "guide": "Nirvana – Smells Like Teen Spirit → Basso/Kick: devono incastrarsi senza coprire la voce; ritocca ±0.5 dB @160 Hz. | Voce/Chitarre: presenza centrata @2.5 kHz; se la voce affoga, +0.5 dB. | Boxiness: se senti 'scatola' nel rullante, -0.5 dB @400 Hz. | Aria: piatti e chitarre brillanti ma non pungenti, regola @6.25 kHz.",
+    "emotion": "Ascoltando 'Nirvana – Smells Like Teen Spirit', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Rock",
+    "subgenre": "Alternative rock",
+    "bass": 6.5,
+    "treble": 5.5,
+    "song": "Radiohead – Creep",
+    "guide": "Radiohead – Creep → Basso/Kick: devono incastrarsi senza coprire la voce; ritocca ±0.5 dB @160 Hz. | Voce/Chitarre: presenza centrata @2.5 kHz; se la voce affoga, +0.5 dB. | Boxiness: se senti 'scatola' nel rullante, -0.5 dB @400 Hz. | Aria: piatti e chitarre brillanti ma non pungenti, regola @6.25 kHz.",
+    "emotion": "Ascoltando 'Radiohead – Creep', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Rock",
+    "subgenre": "Garage rock",
+    "bass": 6.5,
+    "treble": 5.0,
+    "song": "The Strokes – Last Nite",
+    "guide": "The Strokes – Last Nite → Basso/Kick: devono incastrarsi senza coprire la voce; ritocca ±0.5 dB @160 Hz. | Voce/Chitarre: presenza centrata @2.5 kHz; se la voce affoga, +0.5 dB. | Boxiness: se senti 'scatola' nel rullante, -0.5 dB @400 Hz. | Aria: piatti e chitarre brillanti ma non pungenti, regola @6.25 kHz.",
+    "emotion": "Ascoltando 'The Strokes – Last Nite', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Rock",
+    "subgenre": "Southern rock",
+    "bass": 6.5,
+    "treble": 5.0,
+    "song": "Lynyrd Skynyrd – Sweet Home Alabama",
+    "guide": "Lynyrd Skynyrd – Sweet Home Alabama → Basso/Kick: devono incastrarsi senza coprire la voce; ritocca ±0.5 dB @160 Hz. | Voce/Chitarre: presenza centrata @2.5 kHz; se la voce affoga, +0.5 dB. | Boxiness: se senti 'scatola' nel rullante, -0.5 dB @400 Hz. | Aria: piatti e chitarre brillanti ma non pungenti, regola @6.25 kHz.",
+    "emotion": "Ascoltando 'Lynyrd Skynyrd – Sweet Home Alabama', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Classica",
+    "subgenre": "Musica barocca",
+    "bass": 3.0,
+    "treble": 7.0,
+    "song": "J.S. Bach – Brandenburg Concerto No. 3 (I)",
+    "guide": "J.S. Bach – Brandenburg Concerto No. 3 (I) → Fondamentali bassi: niente boom in platea; se serve, -0.5 dB @160 Hz. | Centro (1 kHz): legni/archi devono restare naturali; se nasale, -0.5 dB. | Dettaglio (2.5 kHz): articolazione dell'archetto; se aspro, -0.5 dB. | Aria (6.25 kHz): riverberi e respiro; se frizzante, -0.5 dB.",
+    "emotion": "Ascoltando 'J.S. Bach – Brandenburg Concerto No. 3 (I)', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Classica",
+    "subgenre": "Classica del periodo classico",
+    "bass": 3.5,
+    "treble": 6.5,
+    "song": "W.A. Mozart – Eine kleine Nachtmusik",
+    "guide": "W.A. Mozart – Eine kleine Nachtmusik → Fondamentali bassi: niente boom in platea; se serve, -0.5 dB @160 Hz. | Centro (1 kHz): legni/archi devono restare naturali; se nasale, -0.5 dB. | Dettaglio (2.5 kHz): articolazione dell'archetto; se aspro, -0.5 dB. | Aria (6.25 kHz): riverberi e respiro; se frizzante, -0.5 dB.",
+    "emotion": "Ascoltando 'W.A. Mozart – Eine kleine Nachtmusik', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Classica",
+    "subgenre": "Romantica",
+    "bass": 4.5,
+    "treble": 6.5,
+    "song": "F. Chopin – Nocturne Op.9 No.2",
+    "guide": "F. Chopin – Nocturne Op.9 No.2 → Fondamentali bassi: niente boom in platea; se serve, -0.5 dB @160 Hz. | Centro (1 kHz): legni/archi devono restare naturali; se nasale, -0.5 dB. | Dettaglio (2.5 kHz): articolazione dell'archetto; se aspro, -0.5 dB. | Aria (6.25 kHz): riverberi e respiro; se frizzante, -0.5 dB.",
+    "emotion": "Ascoltando 'F. Chopin – Nocturne Op.9 No.2', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Classica",
+    "subgenre": "Impressionista",
+    "bass": 4.0,
+    "treble": 7.5,
+    "song": "C. Debussy – Clair de Lune",
+    "guide": "C. Debussy – Clair de Lune → Fondamentali bassi: niente boom in platea; se serve, -0.5 dB @160 Hz. | Centro (1 kHz): legni/archi devono restare naturali; se nasale, -0.5 dB. | Dettaglio (2.5 kHz): articolazione dell'archetto; se aspro, -0.5 dB. | Aria (6.25 kHz): riverberi e respiro; se frizzante, -0.5 dB.",
+    "emotion": "Ascoltando 'C. Debussy – Clair de Lune', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Classica",
+    "subgenre": "Contemporanea",
+    "bass": 4.0,
+    "treble": 6.0,
+    "song": "I. Stravinsky – The Rite of Spring (Introduction)",
+    "guide": "I. Stravinsky – The Rite of Spring (Introduction) → Fondamentali bassi: niente boom in platea; se serve, -0.5 dB @160 Hz. | Centro (1 kHz): legni/archi devono restare naturali; se nasale, -0.5 dB. | Dettaglio (2.5 kHz): articolazione dell'archetto; se aspro, -0.5 dB. | Aria (6.25 kHz): riverberi e respiro; se frizzante, -0.5 dB.",
+    "emotion": "Ascoltando 'I. Stravinsky – The Rite of Spring (Introduction)', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Jazz",
+    "subgenre": "Swing",
+    "bass": 6.5,
+    "treble": 7.0,
+    "song": "Benny Goodman – Sing, Sing, Sing",
+    "guide": "Benny Goodman – Sing, Sing, Sing → Basse (60–120 Hz): il contrabbasso deve restare articolato senza boom; se gonfia, -0.5 dB @160 Hz. | Medi (1 kHz): piano/fiati nitidi; se nasalano, -0.5 dB @1 kHz. | Presenza (2.5 kHz): attacco di piatti e fiati; se pizzicano, -0.5 dB @2.5 kHz. | Aria (6.25 kHz): shimmer setoso; se frizza, -0.5 dB @6.25 kHz.",
+    "emotion": "Ascoltando 'Benny Goodman – Sing, Sing, Sing', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Jazz",
+    "subgenre": "Bebop",
+    "bass": 6.5,
+    "treble": 7.0,
+    "song": "Charlie Parker – Donna Lee",
+    "guide": "Charlie Parker – Donna Lee → Basse (60–120 Hz): il contrabbasso deve restare articolato senza boom; se gonfia, -0.5 dB @160 Hz. | Medi (1 kHz): piano/fiati nitidi; se nasalano, -0.5 dB @1 kHz. | Presenza (2.5 kHz): attacco di piatti e fiati; se pizzicano, -0.5 dB @2.5 kHz. | Aria (6.25 kHz): shimmer setoso; se frizza, -0.5 dB @6.25 kHz.",
+    "emotion": "Ascoltando 'Charlie Parker – Donna Lee', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Jazz",
+    "subgenre": "Cool jazz",
+    "bass": 6.5,
+    "treble": 7.0,
+    "song": "Miles Davis – Blue in Green",
+    "guide": "Miles Davis – Blue in Green → Basse (60–120 Hz): il contrabbasso deve restare articolato senza boom; se gonfia, -0.5 dB @160 Hz. | Medi (1 kHz): piano/fiati nitidi; se nasalano, -0.5 dB @1 kHz. | Presenza (2.5 kHz): attacco di piatti e fiati; se pizzicano, -0.5 dB @2.5 kHz. | Aria (6.25 kHz): shimmer setoso; se frizza, -0.5 dB @6.25 kHz.",
+    "emotion": "Ascoltando 'Miles Davis – Blue in Green', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Jazz",
+    "subgenre": "Free jazz",
+    "bass": 6.5,
+    "treble": 7.0,
+    "song": "Ornette Coleman – Free Jazz",
+    "guide": "Ornette Coleman – Free Jazz → Basse (60–120 Hz): il contrabbasso deve restare articolato senza boom; se gonfia, -0.5 dB @160 Hz. | Medi (1 kHz): piano/fiati nitidi; se nasalano, -0.5 dB @1 kHz. | Presenza (2.5 kHz): attacco di piatti e fiati; se pizzicano, -0.5 dB @2.5 kHz. | Aria (6.25 kHz): shimmer setoso; se frizza, -0.5 dB @6.25 kHz.",
+    "emotion": "Ascoltando 'Ornette Coleman – Free Jazz', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Jazz",
+    "subgenre": "Fusion jazz",
+    "bass": 7.0,
+    "treble": 7.0,
+    "song": "Weather Report – Birdland",
+    "guide": "Weather Report – Birdland → Basse (60–120 Hz): il contrabbasso deve restare articolato senza boom; se gonfia, -0.5 dB @160 Hz. | Medi (1 kHz): piano/fiati nitidi; se nasalano, -0.5 dB @1 kHz. | Presenza (2.5 kHz): attacco di piatti e fiati; se pizzicano, -0.5 dB @2.5 kHz. | Aria (6.25 kHz): shimmer setoso; se frizza, -0.5 dB @6.25 kHz.",
+    "emotion": "Ascoltando 'Weather Report – Birdland', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Jazz",
+    "subgenre": "Smooth jazz",
+    "bass": 7.0,
+    "treble": 7.0,
+    "song": "George Benson – Breezin'",
+    "guide": "George Benson – Breezin' → Basse (60–120 Hz): il contrabbasso deve restare articolato senza boom; se gonfia, -0.5 dB @160 Hz. | Medi (1 kHz): piano/fiati nitidi; se nasalano, -0.5 dB @1 kHz. | Presenza (2.5 kHz): attacco di piatti e fiati; se pizzicano, -0.5 dB @2.5 kHz. | Aria (6.25 kHz): shimmer setoso; se frizza, -0.5 dB @6.25 kHz.",
+    "emotion": "Ascoltando 'George Benson – Breezin'', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Jazz",
+    "subgenre": "Latin jazz",
+    "bass": 6.5,
+    "treble": 7.0,
+    "song": "Chick Corea – Spain",
+    "guide": "Chick Corea – Spain → Basse (60–120 Hz): il contrabbasso deve restare articolato senza boom; se gonfia, -0.5 dB @160 Hz. | Medi (1 kHz): piano/fiati nitidi; se nasalano, -0.5 dB @1 kHz. | Presenza (2.5 kHz): attacco di piatti e fiati; se pizzicano, -0.5 dB @2.5 kHz. | Aria (6.25 kHz): shimmer setoso; se frizza, -0.5 dB @6.25 kHz.",
+    "emotion": "Ascoltando 'Chick Corea – Spain', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Jazz",
+    "subgenre": "Gypsy jazz",
+    "bass": 6.0,
+    "treble": 7.0,
+    "song": "Django Reinhardt – Minor Swing",
+    "guide": "Django Reinhardt – Minor Swing → Basse (60–120 Hz): il contrabbasso deve restare articolato senza boom; se gonfia, -0.5 dB @160 Hz. | Medi (1 kHz): piano/fiati nitidi; se nasalano, -0.5 dB @1 kHz. | Presenza (2.5 kHz): attacco di piatti e fiati; se pizzicano, -0.5 dB @2.5 kHz. | Aria (6.25 kHz): shimmer setoso; se frizza, -0.5 dB @6.25 kHz.",
+    "emotion": "Ascoltando 'Django Reinhardt – Minor Swing', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Blues",
+    "subgenre": "Delta blues",
+    "bass": 6.0,
+    "treble": 5.5,
+    "song": "Robert Johnson – Cross Road Blues",
+    "guide": "Robert Johnson – Cross Road Blues → Basso/Grancassa: rotondi ma non invadenti; -0.5 dB @160 Hz se servisse. | Voce: calda e avanti @1 kHz; se sibilante, -0.5 dB @6.25 kHz. | Chitarra: bending dolci @2.5 kHz; se pungente, -0.5 dB. | Piatti: brillanti ma morbidi @6.25 kHz.",
+    "emotion": "Ascoltando 'Robert Johnson – Cross Road Blues', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Blues",
+    "subgenre": "Chicago blues",
+    "bass": 6.5,
+    "treble": 5.5,
+    "song": "Muddy Waters – Hoochie Coochie Man",
+    "guide": "Muddy Waters – Hoochie Coochie Man → Basso/Grancassa: rotondi ma non invadenti; -0.5 dB @160 Hz se servisse. | Voce: calda e avanti @1 kHz; se sibilante, -0.5 dB @6.25 kHz. | Chitarra: bending dolci @2.5 kHz; se pungente, -0.5 dB. | Piatti: brillanti ma morbidi @6.25 kHz.",
+    "emotion": "Ascoltando 'Muddy Waters – Hoochie Coochie Man', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Blues",
+    "subgenre": "Electric blues",
+    "bass": 6.5,
+    "treble": 5.5,
+    "song": "Stevie Ray Vaughan – Texas Flood",
+    "guide": "Stevie Ray Vaughan – Texas Flood → Basso/Grancassa: rotondi ma non invadenti; -0.5 dB @160 Hz se servisse. | Voce: calda e avanti @1 kHz; se sibilante, -0.5 dB @6.25 kHz. | Chitarra: bending dolci @2.5 kHz; se pungente, -0.5 dB. | Piatti: brillanti ma morbidi @6.25 kHz.",
+    "emotion": "Ascoltando 'Stevie Ray Vaughan – Texas Flood', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Blues",
+    "subgenre": "Blues rock",
+    "bass": 6.0,
+    "treble": 5.5,
+    "song": "ZZ Top – La Grange",
+    "guide": "ZZ Top – La Grange → Basso/Grancassa: rotondi ma non invadenti; -0.5 dB @160 Hz se servisse. | Voce: calda e avanti @1 kHz; se sibilante, -0.5 dB @6.25 kHz. | Chitarra: bending dolci @2.5 kHz; se pungente, -0.5 dB. | Piatti: brillanti ma morbidi @6.25 kHz.",
+    "emotion": "Ascoltando 'ZZ Top – La Grange', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Hip-Hop / Rap",
+    "subgenre": "East Coast rap",
+    "bass": 7.5,
+    "treble": 6.5,
+    "song": "Nas – N.Y. State of Mind",
+    "guide": "Nas – N.Y. State of Mind → Sub-bass (31–62 Hz): 808 profonde ma controllate; se vibra la stanza, -0.5 dB @160 Hz. | Vocals (1 kHz): diction chiara; se ovattata, +0.5 dB @1 kHz. | Hi-hat (6–8 kHz): brillante ma non tagliente; se fischia, -0.5 dB @6.25 kHz. | Snap (2.5 kHz): schiocco del rullante; se manca mordente, +0.5 dB @2.5 kHz.",
+    "emotion": "Ascoltando 'Nas – N.Y. State of Mind', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Hip-Hop / Rap",
+    "subgenre": "West Coast rap",
+    "bass": 8.0,
+    "treble": 6.0,
+    "song": "2Pac – California Love",
+    "guide": "2Pac – California Love → Sub-bass (31–62 Hz): 808 profonde ma controllate; se vibra la stanza, -0.5 dB @160 Hz. | Vocals (1 kHz): diction chiara; se ovattata, +0.5 dB @1 kHz. | Hi-hat (6–8 kHz): brillante ma non tagliente; se fischia, -0.5 dB @6.25 kHz. | Snap (2.5 kHz): schiocco del rullante; se manca mordente, +0.5 dB @2.5 kHz.",
+    "emotion": "Ascoltando '2Pac – California Love', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Hip-Hop / Rap",
+    "subgenre": "Trap",
+    "bass": 8.5,
+    "treble": 7.0,
+    "song": "Future – Mask Off",
+    "guide": "Future – Mask Off → Sub-bass (31–62 Hz): 808 profonde ma controllate; se vibra la stanza, -0.5 dB @160 Hz. | Vocals (1 kHz): diction chiara; se ovattata, +0.5 dB @1 kHz. | Hi-hat (6–8 kHz): brillante ma non tagliente; se fischia, -0.5 dB @6.25 kHz. | Snap (2.5 kHz): schiocco del rullante; se manca mordente, +0.5 dB @2.5 kHz.",
+    "emotion": "Ascoltando 'Future – Mask Off', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Hip-Hop / Rap",
+    "subgenre": "Boom bap",
+    "bass": 8.0,
+    "treble": 6.5,
+    "song": "Gang Starr – Mass Appeal",
+    "guide": "Gang Starr – Mass Appeal → Sub-bass (31–62 Hz): 808 profonde ma controllate; se vibra la stanza, -0.5 dB @160 Hz. | Vocals (1 kHz): diction chiara; se ovattata, +0.5 dB @1 kHz. | Hi-hat (6–8 kHz): brillante ma non tagliente; se fischia, -0.5 dB @6.25 kHz. | Snap (2.5 kHz): schiocco del rullante; se manca mordente, +0.5 dB @2.5 kHz.",
+    "emotion": "Ascoltando 'Gang Starr – Mass Appeal', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Hip-Hop / Rap",
+    "subgenre": "Conscious rap",
+    "bass": 7.5,
+    "treble": 6.5,
+    "song": "Kendrick Lamar – Alright",
+    "guide": "Kendrick Lamar – Alright → Sub-bass (31–62 Hz): 808 profonde ma controllate; se vibra la stanza, -0.5 dB @160 Hz. | Vocals (1 kHz): diction chiara; se ovattata, +0.5 dB @1 kHz. | Hi-hat (6–8 kHz): brillante ma non tagliente; se fischia, -0.5 dB @6.25 kHz. | Snap (2.5 kHz): schiocco del rullante; se manca mordente, +0.5 dB @2.5 kHz.",
+    "emotion": "Ascoltando 'Kendrick Lamar – Alright', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Hip-Hop / Rap",
+    "subgenre": "Drill",
+    "bass": 8.5,
+    "treble": 7.0,
+    "song": "Pop Smoke – Dior",
+    "guide": "Pop Smoke – Dior → Sub-bass (31–62 Hz): 808 profonde ma controllate; se vibra la stanza, -0.5 dB @160 Hz. | Vocals (1 kHz): diction chiara; se ovattata, +0.5 dB @1 kHz. | Hi-hat (6–8 kHz): brillante ma non tagliente; se fischia, -0.5 dB @6.25 kHz. | Snap (2.5 kHz): schiocco del rullante; se manca mordente, +0.5 dB @2.5 kHz.",
+    "emotion": "Ascoltando 'Pop Smoke – Dior', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Hip-Hop / Rap",
+    "subgenre": "Alternative hip-hop",
+    "bass": 7.5,
+    "treble": 6.5,
+    "song": "Gorillaz – Feel Good Inc.",
+    "guide": "Gorillaz – Feel Good Inc. → Sub-bass (31–62 Hz): 808 profonde ma controllate; se vibra la stanza, -0.5 dB @160 Hz. | Vocals (1 kHz): diction chiara; se ovattata, +0.5 dB @1 kHz. | Hi-hat (6–8 kHz): brillante ma non tagliente; se fischia, -0.5 dB @6.25 kHz. | Snap (2.5 kHz): schiocco del rullante; se manca mordente, +0.5 dB @2.5 kHz.",
+    "emotion": "Ascoltando 'Gorillaz – Feel Good Inc.', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Elettronica",
+    "subgenre": "House",
+    "bass": 7.0,
+    "treble": 7.0,
+    "song": "Daft Punk – One More Time",
+    "guide": "Daft Punk – One More Time → Kick/Sub: profondità controllata; se maschera il resto, -0.5 dB @160 Hz. | Lead/Pad: chiarezza @1–2.5 kHz; se velati, +0.5 dB @1 kHz. | Transienti: attacco del clap @2.5 kHz. | Top-end: aria senza fatica @6.25 kHz; se pungente, -0.5 dB.",
+    "emotion": "Ascoltando 'Daft Punk – One More Time', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Elettronica",
+    "subgenre": "Deep house",
+    "bass": 7.5,
+    "treble": 6.5,
+    "song": "Caribou – Can't Do Without You",
+    "guide": "Caribou – Can't Do Without You → Kick/Sub: profondità controllata; se maschera il resto, -0.5 dB @160 Hz. | Lead/Pad: chiarezza @1–2.5 kHz; se velati, +0.5 dB @1 kHz. | Transienti: attacco del clap @2.5 kHz. | Top-end: aria senza fatica @6.25 kHz; se pungente, -0.5 dB.",
+    "emotion": "Ascoltando 'Caribou – Can't Do Without You', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Elettronica",
+    "subgenre": "Progressive house",
+    "bass": 7.0,
+    "treble": 7.5,
+    "song": "Eric Prydz – Opus",
+    "guide": "Eric Prydz – Opus → Kick/Sub: profondità controllata; se maschera il resto, -0.5 dB @160 Hz. | Lead/Pad: chiarezza @1–2.5 kHz; se velati, +0.5 dB @1 kHz. | Transienti: attacco del clap @2.5 kHz. | Top-end: aria senza fatica @6.25 kHz; se pungente, -0.5 dB.",
+    "emotion": "Ascoltando 'Eric Prydz – Opus', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Elettronica",
+    "subgenre": "Electro house",
+    "bass": 7.0,
+    "treble": 7.5,
+    "song": "Martin Garrix – Animals",
+    "guide": "Martin Garrix – Animals → Kick/Sub: profondità controllata; se maschera il resto, -0.5 dB @160 Hz. | Lead/Pad: chiarezza @1–2.5 kHz; se velati, +0.5 dB @1 kHz. | Transienti: attacco del clap @2.5 kHz. | Top-end: aria senza fatica @6.25 kHz; se pungente, -0.5 dB.",
+    "emotion": "Ascoltando 'Martin Garrix – Animals', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Elettronica",
+    "subgenre": "Techno",
+    "bass": 7.5,
+    "treble": 7.0,
+    "song": "Plastikman – Spastik",
+    "guide": "Plastikman – Spastik → Kick/Sub: profondità controllata; se maschera il resto, -0.5 dB @160 Hz. | Lead/Pad: chiarezza @1–2.5 kHz; se velati, +0.5 dB @1 kHz. | Transienti: attacco del clap @2.5 kHz. | Top-end: aria senza fatica @6.25 kHz; se pungente, -0.5 dB.",
+    "emotion": "Ascoltando 'Plastikman – Spastik', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Elettronica",
+    "subgenre": "Trance",
+    "bass": 7.0,
+    "treble": 7.5,
+    "song": "Tiësto – Adagio for Strings",
+    "guide": "Tiësto – Adagio for Strings → Kick/Sub: profondità controllata; se maschera il resto, -0.5 dB @160 Hz. | Lead/Pad: chiarezza @1–2.5 kHz; se velati, +0.5 dB @1 kHz. | Transienti: attacco del clap @2.5 kHz. | Top-end: aria senza fatica @6.25 kHz; se pungente, -0.5 dB.",
+    "emotion": "Ascoltando 'Tiësto – Adagio for Strings', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Elettronica",
+    "subgenre": "Psytrance",
+    "bass": 7.0,
+    "treble": 7.5,
+    "song": "Infected Mushroom – Becoming Insane",
+    "guide": "Infected Mushroom – Becoming Insane → Kick/Sub: profondità controllata; se maschera il resto, -0.5 dB @160 Hz. | Lead/Pad: chiarezza @1–2.5 kHz; se velati, +0.5 dB @1 kHz. | Transienti: attacco del clap @2.5 kHz. | Top-end: aria senza fatica @6.25 kHz; se pungente, -0.5 dB.",
+    "emotion": "Ascoltando 'Infected Mushroom – Becoming Insane', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Elettronica",
+    "subgenre": "Progressive trance",
+    "bass": 7.0,
+    "treble": 7.5,
+    "song": "Above & Beyond – Sun & Moon",
+    "guide": "Above & Beyond – Sun & Moon → Kick/Sub: profondità controllata; se maschera il resto, -0.5 dB @160 Hz. | Lead/Pad: chiarezza @1–2.5 kHz; se velati, +0.5 dB @1 kHz. | Transienti: attacco del clap @2.5 kHz. | Top-end: aria senza fatica @6.25 kHz; se pungente, -0.5 dB.",
+    "emotion": "Ascoltando 'Above & Beyond – Sun & Moon', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Elettronica",
+    "subgenre": "Drum and bass",
+    "bass": 7.5,
+    "treble": 7.0,
+    "song": "Goldie – Inner City Life",
+    "guide": "Goldie – Inner City Life → Kick/Sub: profondità controllata; se maschera il resto, -0.5 dB @160 Hz. | Lead/Pad: chiarezza @1–2.5 kHz; se velati, +0.5 dB @1 kHz. | Transienti: attacco del clap @2.5 kHz. | Top-end: aria senza fatica @6.25 kHz; se pungente, -0.5 dB.",
+    "emotion": "Ascoltando 'Goldie – Inner City Life', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Elettronica",
+    "subgenre": "Dubstep",
+    "bass": 7.5,
+    "treble": 7.0,
+    "song": "Skrillex – Scary Monsters and Nice Sprites",
+    "guide": "Skrillex – Scary Monsters and Nice Sprites → Kick/Sub: profondità controllata; se maschera il resto, -0.5 dB @160 Hz. | Lead/Pad: chiarezza @1–2.5 kHz; se velati, +0.5 dB @1 kHz. | Transienti: attacco del clap @2.5 kHz. | Top-end: aria senza fatica @6.25 kHz; se pungente, -0.5 dB.",
+    "emotion": "Ascoltando 'Skrillex – Scary Monsters and Nice Sprites', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Elettronica",
+    "subgenre": "Chillout / Ambient",
+    "bass": 6.5,
+    "treble": 8.0,
+    "song": "Marconi Union – Weightless",
+    "guide": "Marconi Union – Weightless → Kick/Sub: profondità controllata; se maschera il resto, -0.5 dB @160 Hz. | Lead/Pad: chiarezza @1–2.5 kHz; se velati, +0.5 dB @1 kHz. | Transienti: attacco del clap @2.5 kHz. | Top-end: aria senza fatica @6.25 kHz; se pungente, -0.5 dB.",
+    "emotion": "Ascoltando 'Marconi Union – Weightless', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Elettronica",
+    "subgenre": "IDM (Intelligent Dance Music)",
+    "bass": 7.0,
+    "treble": 7.0,
+    "song": "Aphex Twin – Windowlicker",
+    "guide": "Aphex Twin – Windowlicker → Kick/Sub: profondità controllata; se maschera il resto, -0.5 dB @160 Hz. | Lead/Pad: chiarezza @1–2.5 kHz; se velati, +0.5 dB @1 kHz. | Transienti: attacco del clap @2.5 kHz. | Top-end: aria senza fatica @6.25 kHz; se pungente, -0.5 dB.",
+    "emotion": "Ascoltando 'Aphex Twin – Windowlicker', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Reggae / Ska",
+    "subgenre": "Roots reggae",
+    "bass": 8.0,
+    "treble": 5.0,
+    "song": "Bob Marley & The Wailers – One Love",
+    "guide": "Bob Marley & The Wailers – One Love → Basso portante (60–160 Hz): rotondo e davanti; se invadente, -0.5 dB @160 Hz. | Chitarra skank (2.5 kHz): precisa senza pizzicare; regola ±0.5 dB. | Voce (1 kHz): calda e leggibile; se arretra, +0.5 dB @1 kHz. | Hi-hat (6.25 kHz): niente fruscio; se sibilante, -0.5 dB.",
+    "emotion": "Ascoltando 'Bob Marley & The Wailers – One Love', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Reggae / Ska",
+    "subgenre": "Dub reggae",
+    "bass": 8.5,
+    "treble": 4.5,
+    "song": "Augustus Pablo – King Tubby Meets Rockers Uptown",
+    "guide": "Augustus Pablo – King Tubby Meets Rockers Uptown → Basso portante (60–160 Hz): rotondo e davanti; se invadente, -0.5 dB @160 Hz. | Chitarra skank (2.5 kHz): precisa senza pizzicare; regola ±0.5 dB. | Voce (1 kHz): calda e leggibile; se arretra, +0.5 dB @1 kHz. | Hi-hat (6.25 kHz): niente fruscio; se sibilante, -0.5 dB.",
+    "emotion": "Ascoltando 'Augustus Pablo – King Tubby Meets Rockers Uptown', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Reggae / Ska",
+    "subgenre": "Dancehall",
+    "bass": 8.0,
+    "treble": 5.5,
+    "song": "Sister Nancy – Bam Bam",
+    "guide": "Sister Nancy – Bam Bam → Basso portante (60–160 Hz): rotondo e davanti; se invadente, -0.5 dB @160 Hz. | Chitarra skank (2.5 kHz): precisa senza pizzicare; regola ±0.5 dB. | Voce (1 kHz): calda e leggibile; se arretra, +0.5 dB @1 kHz. | Hi-hat (6.25 kHz): niente fruscio; se sibilante, -0.5 dB.",
+    "emotion": "Ascoltando 'Sister Nancy – Bam Bam', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Reggae / Ska",
+    "subgenre": "Ska tradizionale",
+    "bass": 7.5,
+    "treble": 5.0,
+    "song": "The Skatalites – Guns of Navarone",
+    "guide": "The Skatalites – Guns of Navarone → Basso portante (60–160 Hz): rotondo e davanti; se invadente, -0.5 dB @160 Hz. | Chitarra skank (2.5 kHz): precisa senza pizzicare; regola ±0.5 dB. | Voce (1 kHz): calda e leggibile; se arretra, +0.5 dB @1 kHz. | Hi-hat (6.25 kHz): niente fruscio; se sibilante, -0.5 dB.",
+    "emotion": "Ascoltando 'The Skatalites – Guns of Navarone', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Reggae / Ska",
+    "subgenre": "Ska punk",
+    "bass": 8.0,
+    "treble": 5.5,
+    "song": "Rancid – Time Bomb",
+    "guide": "Rancid – Time Bomb → Basso/Kick: devono incastrarsi senza coprire la voce; ritocca ±0.5 dB @160 Hz. | Voce/Chitarre: presenza centrata @2.5 kHz; se la voce affoga, +0.5 dB. | Boxiness: se senti 'scatola' nel rullante, -0.5 dB @400 Hz. | Aria: piatti e chitarre brillanti ma non pungenti, regola @6.25 kHz.",
+    "emotion": "Ascoltando 'Rancid – Time Bomb', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Folk / World",
+    "subgenre": "Folk tradizionale",
+    "bass": 5.5,
+    "treble": 6.0,
+    "song": "Bob Dylan – The Times They Are A-Changin'",
+    "guide": "Bob Dylan – The Times They Are A-Changin' → Low-end bilanciato @160 Hz. | Chiarezza vocale @1 kHz. | Presenza @2.5 kHz. | Aria @6.25 kHz senza fatica.",
+    "emotion": "Ascoltando 'Bob Dylan – The Times They Are A-Changin'', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Folk / World",
+    "subgenre": "Neo-folk",
+    "bass": 5.5,
+    "treble": 6.5,
+    "song": "Bon Iver – Holocene",
+    "guide": "Bon Iver – Holocene → Low-end bilanciato @160 Hz. | Chiarezza vocale @1 kHz. | Presenza @2.5 kHz. | Aria @6.25 kHz senza fatica.",
+    "emotion": "Ascoltando 'Bon Iver – Holocene', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Folk / World",
+    "subgenre": "World music",
+    "bass": 5.5,
+    "treble": 6.5,
+    "song": "Mory Kanté – Yé ké yé ké",
+    "guide": "Mory Kanté – Yé ké yé ké → Low-end bilanciato @160 Hz. | Chiarezza vocale @1 kHz. | Presenza @2.5 kHz. | Aria @6.25 kHz senza fatica.",
+    "emotion": "Ascoltando 'Mory Kanté – Yé ké yé ké', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Folk / World",
+    "subgenre": "Flamenco",
+    "bass": 5.5,
+    "treble": 6.0,
+    "song": "Paco de Lucía – Entre Dos Aguas",
+    "guide": "Paco de Lucía – Entre Dos Aguas → Low-end bilanciato @160 Hz. | Chiarezza vocale @1 kHz. | Presenza @2.5 kHz. | Aria @6.25 kHz senza fatica.",
+    "emotion": "Ascoltando 'Paco de Lucía – Entre Dos Aguas', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Folk / World",
+    "subgenre": "Celtic",
+    "bass": 5.5,
+    "treble": 6.5,
+    "song": "The Chieftains – Mná na hÉireann",
+    "guide": "The Chieftains – Mná na hÉireann → Low-end bilanciato @160 Hz. | Chiarezza vocale @1 kHz. | Presenza @2.5 kHz. | Aria @6.25 kHz senza fatica.",
+    "emotion": "Ascoltando 'The Chieftains – Mná na hÉireann', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Country",
+    "subgenre": "Country tradizionale",
+    "bass": 6.0,
+    "treble": 5.5,
+    "song": "Johnny Cash – Ring of Fire",
+    "guide": "Johnny Cash – Ring of Fire → Low-end bilanciato @160 Hz. | Chiarezza vocale @1 kHz. | Presenza @2.5 kHz. | Aria @6.25 kHz senza fatica.",
+    "emotion": "Ascoltando 'Johnny Cash – Ring of Fire', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Country",
+    "subgenre": "Bluegrass",
+    "bass": 5.5,
+    "treble": 5.5,
+    "song": "Flatt & Scruggs – Foggy Mountain Breakdown",
+    "guide": "Flatt & Scruggs – Foggy Mountain Breakdown → Low-end bilanciato @160 Hz. | Chiarezza vocale @1 kHz. | Presenza @2.5 kHz. | Aria @6.25 kHz senza fatica.",
+    "emotion": "Ascoltando 'Flatt & Scruggs – Foggy Mountain Breakdown', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Country",
+    "subgenre": "Country pop",
+    "bass": 6.0,
+    "treble": 6.0,
+    "song": "Lady A – Need You Now",
+    "guide": "Lady A – Need You Now → Low-end bilanciato @160 Hz. | Chiarezza vocale @1 kHz. | Presenza @2.5 kHz. | Aria @6.25 kHz senza fatica.",
+    "emotion": "Ascoltando 'Lady A – Need You Now', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Country",
+    "subgenre": "Outlaw country",
+    "bass": 6.0,
+    "treble": 5.5,
+    "song": "Merle Haggard – Mama Tried",
+    "guide": "Merle Haggard – Mama Tried → Low-end bilanciato @160 Hz. | Chiarezza vocale @1 kHz. | Presenza @2.5 kHz. | Aria @6.25 kHz senza fatica.",
+    "emotion": "Ascoltando 'Merle Haggard – Mama Tried', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Soul / R&B",
+    "subgenre": "Motown",
+    "bass": 7.0,
+    "treble": 6.0,
+    "song": "Marvin Gaye – I Heard It Through the Grapevine",
+    "guide": "Marvin Gaye – I Heard It Through the Grapevine → Basso stretto (60–160 Hz) con kick definito; correggi @160 Hz. | Voce setosa @1 kHz; se affoga, +0.5 dB. | Snap del rullante @2.5 kHz; se troppo secco, -0.5 dB. | Shimmer @6.25 kHz, mai frizzante.",
+    "emotion": "Ascoltando 'Marvin Gaye – I Heard It Through the Grapevine', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Soul / R&B",
+    "subgenre": "Neo-soul",
+    "bass": 7.0,
+    "treble": 7.0,
+    "song": "D'Angelo – Untitled (How Does It Feel)",
+    "guide": "D'Angelo – Untitled (How Does It Feel) → Basso stretto (60–160 Hz) con kick definito; correggi @160 Hz. | Voce setosa @1 kHz; se affoga, +0.5 dB. | Snap del rullante @2.5 kHz; se troppo secco, -0.5 dB. | Shimmer @6.25 kHz, mai frizzante.",
+    "emotion": "Ascoltando 'D'Angelo – Untitled (How Does It Feel)', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Soul / R&B",
+    "subgenre": "Funk",
+    "bass": 7.0,
+    "treble": 6.5,
+    "song": "Stevie Wonder – Superstition",
+    "guide": "Stevie Wonder – Superstition → Basso stretto (60–160 Hz) con kick definito; correggi @160 Hz. | Voce setosa @1 kHz; se affoga, +0.5 dB. | Snap del rullante @2.5 kHz; se troppo secco, -0.5 dB. | Shimmer @6.25 kHz, mai frizzante.",
+    "emotion": "Ascoltando 'Stevie Wonder – Superstition', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Soul / R&B",
+    "subgenre": "Disco",
+    "bass": 7.5,
+    "treble": 7.0,
+    "song": "Bee Gees – Stayin' Alive",
+    "guide": "Bee Gees – Stayin' Alive → Basso stretto (60–160 Hz) con kick definito; correggi @160 Hz. | Voce setosa @1 kHz; se affoga, +0.5 dB. | Snap del rullante @2.5 kHz; se troppo secco, -0.5 dB. | Shimmer @6.25 kHz, mai frizzante.",
+    "emotion": "Ascoltando 'Bee Gees – Stayin' Alive', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Blues",
+    "subgenre": "Generico",
+    "bass": 6.0,
+    "treble": 5.5,
+    "song": "B.B. King – The Thrill Is Gone",
+    "guide": "B.B. King – The Thrill Is Gone → Voce calda e avanti @1 kHz; bending morbidi @2.5 kHz; piatti lucidi @6.25 kHz; controlla il low-end @160 Hz.",
+    "emotion": "Ascoltando 'B.B. King – The Thrill Is Gone', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Classica",
+    "subgenre": "Generico",
+    "bass": 4.0,
+    "treble": 6.0,
+    "song": "Claude Debussy – Clair de Lune",
+    "guide": "Claude Debussy – Clair de Lune → Scena ampia; niente boom @160 Hz; legni/archi naturali @1 kHz; dettaglio arco @2.5 kHz; riverbero e aria @6.25 kHz.",
+    "emotion": "Ascoltando 'Claude Debussy – Clair de Lune', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Country",
+    "subgenre": "Generico",
+    "bass": 6.0,
+    "treble": 5.5,
+    "song": "Johnny Cash – Ring of Fire",
+    "guide": "Johnny Cash – Ring of Fire → Voce centrale @1 kHz; steel dolce @2.5 kHz; niente boom delle acustiche @160 Hz; hi-end mai pungente @6.25 kHz.",
+    "emotion": "Ascoltando 'Johnny Cash – Ring of Fire', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Elettronica",
+    "subgenre": "Generico",
+    "bass": 7.0,
+    "treble": 7.0,
+    "song": "deadmau5 – Strobe",
+    "guide": "deadmau5 – Strobe → Kick profondo ma pulito @160 Hz; lead/pad chiari @1–2.5 kHz; top-end arioso @6.25 kHz; evita fatica salendo di volume.",
+    "emotion": "Ascoltando 'deadmau5 – Strobe', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Folk / World",
+    "subgenre": "Generico",
+    "bass": 5.5,
+    "treble": 6.0,
+    "song": "The Chieftains – The Foggy Dew",
+    "guide": "The Chieftains – The Foggy Dew → Acustiche naturali @2.5 kHz; voce vicina @1 kHz; aria sugli armonici @6.25 kHz; controlla boom chitarre @160 Hz.",
+    "emotion": "Ascoltando 'The Chieftains – The Foggy Dew', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Hip-Hop / Rap",
+    "subgenre": "Generico",
+    "bass": 7.5,
+    "treble": 6.5,
+    "song": "Dr. Dre – Still D.R.E.",
+    "guide": "Dr. Dre – Still D.R.E. → Sub 808 controllato @160 Hz; intelligibilità vocale @1 kHz; snap rullante @2.5 kHz; hi-hat brillanti ma non taglienti @6.25 kHz.",
+    "emotion": "Ascoltando 'Dr. Dre – Still D.R.E.', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Jazz",
+    "subgenre": "Generico",
+    "bass": 6.5,
+    "treble": 7.0,
+    "song": "The Dave Brubeck Quartet – Take Five",
+    "guide": "The Dave Brubeck Quartet – Take Five → Contrabbasso articolato @160 Hz; piano/fiati chiari @1 kHz; attacco piatti @2.5 kHz; aria setosa @6.25 kHz. Se pizzica, -0.5 dB su 2.5/6.25 kHz.",
+    "emotion": "Ascoltando 'The Dave Brubeck Quartet – Take Five', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Pop",
+    "subgenre": "Generico",
+    "bass": 7.0,
+    "treble": 7.0,
+    "song": "The Weeknd – Blinding Lights",
+    "guide": "The Weeknd – Blinding Lights → Equilibrio generale: low-end @160 Hz, chiarezza @1 kHz, presenza @2.5 kHz, aria @6.25 kHz.",
+    "emotion": "Ascoltando 'The Weeknd – Blinding Lights', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Reggae / Ska",
+    "subgenre": "Generico",
+    "bass": 7.5,
+    "treble": 5.0,
+    "song": "Bob Marley & The Wailers – Three Little Birds",
+    "guide": "Bob Marley & The Wailers – Three Little Birds → Basso rotondo in avanti @160 Hz; skank definito @2.5 kHz; voce morbida @1 kHz; niente fruscio @6.25 kHz.",
+    "emotion": "Ascoltando 'Bob Marley & The Wailers – Three Little Birds', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Rock",
+    "subgenre": "Generico",
+    "bass": 6.5,
+    "treble": 5.5,
+    "song": "Eagles – Hotel California",
+    "guide": "Eagles – Hotel California → Kick/basso compatti @160 Hz; voce e chitarre presenti @2.5 kHz; togli boxiness @400 Hz; controlla sibilanti @6.25 kHz.",
+    "emotion": "Ascoltando 'Eagles – Hotel California', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
+  },
+  {
+    "genre": "Soul / R&B",
+    "subgenre": "Generico",
+    "bass": 7.0,
+    "treble": 6.5,
+    "song": "Marvin Gaye – What's Going On",
+    "guide": "Marvin Gaye – What's Going On → Groove del basso stretto @160 Hz; voce setosa @1 kHz; snap del rullante @2.5 kHz; shimmer morbido @6.25 kHz.",
+    "emotion": "Ascoltando 'Marvin Gaye – What's Going On', lasciati trasportare: percepisci il basso come fondamenta solide, le medie come il cuore narrativo e gli alti come la luce che illumina la scena. Ogni suono è parte di un paesaggio emotivo unico."
   }
-}
+]

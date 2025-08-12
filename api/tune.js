@@ -19,7 +19,7 @@ export default async function handler(req, res) {
       required:["bass_clock","treble_clock","notes"],
       additionalProperties:false
     };
-    const sys=`Sei un tecnico Marshall per Acton III. Parti dal preset fornito e ritocca al massimo di ±${delta.toFixed(1)} ore (limiti 0.5–3.5). Restituisci SOLO JSON (schema).`;
+    const sys=`Sei un tecnico Marshall per Acton III. Parti tassativamente dal preset fornito e ritocca al massimo di ±${delta.toFixed(1)} ore (limiti 0.5–3.5). Restituisci SOLO JSON (schema).`;
     const prompt=`Contesto: ambiente="${room}", volume=${volume}%. Preset di base: bass_clock=${baseBass}, treble_clock=${baseTreble}. Richiesta: ${query}`;
     const model = process.env.OPENAI_MODEL || "gpt-4.1-mini";
     const resp = await client.responses.create({
@@ -28,7 +28,7 @@ export default async function handler(req, res) {
       text:{ format:{ type:"json_schema", name:"tuning_refined", strict:true, schema } },
       temperature: 0.3
     });
-    const text = resp.output_text || "{}";
+    const text = resp.output_text || resp.output?.[0]?.content?.[0]?.text || "{}";
     const data = JSON.parse(text);
     data.bass_clock=Math.max(baseBass-delta, Math.min(baseBass+delta, data.bass_clock));
     data.treble_clock=Math.max(baseTreble-delta, Math.min(baseTreble+delta, data.treble_clock));
