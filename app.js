@@ -169,7 +169,7 @@ async function askAIPro(){
     if(!res.ok) throw new Error('AI '+res.status);
     const data=await res.json();
     LAST.baseBass = clamp(data.bass_clock ?? LAST.baseBass, LAST.pristine.bass-0.3, LAST.pristine.bass+0.3);
-    LAST.baseTreble = clamp(data.treble_clock ?? LAST.baseTreble, LAST.pristine.treble-0.3, LAST.pristine.treble+0.3);
+    LAST.baseTreble = clamp(data.treble_clock ?? LAST.pristine.treble-0.3, LAST.pristine.treble+0.3);
     LAST.source = 'AI Tune Pro';
     LAST.ts = fmtTs(new Date());
     setKnob(document.getElementById('bassKnob'), LAST.baseBass);

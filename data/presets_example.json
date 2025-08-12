@@ -6,7 +6,9 @@
   "top_genres_order": [
     "rock",
     "classica",
-    "ost"
+    "ost",
+    "metal",
+    "country"
   ],
   "genres": {
     "rock": {
@@ -26,6 +28,18 @@
       "bass_clock": 2.5,
       "treble_clock": 2.2,
       "notes": "Scena ampia cinematica."
+    },
+    "metal": {
+      "name": "Metal",
+      "bass_clock": 2.7,
+      "treble_clock": 2.0,
+      "notes": "Impatto e definizione palm‑mute."
+    },
+    "country": {
+      "name": "Country",
+      "bass_clock": 2.3,
+      "treble_clock": 2.2,
+      "notes": "Voce calda, chitarre lucide."
     }
   },
   "subgenres": {
@@ -43,6 +57,28 @@
         "name": "Cinematic Epico",
         "bass_clock": 2.7,
         "treble_clock": 2.1
+      }
+    ],
+    "metal": [
+      {
+        "id": "thrash",
+        "name": "Thrash Metal",
+        "bass_clock": 2.8,
+        "treble_clock": 2.1
+      },
+      {
+        "id": "heavy",
+        "name": "Heavy Metal",
+        "bass_clock": 2.7,
+        "treble_clock": 2.0
+      }
+    ],
+    "country": [
+      {
+        "id": "country_soul",
+        "name": "Country Soul",
+        "bass_clock": 2.6,
+        "treble_clock": 1.9
       }
     ]
   }
