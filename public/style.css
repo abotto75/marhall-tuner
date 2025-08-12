@@ -76,8 +76,77 @@ border-radius:var(--r-2);background:#262628}
 /* Focus */
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:10px}
 
-/* Horizontal margin of 10px inside .card.quick for its direct children */
-.card.quick > * {
+/* === AI PRO adjustments === */
+.card.ai > * {
   margin-left: 10px;
   margin-right: 10px;
 }
+
+/* Match #freeText and #aiRoom to consult input style */
+.card.ai #freeText,
+.card.ai #aiRoom {
+  flex: 1;
+  min-height: 52px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #1f1f21;
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-weight: 700;
+}
+
+.card.ai #freeText::placeholder {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.card.ai #freeText:focus,
+.card.ai #aiRoom:focus {
+  outline: none;
+  border-color: #4a4a4d;
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, .16);
+}
+
+/* Custom arrow for #aiRoom */
+.card.ai #aiRoom {
+  appearance: none;
+  padding-right: 42px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23b0b0b0' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+/* Force label above select with spacing */
+.card.ai .field label {
+  display: block;
+  width: 100%;
+  margin-bottom: 6px;
+}
+
+/* === AI PRO layout: 'Dettagli' full width, then 'Ambiente' + 'Volume cassa' below === */
+.card.ai .grid { 
+  display: grid; 
+  grid-template-columns: 1fr; 
+  gap: 14px; 
+}
+
+/* On wider screens, force two rows:
+   Row 1: details details
+   Row 2: room   volume
+*/
+@media (min-width: 780px){
+  .card.ai .grid{
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "details details"
+      "room    volume";
+    column-gap: 14px;
+    row-gap: 14px;
+  }
+  .card.ai .grid .field:nth-child(1){ grid-area: details; }
+  .card.ai .grid .field:nth-child(2){ grid-area: room; }
+  .card.ai .grid .field:nth-child(3){ grid-area: volume; }
+}
+
+/* Keep labels above their controls inside AI PRO */
+.card.ai .field label{ display:block; width:100%; margin-bottom:6px; }
