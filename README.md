@@ -1,4 +1,5 @@
-# Marshall Tuner v6.2
-- Artist/Track AI Match (2 campi separati) con /api/match.
-- Selezione header con origine (Preset/AI Tune Pro) e timestamp.
-- LED rounding 5↓/6↑, micro-guide.
+# Marshall Tuner v6.3
+- Ricerca Genere con bottoni (niente auto-match su 2 lettere).
+- Campi separati Artista/Brano.
+- Bottone Reset ricerca.
+- Classificatore robusto: schema enum + soglia di confidenza + fallback senza bias su POP.

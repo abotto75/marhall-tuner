@@ -5,7 +5,7 @@ function clockToDeg(clock){const pct=Math.min(1,Math.max(0,(clock-0.5)/3));retur
 const qs=s=>document.querySelector(s);
 
 let PRESETS=null, SUB_GUIDES=null;
-let LAST={query:'', baseBass:2.0, baseTreble:2.0, genreId:null, subId:null, guide:'', pristine:{bass:2.0, treble:2.0}, source:'Preset', lastAiTs:null};
+let LAST={query:'', baseBass:2.0, baseTreble:2.0, genreId:null, subId:null, guide:'', pristine:{bass:2.0, treble:2.0}, source:'Preset', lastTs:null};
 let displayMode='percent';
 
 async function loadData(){
@@ -17,21 +17,24 @@ async function loadData(){
   qs('#aiBtn').onclick=askAIPro;
   qs('#resetBtn').onclick=resetToPristine;
   const aiVol=qs('#aiVolume'); const aiVal=qs('#aiVolVal'); aiVol.oninput=()=>aiVal.textContent=aiVol.value;
-  updateSelBar();
 
-  // artist/track listeners with debounce
-  const artist = document.getElementById('artistInput');
-  const track = document.getElementById('trackInput');
-  let t=null;
-  function trigger(){
-    clearTimeout(t);
-    const a=(artist.value||'').trim();
-    const tr=(track.value||'').trim();
-    if(!a && !tr) return;
-    t=setTimeout(()=>aiMatch(a,tr), 400);
-  }
-  artist.addEventListener('input', trigger);
-  track.addEventListener('input', trigger);
+  // Search controls
+  qs('#matchBtn').onclick=()=>{
+    const artist=(qs('#artistField').value||'').trim();
+    const track=(qs('#trackField').value||'').trim();
+    if(artist.length<3 && track.length<3){
+      setMatchMsg('Inserisci almeno 3 caratteri in Artista o Brano.', true);
+      return;
+    }
+    aiMatch({artist, track});
+  };
+  qs('#resetSearchBtn').onclick=resetSearch;
+
+  updateSelBar();
+}
+
+function setMatchMsg(msg, isErr=false){
+  const el=qs('#matchMsg'); el.textContent=msg||''; el.style.color=isErr?'#FFB4B4':'#A9A9A9';
 }
 
 function renderGenreChips(){
@@ -44,6 +47,7 @@ function renderGenreChips(){
     wrap.appendChild(b);
   }
 }
+
 function renderSubgenreChips(gid){
   const sw=qs('#subWrap'); const sc=qs('#subchips'); sc.innerHTML='';
   const list = (PRESETS.subgenres||{})[gid]||[];
@@ -100,10 +104,8 @@ function updateSelBar(){
   badge.textContent = LAST.source;
   badge.classList.toggle('aipro', LAST.source==='AI Tune Pro');
   badge.classList.toggle('preset', LAST.source!=='AI Tune Pro');
-  const ts = qs('#tsBadge');
-  if(LAST.source==='AI Tune Pro' && LAST.lastAiTs){
-    ts.hidden=false; ts.textContent = LAST.lastAiTs;
-  } else { ts.hidden=true; ts.textContent=''; }
+  const ts=qs('#timestamp');
+  if(LAST.source==='AI Tune Pro' && LAST.lastTs){ ts.hidden=false; ts.textContent=LAST.lastTs; } else { ts.hidden=true; ts.textContent=''; }
 }
 
 function selectGenre(gid){
@@ -111,8 +113,8 @@ function selectGenre(gid){
   applyPreset(g.bass_clock, g.treble_clock, g.notes||'');
   LAST.genreId=gid; LAST.subId=null; LAST.query=g.name;
   renderSubgenreChips(gid);
-  updateSelBar();
 }
+
 function applySubgenre(gid, sid){
   const list=(PRESETS.subgenres||{})[gid]||[];
   const sg=list.find(x=>x.id===sid); if(!sg) return;
@@ -124,22 +126,22 @@ function applySubgenre(gid, sid){
   updateSelBar();
 }
 
-async function aiMatch(artist, track){
+async function aiMatch({artist, track}){
   try{
-    const r = await fetch('/api/match', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ artist, track })
-    });
-    if(!r.ok) throw new Error('match '+r.status);
-    const { genreId, subId, confidence } = await r.json();
+    setMatchMsg('Ricerca in corso…');
+    const res=await fetch('/api/match',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({artist, track})});
+    if(!res.ok){ setMatchMsg('Nessun risultato. Prova a scrivere meglio artista o brano.', true); return; }
+    const { genreId, subId, confidence, reason } = await res.json();
 
     if (genreId && PRESETS.genres[genreId]) {
       const g = PRESETS.genres[genreId];
       applyPreset(g.bass_clock, g.treble_clock, g.notes || '');
       LAST.genreId = genreId; LAST.subId = null; LAST.query = g.name;
       renderSubgenreChips(genreId);
+    } else {
+      setMatchMsg('Genere non trovato tra i preset.', true); return;
     }
+
     if (subId && (PRESETS.subgenres?.[genreId]||[]).find(s=>s.id===subId)) {
       const sg = PRESETS.subgenres[genreId].find(s=>s.id===subId);
       applyPreset(sg.bass_clock, sg.treble_clock, PRESETS.genres[genreId]?.notes || '');
@@ -147,12 +149,20 @@ async function aiMatch(artist, track){
       const mg = (SUB_GUIDES?.[genreId]||{})[subId];
       if (mg){ const el=document.getElementById('subGuide'); el.textContent=mg; el.hidden=false; }
     }
-    LAST.source='Preset'; updateSelBar();
-    // Optionally auto AI Pro when confidence low:
-    // if(confidence < 0.6){ await askAIPro(); }
+
+    LAST.source='Preset';
+    updateSelBar();
+    setMatchMsg(confidence<0.6 ? 'Trovato (bassa confidenza): verifica o prova AI Pro.' : 'Trovato.');
   }catch(e){
-    console.warn('AI match failed', e);
+    setMatchMsg('Errore di rete/AI durante la ricerca.', true);
   }
+}
+
+function resetSearch(){
+  qs('#artistField').value=''; qs('#trackField').value='';
+  setMatchMsg('');
+  // Non resetto il preset selezionato; ma posso offrire reset totale:
+  // resetToPristine();
 }
 
 async function askAIPro(){
@@ -169,8 +179,9 @@ async function askAIPro(){
     LAST.baseBass = clamp(data.bass_clock ?? LAST.baseBass, LAST.pristine.bass-0.3, LAST.pristine.bass+0.3);
     LAST.baseTreble = clamp(data.treble_clock ?? LAST.baseTreble, LAST.pristine.treble-0.3, LAST.pristine.treble+0.3);
     LAST.source = 'AI Tune Pro';
-    const d=new Date(); const pad=n=>String(n).padStart(2,'0');
-    LAST.lastAiTs = `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} • ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    const now = new Date();
+    const ts = now.toLocaleDateString('it-IT') + ' • ' + now.toLocaleTimeString('it-IT', {hour:'2-digit', minute:'2-digit'});
+    LAST.lastTs = ts;
     setKnob(document.getElementById('bassKnob'), LAST.baseBass);
     setKnob(document.getElementById('trebleKnob'), LAST.baseTreble);
     document.getElementById('notes').textContent = data.notes || 'Refinement AI applicato.';
@@ -185,7 +196,7 @@ function resetToPristine(){
   LAST.baseBass = LAST.pristine.bass;
   LAST.baseTreble = LAST.pristine.treble;
   LAST.source = 'Preset';
-  LAST.lastAiTs = null;
+  LAST.lastTs = null;
   setKnob(document.getElementById('bassKnob'), LAST.baseBass);
   setKnob(document.getElementById('trebleKnob'), LAST.baseTreble);
   document.getElementById('notes').textContent='Ripristinato il preset originale.';

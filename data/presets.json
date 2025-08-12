@@ -1,7 +1,7 @@
 {
   "meta": {
-    "version": "v6.2",
-    "notes": "Artist/Track AI Match; selection header; LED rounding; micro-guides."
+    "version": "v5.4",
+    "notes": "Preset-first. Toggle Ore↔%, Quick Env/Vol con LED percepito. AI Pro concatena Genere/Sottogenere + testo utente."
   },
   "top_genres_order": [
     "pop",

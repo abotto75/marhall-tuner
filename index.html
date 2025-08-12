@@ -3,30 +3,33 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Marshall Tuner — v6.2</title>
+  <title>Marshall Tuner — v6.3</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=6.2">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">Marshall Tuner</div>
-    <div class="ver">v6.2</div>
-  </header>
-
+  <header class="topbar"><div class="brand">Marshall Tuner <span class="ver">v6.3</span></div></header>
   <main>
     <section class="card quick">
       <div class="section-title">Quick</div>
-      <p class="section-sub">Seleziona Genere/Sottogenere oppure usa l'abbinamento **Artist / Track**. I LED rispecchiano il preset (round 5↓ / 6↑).</p>
+      <p class="section-sub">Seleziona <b>Genere</b> e opzionalmente <b>Sottogenere</b>. Oppure usa <b>Ricerca Genere</b> con Artista/Brano. I LED rispecchiano il <b>preset</b> (round 5↓/6↑).</p>
 
-      <div class="block">
-        <div class="block-title">Artist / Track</div>
-        <div class="row2">
-          <div class="field"><input id="artistInput" placeholder="Artista (es. Chris Stapleton)"></div>
-          <div class="field"><input id="trackInput" placeholder="Brano (es. Tennessee Whiskey)"></div>
+      <div class="finder">
+        <div class="field">
+          <label>Artista</label>
+          <input id="artistField" placeholder="Es. Chris Stapleton">
         </div>
-        <div class="hint">Digita artista e/o brano: l'app abbina automaticamente Genere e Sottogenere.</div>
+        <div class="field">
+          <label>Brano</label>
+          <input id="trackField" placeholder="Es. Tennessee Whiskey">
+        </div>
+        <div class="finder-actions">
+          <button id="matchBtn" class="primary">Ricerca Genere</button>
+          <button id="resetSearchBtn" class="ghost">Reset ricerca</button>
+        </div>
+        <div id="matchMsg" class="hint"></div>
       </div>
 
       <div id="genreWrap" class="block">
@@ -42,7 +45,7 @@
         <div class="seltext" id="selText">Nessuna selezione</div>
         <div class="source">
           <span id="sourceBadge" class="badge badge-src preset">Preset</span>
-          <span id="tsBadge" class="badge" hidden>—</span>
+          <span id="timestamp" class="ts" hidden>—</span>
         </div>
       </div>
 
@@ -71,7 +74,7 @@
         </div>
         <div class="guide">
           <div class="guide-title">Guida all'ascolto</div>
-          <div id="guideText" class="guide-text">Seleziona un (sotto)genere o usa Artist/Track per un abbinamento automatico.</div>
+          <div id="guideText" class="guide-text">Seleziona un (sotto)genere per i suggerimenti rapidi.</div>
         </div>
         <div id="subGuide" class="micro-guide" hidden></div>
       </div>
@@ -107,6 +110,6 @@
       <div class="notes" id="notes">L’AI userà “Genere/Sottogenere selezionato + Dettagli”.</div>
     </section>
   </main>
-  <script src="app.js?v=6.2"></script>
+  <script src="app.js?v=6.3"></script>
 </body>
 </html>
