@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Marshall Tuner — v9.0.0</title>
+  <title>Marshall Tuner — v8.0.3</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=8.0.3-fix">
+  <link rel="stylesheet" href="style.css?v=7.0.4">
 </head>
 <body>
   <header class="topbar">
-    <div class="brand">AI Tuner Pro</div>
-    <div class="ver">v9.0.0</div>
+    <div class="brand">Marshall Tuner</div>
+    <div class="ver">v8.0.3</div>
   </header>
 
   <main>
@@ -22,11 +22,11 @@
       <p class="section-sub">Seleziona <b>Genere</b> e opzionalmente <b>Sottogenere</b>. LED = <b>preset</b>. Arrotondamento: ≤ .5 ↓, ≥ .6 ↑.</p>
 
       <div id="genreWrap" class="block">
-      <h2 class="block-title">GENERI</h2>
+        <div class="block-title">Generi</div>
         <div id="chips" class="chips emph"></div>
       </div>
       <div id="subWrap" class="block subtle" hidden>
-        <h3 class="block-title alt">SOTTOGENERI</h3>
+        <div class="block-title alt">Sottogeneri</div>
         <div id="subchips" class="chips alt"></div>
       </div>
 
@@ -40,11 +40,11 @@
 
       <!-- Consulente: Ricerca genere -->
       <div class="card-lite">
-        <h2 class="consult-title">RICERCA GENERE</h2>
+        <div class="consult-title">Ricerca genere (consulente)</div>
         <p class="consult-sub">Scrivi artista e/o brano. Ti suggerisco il genere più adatto tra i tuoi preset. Non applico nulla finché non confermi.</p>
         <div class="consult-row">
-          <input id="consultInput" class="input-primary" placeholder="Es. Metallica — Master of Puppets · oppure Vivaldi">
-          <button id="consultBtn" class="primary">CONSIGLIAMI</button>
+          <input id="consultInput" placeholder="Es. Metallica — Master of Puppets · oppure Vivaldi">
+          <button id="consultBtn" class="ghost">Consigliami il genere</button>
         </div>
         <div id="consultResult" class="consult-result" hidden>
           <div><b>Suggerimento:</b> <span id="consultGenre">—</span> <span class="badge ai">AI Consiglio</span></div>
@@ -57,9 +57,9 @@
       </div>
 
       <div class="quick-output">
-        <div class="toggle"><span class="tlabel">%</span></div>
-
-        <!-- READOUT: knobs affiancati nella stessa colonna/card -->
+        <div class="toggle">
+          <span class="tlabel">%</span>
+        </div>
         <div class="readout">
           <div class="dial">
             <div class="dial-head">BASS</div>
@@ -68,7 +68,6 @@
             </div>
             <div class="dial-value" id="bassValue">—</div>
           </div>
-
           <div class="dial">
             <div class="dial-head">TREBLE</div>
             <div class="dial-knob">
@@ -77,7 +76,6 @@
             <div class="dial-value" id="trebleValue">—</div>
           </div>
         </div>
-
         <div class="guide" hidden>
           <div class="guide-title">Guida all'ascolto</div>
           <div id="guideText" class="guide-text">Seleziona un (sotto)genere per i suggerimenti rapidi.</div>
@@ -92,11 +90,11 @@
       <div class="grid">
         <div class="field">
           <label>Dettagli (testo libero)</label>
-          <input id="freeText" class="input-primary" placeholder="Es. Queen — Bohemian Rhapsody">
+          <input id="freeText" placeholder="Es. Elton John — live 1975 — remaster">
         </div>
         <div class="field">
-          <label>Ambiente</label>
-          <select id="aiRoom" class="select-primary">
+          <label>Ambiente (default: Vicino muro)</label>
+          <select id="aiRoom">
             <option value="nearwall" selected>Vicino muro</option>
             <option value="neutral">Scrivania</option>
             <option value="corner">Angolo</option>
@@ -105,19 +103,18 @@
         </div>
         <div class="field">
           <label>Volume cassa</label>
-          <input type="range" id="aiVolume" min="0" max="100" value="50">
-          <div class="hint"><span id="aiVolVal">50</span>%</div>
+          <input type="range" id="aiVolume" min="0" max="100" value="70">
+          <div class="hint"><span id="aiVolVal">70</span>%</div>
         </div>
       </div>
       <div class="actions">
-        <button id="aiBtn" class="primary">CHIEDI ad AI TUNE</button>
+        <button id="aiBtn" class="primary">Chiedi ad AI Tune Pro</button>
         <button id="resetBtn" class="ghost">Reset preset</button>
       </div>
       <div class="notes" id="notes">L’AI userà “Genere/Sottogenere selezionato + Dettagli”.</div>
     </section>
   </main>
 
-  <script src="app.js?v=8.0.3-fix"></script>
+  <script src="app.js?v=7.0.4"></script>
 </body>
 </html>
-

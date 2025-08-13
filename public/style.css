@@ -20,6 +20,55 @@ background: radial-gradient(1200px 800px at 70% -10%, rgba(255,255,255,.04), tra
             var(--bg);
 font-size:var(--fs-16);line-height:1.55;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 
+/* ABO === Tipografia uniforme con Inter === */
+
+/* Body: Inter 400, base */
+body {
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  color: rgb(176, 176, 176);
+  margin-left: 10px; /* margine sinistro per allineamento */
+}
+
+/* Titoli */
+h1, h2, h3, h4, h5, h6 {
+  font-family: inherit; /* eredita Inter dal body */
+  /*color: inherit;*/      /* stesso colore base */
+  color: #BCA36A;       /* colore personalizzato titoli */
+  margin-top: 20px;        /* evita margini extra sopra */
+  margin-bottom: 0.5em; /* distacco sotto */
+  line-height: 1.3;
+  letter-spacing: 0.12em; /* spazio tra le lettere*/
+  margin-left: 10px; /* margine sinistro per allineamento */
+
+}
+
+/* Gerarchia dimensioni e pesi */
+h1 {
+  font-size: 20px;
+  font-weight: 800; /* molto bold */
+}
+h2 {
+  font-size: 16px;
+  font-weight: 400; /* bold medio */
+}
+h3 {
+  font-size: 14px;
+  font-weight: 400;
+}
+h4, h5, h6 {
+  font-size: 12px;
+  font-weight: 400; /* stesso del body */
+}
+
+
+
+/* ABO FINE === Tipografia uniforme con Inter === */
+
+
 /* Topbar */
 .topbar{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:12px;
 padding:12px 14px;background:linear-gradient(180deg,rgba(34,34,36,.92),rgba(34,34,36,.6));border-bottom:1px solid var(--border);backdrop-filter:saturate(1.1) blur(6px)}
@@ -29,7 +78,7 @@ padding:12px 14px;background:linear-gradient(180deg,rgba(34,34,36,.92),rgba(34,3
 main{max-width:1080px;margin:22px auto;padding:0 14px;display:grid;grid-template-columns:1fr;gap:16px}
 @media (min-width:980px){main{grid-template-columns:1.1fr .9fr;gap:20px}}
 .card{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid var(--border);border-radius:var(--r-4)}
-.card .section-title{padding:12px 14px 6px;font-size:var(--fs-12);text-transform:uppercase;letter-spacing:.14em;color:var(--text-dim)}
+.card .section-title{padding:12px 14px 6px;font-size:var(--fs-14);text-transform:uppercase;letter-spacing:.14em;color:var(--text-dim)}
 .card .section-sub{padding:0 14px 10px;font-size:var(--fs-14);color:var(--text-dim)}
 .card .content{padding:12px 14px 14px}
 
@@ -49,7 +98,7 @@ border-radius:var(--r-2);background:#262628}
 .consult-row input{flex:1;min-height:52px;padding:12px 14px;border-radius:14px;background:#1f1f21;border:1px solid var(--border);color:var(--text);font-weight:700}
 .consult-row input::placeholder{color:var(--muted);font-weight:600}
 .consult-row input:focus{outline:none;border-color:#4a4a4d;box-shadow:0 0 0 2px rgba(212,175,55,.16)}
-.primary, #consultBtn, #aiBtn{padding:.9rem 1.2rem;border-radius:14px;background:#2b2b2d;color:#f7e7b0;border:1px solid var(--gold-weak);font-weight:900;letter-spacing:.2px}
+.primary, #consultBtn, #aiBtn{padding:.9rem 1.2rem;border-radius:14px;background:#2b2b2d;color:#BCA36A;border:1px solid var(--gold-weak);font-weight:900;letter-spacing:.2px}
 .ghost{padding:.9rem 1.2rem;border-radius:14px;background:transparent;color:#fff;border:1px solid var(--border)}
 
 /* Quick output */
@@ -214,3 +263,144 @@ border-radius:var(--r-2);background:#262628}
   flex: 1;
   width: 100%;
 }
+
+/* === QUICK: input consulente full width, bottone a destra === */
+.card.quick .consult-row{
+  display: grid;
+  grid-template-columns: 1fr max-content; /* input prende tutto, bottone solo necessario */
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+.card.quick #consultInput{
+  width: 100%;
+  min-width: 0;     /* importante per evitare overflow */
+  flex: 1 1 auto;
+}
+.card.quick #consultBtn{
+  white-space: nowrap;
+  flex: 0 0 auto;
+  justify-self: end;
+}
+@media (max-width: 520px){
+  .card.quick .consult-row{ grid-template-columns: 1fr; }
+  .card.quick #consultBtn{ width: 100%; }
+}
+
+/* Campo DETTAGLI (TESTO LIBERO) a tutta larghezza con padding migliorato */
+#freeText {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  flex: 1 1 auto;
+
+  padding: 10px 14px;         /* spazio interno confortevole */
+  border-radius: 8px;         /* angoli arrotondati */
+  border: 1px solid #33373f;  /* bordo sottile */
+  background-color: #151823;  /* sfondo in linea con il tema */
+  color: #e7e9ee;             /* testo chiaro */
+  font-size: 14px;            /* dimensione leggibile */
+}
+
+/* Stile placeholder coerente col tema */
+#freeText::placeholder {
+  color: #a3a7b3;
+  opacity: 0.9;
+}
+
+
+/* ABO: === MODIFICHE IN DATA 13/08/2025 === */
+
+
+
+/* === Pulsanti: spaziatura semplice e affidabile === */
+
+/* stacco verticale sotto lo slider */
+#aiBtn,
+#resetBtn { margin-top: 16px; }
+
+/* se c'è il wrapper .buttons, gestisce il layout */
+.buttons {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* distacco orizzontale tra i pulsanti su desktop */
+#resetBtn { margin-left: 16px; }
+
+/* mobile: impila con aria tra i due */
+@media (max-width: 700px) {
+  .buttons {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  #resetBtn {
+    margin-left: 20px;
+    margin-top: 10px;
+  }
+}
+
+
+/* ABO: Centro il testo della Ricerca per genere */
+.consult-sub {
+  margin-left: 24px; /* scegli la distanza che preferisci */
+  margin-right: 24px; /* scegli la distanza che preferisci */
+
+}
+
+.selbar {
+  margin-top: 24px;
+  /* lascia qui solo le proprietà di layout */
+}
+
+.selbar .seltext {
+  color: #fff;
+  font-style: italic;
+  font-size: 16px;
+  font-family: Inter, Arial, sans-serif;
+}
+
+}
+/* ABO FINE: Centro il testo della Ricerca per genere */
+
+
+/* ABO: === AI PRO: stile per i campi e il volume === */
+.field {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+#aiVolume {
+  margin-left: -10px;
+}
+.field label {
+  flex-basis: 80%;
+  margin-bottom: 6px;
+
+}
+/* ABO FINE: === AI PRO: stile per i campi e il volume === */
+
+
+/* ABO: === Note di stile per il layout delle note === */
+.card .notes,
+.card.quick .notes,
+.card.ai .notes {
+  margin-left: 24px !important;
+  margin-right: 24px !important;
+  margin-top: 18px !important;
+  margin-bottom: 12px !important;
+}
+/* ABO FINE: === Note di stile per il layout delle note === */
+
+
+/* ABO: === Stile per i campi di input e label === */
+.field label {
+  margin-left: 10px;
+  margin-right: 10px;
+  flex-basis: 80%;
+  margin-bottom: 6px;
+    color: #BCA36A; /* colore dorato *
+}
+/* ABO FINE: === Stile per i campi di input e label === */
