@@ -15,7 +15,6 @@ Country;Country pop;6.0;6.0
 Country;Generico;6.0;5.5
 Elettronica;Generico;7.0;7.0
 Folk / World;Folk tradizionale;5.5;6.0
-Folk / World;Neo-folk;5.5;6.5
 Folk / World;World music;5.5;6.5
 Folk / World;Flamenco;5.5;6.0
 Folk / World;Celtic;5.5;6.5
@@ -23,36 +22,17 @@ Folk / World;Generico;5.5;6.0
 Heavy metal;Generico;7.0;6.5
 Hip-Hop / Rap;Generico;7.5;6.5
 Jazz;Swing;6.5;7.0
-Jazz;Bebop;6.5;7.0
-Jazz;Cool jazz;6.5;7.0
-Jazz;Free jazz;6.5;7.0
-Jazz;Fusion jazz;7.0;7.0
 Jazz;Smooth jazz;7.0;7.0
 Jazz;Latin jazz;6.5;7.0
-Jazz;Gypsy jazz;6.0;7.0
 Jazz;Generico;6.5;7.0
 Pop;Dance pop;7.0;7.5
 Pop;Synth pop;6.5;7.0
-Pop;Electropop;7.0;7.5
-Pop;Teen pop;7.0;7.5
-Pop;Indie pop;7.0;6.5
-Pop;Pop rock;7.0;6.5
 Pop;Generico;7.0;7.0
 Punk Rock;Generico;6.5;6.5
 Reggae / Ska;Generico;7.5;5.0
 Rock;Classic rock;6.5;5.5
 Rock;Hard rock;6.5;5.5
-Rock;Progressive rock;6.5;6.5
-Rock;Psychedelic rock;6.5;7.0
-Rock;Grunge;6.5;5.5
-Rock;Alternative rock;6.5;5.5
-Rock;Garage rock;6.5;5.0
-Rock;Southern rock;6.5;5.0
 Rock;Generico;6.5;5.5
-Soul / R&B;Motown;7.0;6.0
-Soul / R&B;Neo-soul;7.0;7.0
-Soul / R&B;Funk;7.0;6.5
-Soul / R&B;Disco;7.5;7.0
 Soul / R&B;Generico;7.0;6.5
 Colonne Sonore;Epico / Cinematico;6.0;6.5
 Colonne Sonore;Orchestrale Classico;4.5;6.0
