@@ -11,13 +11,29 @@ let displayMode='percent';
 async function loadData(){
   PRESETS = await (await fetch('data/presets.json')).json();
   try { SUB_GUIDES = await (await fetch('data/subgenre_guides.json')).json(); } catch { SUB_GUIDES = {}; }
+
   renderGenreChips();
-  // mode percent disabled
-  // mode clock removed
+
+  // Ripristina selezioni salvate (dopo il render delle chip)
+  try {
+    const savedG = localStorage.getItem('mt:sel:genre');
+    if (savedG && PRESETS.genres[savedG]) {
+      selectGenre(savedG);        // applica preset + subchips
+      highlightGenre(savedG);     // evidenzia chip genere
+      const savedS = localStorage.getItem('mt:sel:subgenre');
+      if (savedS) {
+        applySubgenre(savedG, savedS);
+        highlightSub(savedS);     // evidenzia chip subgenere
+      }
+    }
+  } catch {}
+
+  // (il resto invariato)
   qs('#aiBtn').onclick=askAIPro;
   qs('#resetBtn').onclick=resetToPristine;
   const aiVol=qs('#aiVolume'); const aiVal=qs('#aiVolVal'); aiVol.oninput=()=>aiVal.textContent=aiVol.value;
   updateSelBar();
+
 
   // --- Consulente ---
   const cInput = document.getElementById('consultInput');
@@ -28,6 +44,22 @@ async function loadData(){
   const cApply = document.getElementById('consultApply');
   const cReset = document.getElementById('consultReset');
   let lastSuggest = { genreId: "", genreName: "", note: "" };
+
+  // Ripristina selezioni salvate
+try {
+  const savedG = localStorage.getItem('mt:sel:genre');
+  if (savedG && PRESETS.genres[savedG]) {
+    // Applica e evidenzia il genere
+    selectGenre(savedG);
+    highlightGenre(savedG);
+    // Se esiste anche un sub salvato, prova ad applicarlo
+    const savedS = localStorage.getItem('mt:sel:subgenre');
+    if (savedS) {
+      applySubgenre(savedG, savedS);
+      highlightSub(savedS);
+    }
+  }
+} catch {}
 
   cBtn.onclick = async () => {
     const text = (cInput.value || "").trim();
@@ -68,13 +100,30 @@ async function loadData(){
   };
 }
 
+// Mostra la versione leggendo /version.json (file pubblico generato in build)
+fetch('version.json')
+  .then(r => r.ok ? r.json() : Promise.reject(new Error('version.json not found')))
+  .then(({ version }) => {
+    const el = document.getElementById('appVersion');
+    if (el && version) el.textContent = 'v' + version;
+  })
+  .catch(err => console.warn('Versione non disponibile:', err?.message));
+
+
+
 function renderGenreChips(){
   const wrap=qs('#chips'); wrap.innerHTML='';
   for(const gid of PRESETS.top_genres_order){
     const g = PRESETS.genres[gid];
     const b=document.createElement('button');
     b.className='chip'; b.textContent=g.name; b.dataset.gid=gid;
-    b.onclick=()=>selectGenre(gid);
+    //b.onclick=()=>selectGenre(gid); // OLD
+    b.onclick = () => { 
+      selectGenre(gid);        // logica esistente
+      highlightGenre(gid);     // accendi chip genere
+      highlightSub(null);      // spegni eventuale sottogenere precedente
+    } // ABO: evidenziazione chip genere
+    b.setAttribute('aria-pressed', 'false');
     wrap.appendChild(b);
   }
 }
@@ -86,7 +135,13 @@ function renderSubgenreChips(gid){
   list.forEach(sg=>{
     const b=document.createElement('button');
     b.className='chip'; b.textContent=sg.name; b.dataset.sid=sg.id;
-    b.onclick=()=>applySubgenre(gid, sg.id);
+    //b.onclick=()=>applySubgenre(gid, sg.id);
+    b.onclick = () => { 
+      applySubgenre(gid, sg.id); // logica esistente
+      highlightGenre(gid);       // assicura che il genere resti evidenziato
+    highlightSub(sg.id);       // accendi chip sottogenere
+    } // ABO: evidenziazione chip sottogenere
+    b.setAttribute('aria-pressed', 'false');
     sc.appendChild(b);
   });
 }
@@ -140,23 +195,54 @@ function updateSelBar(){
   if (LAST.ts){ ts.textContent = LAST.ts; ts.hidden=false; } else { ts.hidden=true; }
 }
 
+// ABO: Quick Select Genere/Sottogenere (per fare subito una selezione)
+
 function selectGenre(gid){
-  const g=PRESETS.genres[gid];
-  applyPreset(g.bass_clock, g.treble_clock, g.notes||'');
-  LAST.genreId=gid; LAST.subId=null; LAST.query=g.name;
+  const g = PRESETS.genres[gid];
+  applyPreset(g.bass_clock, g.treble_clock, g.notes||''); // questo fa un updateSelBar() con LAST vecchio
+
+  LAST.genreId = gid;
+  LAST.subId   = null;
+  LAST.query   = g.name;
+
   renderSubgenreChips(gid);
+
+  // evidenza UI
+  highlightGenre(gid);
+  highlightSub(null);
+
+  // 🔧 AGGIUNTA: ora che LAST è aggiornato, aggiorno la selbar correttamente
+  updateSelBar();
 }
 
 function applySubgenre(gid, sid){
-  const list=(PRESETS.subgenres||{})[gid]||[];
-  const sg=list.find(x=>x.id===sid); if(!sg) return;
-  const gName=PRESETS.genres[gid]?.name || gid;
+  const list = (PRESETS.subgenres||{})[gid]||[];
+  const sg   = list.find(x=>x.id===sid); if(!sg) return;
+
+  const gName = PRESETS.genres[gid]?.name || gid;
   applyPreset(sg.bass_clock, sg.treble_clock, PRESETS.genres[gid]?.notes || '');
-  LAST.genreId=gid; LAST.subId=sid; LAST.query=`${gName} — ${sg.name}`;
+
+  LAST.genreId = gid;
+  LAST.subId   = sid;
+  LAST.query   = `${gName} — ${sg.name}`;
+  LAST.source  = 'Preset';
+  LAST.ts      = null;
+
   const mg = (SUB_GUIDES?.[gid]||{})[sid];
-  if(mg){ const el=document.getElementById('subGuide'); el.textContent = mg; el.hidden=false; }
+  const guideEl = document.getElementById('subGuide');
+  if (guideEl){
+    if (mg){ guideEl.textContent = mg; guideEl.hidden = false; }
+    else { guideEl.hidden = true; }
+  }
+
   updateSelBar();
+  // 🔧 qui stavi spegnendo la chip: non più null
+  highlightGenre(gid);
+  highlightSub(sid);
 }
+
+
+// ABO: Fine Quick Select Genere/Sottogenere
 
 function fmtTs(d){
   const pad=n=>String(n).padStart(2,'0');
@@ -200,4 +286,31 @@ function resetToPristine(){
   refreshValues();
 }
 
-(function init(){ loadData(); })();
+//(function init(){ loadData(); })();
+window.addEventListener('DOMContentLoaded', () => {
+  loadData();
+});
+
+// ABO: === Evidenziazione chips e persistenza ===
+// Evidenziazione chip attiva + persistenza
+function highlightGenre(gid) {
+  const box = document.getElementById('chips');
+  if (!box) return;
+  box.querySelectorAll('.chip').forEach(b => {
+    const on = b.dataset.gid === gid;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-pressed', String(on));
+  });
+  try { localStorage.setItem('mt:sel:genre', gid || ''); } catch {}
+}
+
+function highlightSub(sid) {
+  const box = document.getElementById('subchips');
+  if (!box) return;
+  box.querySelectorAll('.chip').forEach(b => {
+    const on = b.dataset.sid === sid;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-pressed', String(on));
+  });
+  try { localStorage.setItem('mt:sel:subgenre', sid || ''); } catch {}
+}

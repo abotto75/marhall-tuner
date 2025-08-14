@@ -1,10 +1,15 @@
 {
-  "name": "marshall-tuner-v9.0.0",
-  "version": "9.0.0",
+  "name": "ai-tuner-pro",
+  "version": "9.1.0",
+  "private": true,
+  
   "scripts": {
-    "build:presets": "node scripts/build_presets_from_csv.cjs public/data/presets.csv public/data/presets.json",
-    "vercel-build": "npm run build:presets && echo Vercel build step complete"
-  },
+  "build:presets": "node scripts/build_presets_from_csv.cjs public/data/presets.csv public/data/presets.json",
+  "build:version": "node -e \"const fs=require('fs');const v=require('./package.json').version;fs.writeFileSync('./version.json', JSON.stringify({version:v}))\"",
+  "build": "npm run build:presets && npm run build:version",
+  "vercel-build": "npm run build"
+}
+,
   "dependencies": {
     "openai": "^4.0.0"
   },
