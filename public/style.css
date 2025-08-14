@@ -401,6 +401,18 @@ border-radius:var(--r-2);background:#262628}
   margin-right: 10px;
   flex-basis: 80%;
   margin-bottom: 6px;
-    color: #BCA36A; /* colore dorato *
+    color: #BCA36A; /* colore dorato */
 }
 /* ABO FINE: === Stile per i campi di input e label === */
+
+
+
+/* ABO: === Stile per la chip selezionata in stile Marshall === */
+/* Evidenziazione chip selezionata in stile Marshall */
+.chip.active {
+  background-color: #D4AF37; /* Oro Marshall */
+  color: #000;               /* Testo nero */
+  border-color: #D4AF37;     /* Bordo in tinta */
+  box-shadow: 0 0 0 2px rgba(212,175,55,0.4); /* alone morbido */
+}
+/* ABO FINE: === Stile per la chip selezionata in stile Marshall === */
