@@ -100,15 +100,6 @@ try {
   };
 }
 
-// Mostra la versione leggendo /version.json (file pubblico generato in build)
-fetch('version.json')
-  .then(r => r.ok ? r.json() : Promise.reject(new Error('version.json not found')))
-  .then(({ version }) => {
-    const el = document.getElementById('appVersion');
-    if (el && version) el.textContent = 'v' + version;
-  })
-  .catch(err => console.warn('Versione non disponibile:', err?.message));
-
 
 
 function renderGenreChips(){
