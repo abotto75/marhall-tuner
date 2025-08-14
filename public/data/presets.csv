@@ -11,22 +11,8 @@ Classica;Impressionista;4.0;7.5
 Classica;Contemporanea;4.0;6.0
 Classica;Generico;4.0;6.0
 Country;Country tradizionale;6.0;5.5
-Country;Bluegrass;5.5;5.5
 Country;Country pop;6.0;6.0
-Country;Outlaw country;6.0;5.5
 Country;Generico;6.0;5.5
-Elettronica;House;7.0;7.0
-Elettronica;Deep house;7.5;6.5
-Elettronica;Progressive house;7.0;7.5
-Elettronica;Electro house;7.0;7.5
-Elettronica;Techno;7.5;7.0
-Elettronica;Trance;7.0;7.5
-Elettronica;Psytrance;7.0;7.5
-Elettronica;Progressive trance;7.0;7.5
-Elettronica;Drum and bass;7.5;7.0
-Elettronica;Dubstep;7.5;7.0
-Elettronica;Chillout / Ambient;6.5;8.0
-Elettronica;IDM (Intelligent Dance Music);7.0;7.0
 Elettronica;Generico;7.0;7.0
 Folk / World;Folk tradizionale;5.5;6.0
 Folk / World;Neo-folk;5.5;6.5
@@ -35,22 +21,6 @@ Folk / World;Flamenco;5.5;6.0
 Folk / World;Celtic;5.5;6.5
 Folk / World;Generico;5.5;6.0
 Heavy metal;Generico;7.0;6.5
-Heavy metal;Thrash metal;6.5;6.5
-Heavy metal;Death metal;7.0;6.5
-Heavy metal;Black metal;6.5;7.0
-Heavy metal;Power metal;7.0;6.5
-Heavy metal;Doom metal;8.0;5.0
-Heavy metal;Progressive metal;6.5;6.0
-Heavy metal;Nu metal;8.0;6.0
-Heavy metal;Symphonic metal;6.5;7.0
-Heavy metal;Groove metal;6.5;5.5
-Hip-Hop / Rap;East Coast rap;7.5;6.5
-Hip-Hop / Rap;West Coast rap;8.0;6.0
-Hip-Hop / Rap;Trap;8.5;7.0
-Hip-Hop / Rap;Boom bap;8.0;6.5
-Hip-Hop / Rap;Conscious rap;7.5;6.5
-Hip-Hop / Rap;Drill;8.5;7.0
-Hip-Hop / Rap;Alternative hip-hop;7.5;6.5
 Hip-Hop / Rap;Generico;7.5;6.5
 Jazz;Swing;6.5;7.0
 Jazz;Bebop;6.5;7.0
@@ -61,7 +31,6 @@ Jazz;Smooth jazz;7.0;7.0
 Jazz;Latin jazz;6.5;7.0
 Jazz;Gypsy jazz;6.0;7.0
 Jazz;Generico;6.5;7.0
-Pop;Pop tradizionale;7.0;7.0
 Pop;Dance pop;7.0;7.5
 Pop;Synth pop;6.5;7.0
 Pop;Electropop;7.0;7.5
@@ -70,14 +39,6 @@ Pop;Indie pop;7.0;6.5
 Pop;Pop rock;7.0;6.5
 Pop;Generico;7.0;7.0
 Punk Rock;Generico;6.5;6.5
-Punk Rock;Pop punk;6.5;5.5
-Punk Rock;Hardcore punk;6.0;6.5
-Punk Rock;Post-punk;6.0;5.5
-Reggae / Ska;Roots reggae;8.0;5.0
-Reggae / Ska;Dub reggae;8.5;4.5
-Reggae / Ska;Dancehall;8.0;5.5
-Reggae / Ska;Ska tradizionale;7.5;5.0
-Reggae / Ska;Ska punk;8.0;5.5
 Reggae / Ska;Generico;7.5;5.0
 Rock;Classic rock;6.5;5.5
 Rock;Hard rock;6.5;5.5
