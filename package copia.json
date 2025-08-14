@@ -4,11 +4,5 @@
   "scripts": {
     "build:presets": "node scripts/build_presets_from_csv.cjs public/data/presets.csv public/data/presets.json",
     "vercel-build": "npm run build:presets && echo Vercel build step complete"
-  },
-  "dependencies": {
-    "openai": "^4.0.0"
-  },
-  "engines": {
-    "node": ">=18"
   }
 }
