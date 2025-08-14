@@ -4,13 +4,12 @@ Blues;Chicago blues;6.5;5.5
 Blues;Electric blues;6.5;5.5
 Blues;Blues rock;6.0;5.5
 Blues;Generico;6.0;5.5
-Classica;Musica barocca;3.0;7.0
-Classica;Classica del periodo classico;3.5;6.5
+Classica;Barocca;3.0;7.0
+Classica;Periodo classico;3.5;6.5
 Classica;Romantica;4.5;6.5
-Classica;Impressionista;4.0;7.5
 Classica;Contemporanea;4.0;6.0
 Classica;Generico;4.0;6.0
-Country;Country tradizionale;6.0;5.5
+Country;Tradizionale;6.0;5.5
 Country;Country pop;6.0;6.0
 Country;Generico;6.0;5.5
 Elettronica;Generico;7.0;7.0
@@ -34,7 +33,6 @@ Rock;Classic rock;6.5;5.5
 Rock;Hard rock;6.5;5.5
 Rock;Generico;6.5;5.5
 Soul / R&B;Generico;7.0;6.5
-Colonne Sonore;Epico / Cinematico;6.0;6.5
-Colonne Sonore;Orchestrale Classico;4.5;6.0
-Colonne Sonore;Minimal / Ambientale;5.5;6.5
-Colonne Sonore;Ibrido Elettronico-Orchestrale;6.5;7.0
+Colonne Sonore;Epico;6.0;6.5
+Colonne Sonore;Orchestrale;4.5;6.0
+Colonne Sonore;Ambientale;5.5;6.5
